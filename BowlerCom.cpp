@@ -3,12 +3,12 @@
  */
 
 
-#include <cbowler.h>
+#include <BowlerCom.h>
 
-Bowler::Bowler(){
+BowlerCom::BowlerCom(){
 
 }
  
-Bowler::initBowler(void){
+void BowlerCom::initBowler(){
 
 }

@@ -7,9 +7,9 @@
  
 #include <Arduino.h>
  
-class Bowler {
+class BowlerCom {
 public:
-      void initBowler(void);
+      void initBowler();
 };
  
 #endif
