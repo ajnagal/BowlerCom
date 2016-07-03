@@ -2,7 +2,7 @@
  * Bowler Communication System
  */
 
-
+#include <Arduino.h>
 #include <BowlerCom.h>
 
 BowlerCom::BowlerCom(){

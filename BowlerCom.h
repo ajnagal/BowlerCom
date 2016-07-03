@@ -9,7 +9,8 @@
  
 class BowlerCom {
 public:
-      void initBowler();
+	BowlerCom();
+	void initBowler();
 };
  
 #endif
