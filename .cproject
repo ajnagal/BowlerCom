@@ -58,8 +58,6 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry excluding="BowlerStack/src|Platform/src/Arduino|Platform/|c-bowler.X/|Debug/|toolchain/|tools/|168_16MHz/|.settings/|Sample/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="BowlerStack/src"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Platform/src/Arduino"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
