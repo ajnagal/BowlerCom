@@ -1,1 +1,0 @@
-This lib is set up to build on BASH compliant shells only. 
