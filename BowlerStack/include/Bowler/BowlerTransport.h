@@ -9,11 +9,17 @@
 #define BOWLERTRANSPORT_H_
 
 #include "FIFO.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
 boolean GetBowlerPacket_arch(BowlerPacket * Packet);
 boolean GetBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo);
 boolean PutBowlerPacket(BowlerPacket * Packet);
 void FixPacket(BowlerPacket * Packet);
 boolean GetBowlerPacketDebug(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo);
 boolean _getBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo, boolean debug);
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* BOWLERTRANSPORT_H_ */

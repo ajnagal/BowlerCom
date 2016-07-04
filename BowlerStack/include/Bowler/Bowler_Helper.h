@@ -19,6 +19,9 @@
 #define BOWLER_HELPER_H_
 #include "Defines.h"
 #include "Bowler_Struct_Def.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
 uint16_t READY(BowlerPacket * Packet,uint8_t code,uint8_t trace);
 uint16_t ERR(BowlerPacket * Packet,uint8_t code,uint8_t trace);
 
@@ -77,6 +80,8 @@ void setString(BowlerPacket * Packet, char * val, uint8_t offset);
 int32_t get32bit(BowlerPacket * Packet, uint8_t offset);
 
 int32_t get16bit(BowlerPacket * Packet, uint8_t offset);
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* BOWLER_HELPER_H_ */

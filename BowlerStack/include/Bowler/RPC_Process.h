@@ -19,6 +19,9 @@
 #ifndef RPC_PROCESS_H_
 #define RPC_PROCESS_H_
 #include "namespace.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 float getLastPacketTime(void);
 void setIgnoreAddressing(boolean v);
@@ -36,4 +39,7 @@ unsigned char UserCriticalRPCs(BowlerPacket * Packet);
 void AddNamespace(unsigned char len, const unsigned char *  string);
 #endif
 
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* RPC_PROCESS_H_ */

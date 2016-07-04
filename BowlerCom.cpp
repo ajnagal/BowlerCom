@@ -5,10 +5,10 @@
 #include <BowlerCom.h>
 
 #define comBuffSize 256
-static byte privateRXCom[comBuffSize];
-static BYTE_FIFO_STORAGE store;
-static byte err,i;
-static BowlerPacket Packet;
+byte privateRXCom[comBuffSize];
+BYTE_FIFO_STORAGE store;
+byte err,i;
+BowlerPacket Packet;
 
 BowlerCom::BowlerCom(int baudrate){
 	Serial.begin(baudrate);
@@ -17,6 +17,7 @@ BowlerCom::BowlerCom(int baudrate){
  
 
 void BowlerCom::server(){
+	serialEvent();
 	if(GetBowlerPacket(&Packet,&store)){
 		//Now the Packet struct contains the parsed packet data
 		Process_Self_Packet(&Packet);
@@ -37,7 +38,7 @@ void BowlerCom::server(){
  time loop() runs, so using delay inside loop can delay
  response.  Multiple bytes of data may be available.
  */
-void serialEvent() {
+void BowlerCom::serialEvent() {
   while (Serial.available()) {
     FifoAddByte(&store, (char)Serial.read(), &err);
   }

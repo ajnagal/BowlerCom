@@ -11,6 +11,8 @@ class BowlerCom {
 public:
 	BowlerCom(int baudrate);
 	void server();
+private:
+	void serialEvent();
 };
  
 #endif

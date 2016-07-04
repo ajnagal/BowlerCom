@@ -10,6 +10,9 @@
 
 #include "Bowler_Struct_Def.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 #define FIFO_OK 			0
 #define FIFO_FAILED_TO_SET	1
@@ -93,6 +96,9 @@ uint32_t FifoGetPacketSpaceAvailible(PACKET_FIFO_STORAGE * fifo);
 uint32_t FifoGetPacket(PACKET_FIFO_STORAGE * fifo,BowlerPacket * retrived);
 
 
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 
 #endif /* FIFO_H_ */
