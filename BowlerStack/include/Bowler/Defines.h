@@ -78,9 +78,10 @@ AVR Baud = 576000 	Pic Baud = 571428	Percent = 0.793650793650785 AVR Baud = 1 	P
 #define BOWLER_FIXED1K_STR   44// first uint8_t  is number of values, next is floats
 // ASCII
 #define BOWLER_ASCII    39// ASCII string, null terminated
-
-#define true 1
-#define false 0
+#if !defined(ARDUINO)
+	#define true 1
+	#define false 0
+#endif
 typedef uint8_t			boolean;
 //#if !defined(__GENERIC_TYPE_DEFS_H_)
 ////#define B_B_true 1
