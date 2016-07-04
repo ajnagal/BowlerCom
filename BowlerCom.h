@@ -6,6 +6,11 @@
 #define ARDUBCS_H
  #define comBuffSize 256
 #include "BowlerStack/include/Bowler/Bowler.h"
+#include "BowlerStack/include/DyIO/PID.h"
+#include "BowlerStack/include/DyIO/DyIO_def.h"
+#include "BowlerStack/include/Namespace/AsyncManager.h"
+#include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
+#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
 /* Borrwoing heavily from Boards.h - Hardware Abstraction Layer for Firmata library */
 
 // Normally Servo.h must be included before Firmata.h (which then includes
