@@ -11,6 +11,9 @@
 #include "namespace.h"
 #include "Scheduler.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 #define IntegralSize  10
 
 //bcs.pid
@@ -293,8 +296,6 @@ int getUpperPidHistoresis(int group);
 int getLowerPidHistoresis(int group);
 int getPidStop(int group);
 
-float getMs();
-
 void updatePidAsync();
 void pidReset(uint8_t chan, int32_t val);
 float pidResetNoStop(uint8_t chan, int32_t val);
@@ -308,5 +309,7 @@ boolean processRunAutoCal(BowlerPacket * Packet);
 void OnPidConfigure(int v);
 
 void setOutput(int group, float val);
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* ABSTRACTPID_H_ */

@@ -10,6 +10,15 @@ BYTE_FIFO_STORAGE store;
 byte err,i;
 BowlerPacket Packet;
 
+float getMs(void){
+	return (float)millis();
+}
+void putCharDebug(char a){
+	// none
+}
+void EnableDebugTerminal(){
+	//none
+}
 BowlerCom::BowlerCom(int baudrate){
 	Serial.begin(baudrate);
 	InitByteFifo(&store,privateRXCom,comBuffSize);

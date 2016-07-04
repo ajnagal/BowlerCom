@@ -20,6 +20,10 @@
 #define DEBUG_H_
 #include "Defines.h"
 #include "AbstractPID.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 typedef enum _Print_Level{
 	NO_PRINT=0,
 	ERROR_PRINT=1,
@@ -225,4 +229,8 @@ void sendStr(const char *str) ;
 
 	boolean okToPrint(Print_Level l);
 	void setColor(Print_Level l);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* DEBUG_H_ */

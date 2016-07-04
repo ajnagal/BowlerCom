@@ -10,6 +10,9 @@
 #ifndef BOWLERHARDWAREABSTRACTION_H_
 #define BOWLERHARDWAREABSTRACTION_H_
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 /**
  * @Depricated use library function FifoGetByteCount
@@ -67,5 +70,7 @@ void putCharDebug(char c);
  */
 void startScheduler(void);
 
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* BOWLERHARDWAREABSTRACTION_H_ */
