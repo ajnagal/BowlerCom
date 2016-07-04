@@ -29,6 +29,7 @@
 								<option id="de.innot.avreclipse.compiler.option.incpath.1299622714" name="Include Paths (-I)" superClass="de.innot.avreclipse.compiler.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/share/arduino/hardware/arduino/cores/arduino/"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom}&quot;"/>
+									<listOptionValue builtIn="false" value="/usr/share/arduino/hardware/arduino/variants/standard"/>
 								</option>
 								<option id="de.innot.avreclipse.compiler.option.def.1409957412" name="Define Syms (-D)" superClass="de.innot.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ARDUINO=105"/>
@@ -41,6 +42,7 @@
 								<option id="de.innot.avreclipse.cppcompiler.option.incpath.1605273378" name="Include Paths (-I)" superClass="de.innot.avreclipse.cppcompiler.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/share/arduino/hardware/arduino/cores/arduino/"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom}&quot;"/>
+									<listOptionValue builtIn="false" value="/usr/share/arduino/hardware/arduino/variants/standard"/>
 								</option>
 								<option id="de.innot.avreclipse.cppcompiler.option.def.621104481" name="Define Syms (-D)" superClass="de.innot.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ARDUINO=105"/>
