@@ -183,8 +183,7 @@ public:
 	    void begin();
 	    void begin(long);
 	    void begin(Stream &s);
-	   boolean PutBowlerPacketLocal(BowlerPacket * p)
-private:
+	   boolean PutBowlerPacketLocal(BowlerPacket * p);
 	    Stream &BowlerSerial;
 	byte privateRXCom[comBuffSize];
 	BYTE_FIFO_STORAGE store;

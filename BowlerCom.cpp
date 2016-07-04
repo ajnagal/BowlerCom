@@ -4,9 +4,9 @@
 #include <Arduino.h>
 #include <BowlerCom.h>
 
-
+BowlerCom * ref;
 float getMs(void) {
-	return (float) millis();
+	return ((float)micros() )*1000.0f;
 }
 void putCharDebug(char a) {
 	// none
@@ -16,6 +16,7 @@ void EnableDebugTerminal() {
 }
 BowlerCom::BowlerCom(Stream &s) : BowlerSerial(s)
 {
+	ref =this;
 
 }
 
@@ -38,11 +39,11 @@ void BowlerCom::begin(Stream &s)
 	InitByteFifo(&store, privateRXCom, comBuffSize);
 
 }
-boolean BowlerCom::PutBowlerPacketLocal(BowlerPacket * p) {
+uint16_t putStream(uint8_t * buffer,uint16_t datalength) {
 	int i;
-	for (i = 0; i < (int)GetPacketLegnth(p); i++) {
+	for (i = 0; i < datalength; i++) {
 		//Grab the response packet one byte at a time and push it out the physical layer
-		BowlerSerial.write((char) p->stream[i]);
+		ref->BowlerSerial.write((char) buffer[i]);
 	}
     return true;
 }
@@ -61,6 +62,6 @@ void BowlerCom::server(void) {
 		// to be sent back to the client as a response.
 
 	}
-	RunNamespaceAsync(&Packet, &PutBowlerPacketLocal);
+	RunNamespaceAsync(&Packet, &PutBowlerPacket);
 }
 

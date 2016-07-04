@@ -8,6 +8,9 @@
 #ifndef NAMESPACE_H_
 #define NAMESPACE_H_
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 #define USE_LINKED_LIST_NAMESPACE
 
 typedef boolean packetEventCallback(BowlerPacket *);
@@ -58,5 +61,7 @@ void RunNamespaceAsync(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(Bowle
 //bcs.safe
 #define SAFE					0x65666173 // 'safe'  Get/Set the safe-mode parameters
 
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* NAMESPACE_H_ */
