@@ -4,11 +4,11 @@
 
 #include <BowlerCom.h>
 
-#define comBuffSize 256
-byte privateRXCom[comBuffSize];
-BYTE_FIFO_STORAGE store;
 
-BowlerPacket Packet;
+static byte privateRXCom[comBuffSize];
+static BYTE_FIFO_STORAGE store;
+
+static BowlerPacket Packet;
 // Pin 13 has an LED connected on most Arduino boards.
 // give it a name:
 
@@ -28,10 +28,15 @@ BowlerCom::BowlerCom(int baudrate) {
 	    ; // wait for serial port to connect. Needed for Leonardo only
 	  }
 	InitByteFifo(&store, privateRXCom, comBuffSize);
+
+	pinMode(11, OUTPUT);
+	digitalWrite(11, LOW );
+	pinMode(12, OUTPUT);
+	digitalWrite(12, LOW );
 }
 
 void BowlerCom::server() {
-	while (Serial.available()) {
+	while (Serial.available()>0) {
 		// get the new byte:
 		char inChar = (char) Serial.read();
 		addByte(inChar);
@@ -43,15 +48,19 @@ void BowlerCom::server() {
 		// and the Packet struct now contains the data
 		// to be sent back to the client as a response.
 		int i;
-		for (i = 0; i < GetPacketLegnth(&Packet); i++) {
+		for (i = 0; i < (int)GetPacketLegnth(&Packet); i++) {
 			//Grab the response packet one byte at a time and push it out the physical layer
 			Serial.write((char) Packet.stream[i]);
+
 		}
+		digitalWrite(11, HIGH );
+		digitalWrite(12, LOW );
 	}
 }
 void BowlerCom::addByte(byte b){
 	byte err;
 	FifoAddByte(&store, b, &err);
-
+	digitalWrite(12, HIGH );
+	digitalWrite(11, LOW );
 }
 
