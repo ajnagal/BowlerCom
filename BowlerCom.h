@@ -9,8 +9,8 @@
  
 class BowlerCom {
 public:
-	BowlerCom();
-	void initBowler();
+	BowlerCom(int baudrate);
+	void server();
 };
  
 #endif
