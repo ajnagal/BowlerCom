@@ -1,6 +1,16 @@
-c-bowler
+Arduino Bowler
 ========
+```C
+#include <BowlerCom.h>
+BowlerCom com(Serial);
+void setup() {
+  	com.begin(9600);
+}
+void loop() {
+  	com.server();
+}
 
+```
 A library for controlling Bowler devices with C
 
 #Theory Of Operation
