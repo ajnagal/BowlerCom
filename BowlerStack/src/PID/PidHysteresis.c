@@ -4,7 +4,11 @@
  *  Created on: Feb 14, 2014
  *      Author: hephaestus
  */
+#if defined(ARDUINO)
+#include "BowlerStack/include/Bowler/Bowler.h"
+#else
 #include "Bowler/Bowler.h"
+#endif
 
 void incrementHistoresis(int group) {
     getPidGroupDataTable(group)->config.upperHistoresis += 1;

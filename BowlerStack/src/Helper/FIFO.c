@@ -4,8 +4,11 @@
  * Created on: May 27, 2010
  * @author hephaestus
  */
-
+#if defined(ARDUINO)
+#include "BowlerStack/include/Bowler/Bowler.h"
+#else
 #include "Bowler/Bowler.h"
+#endif
 void clearByteFifo(BYTE_FIFO_STORAGE * fifo);
 
 //const char * fifoinit = "Initializing FIFO, Buffer Size: ";

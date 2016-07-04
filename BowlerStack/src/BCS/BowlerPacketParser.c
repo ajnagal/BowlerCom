@@ -4,7 +4,11 @@
  *  Created on: May 27, 2010
  *      Author: hephaestus
  */
+#if defined(ARDUINO)
+#include "BowlerStack/include/Bowler/Bowler.h"
+#else
 #include "Bowler/Bowler.h"
+#endif
 //#define minSize ((BowlerHeaderSize)+4)
 #define minSize 1
 

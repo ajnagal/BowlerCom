@@ -16,7 +16,11 @@
  * limitations under the License.
  *
  */
+#if defined(ARDUINO)
+#include "BowlerStack/include/Bowler/Bowler.h"
+#else
 #include "Bowler/Bowler.h"
+#endif
 void sendStr(const char *str);
 Print_Level level = NO_PRINT;
 

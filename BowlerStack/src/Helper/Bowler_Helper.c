@@ -15,7 +15,11 @@
  * limitations under the License.
  *
  */
+#if defined(ARDUINO)
+#include "BowlerStack/include/Bowler/Bowler.h"
+#else
 #include "Bowler/Bowler.h"
+#endif
 #if defined(__PIC32MX__)
 extern MAC_ADDR MyMAC __attribute__((section(".scs_global_var")));
 #else

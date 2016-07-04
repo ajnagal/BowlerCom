@@ -15,7 +15,11 @@
  * limitations under the License.
  *
  */
+#if defined(ARDUINO)
+#include "BowlerStack/include/Bowler/Bowler.h"
+#else
 #include "Bowler/Bowler.h"
+#endif
 
 #define schedSet 18
 #define stepSize (schedSet/6.0)
