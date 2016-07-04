@@ -5,14 +5,6 @@
 #include <BowlerCom.h>
 
 
-static byte privateRXCom[comBuffSize];
-static BYTE_FIFO_STORAGE store;
-
-static BowlerPacket Packet;
-// Pin 13 has an LED connected on most Arduino boards.
-// give it a name:
-
-
 float getMs(void) {
 	return (float) millis();
 }
@@ -35,11 +27,14 @@ BowlerCom::BowlerCom(int baudrate) {
 	digitalWrite(12, LOW );
 }
 
-void BowlerCom::server() {
+void BowlerCom::server(void) {
+	byte err;
 	while (Serial.available()>0) {
-		// get the new byte:
-		char inChar = (char) Serial.read();
-		addByte(inChar);
+
+
+		FifoAddByte(&store, (char) Serial.read(), &err);
+		digitalWrite(12, HIGH );
+		digitalWrite(11, LOW );
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
 		//Now the Packet struct contains the parsed packet data
@@ -56,11 +51,5 @@ void BowlerCom::server() {
 		digitalWrite(11, HIGH );
 		digitalWrite(12, LOW );
 	}
-}
-void BowlerCom::addByte(byte b){
-	byte err;
-	FifoAddByte(&store, b, &err);
-	digitalWrite(12, HIGH );
-	digitalWrite(11, LOW );
 }
 

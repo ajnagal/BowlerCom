@@ -10,8 +10,11 @@
 class BowlerCom {
 public:
 	BowlerCom(int baudrate);
-	void server();
-	void addByte(byte b);
+	void server(void);
+private:
+	byte privateRXCom[comBuffSize];
+	BYTE_FIFO_STORAGE store;
+	BowlerPacket Packet;
 };
  
 #endif
