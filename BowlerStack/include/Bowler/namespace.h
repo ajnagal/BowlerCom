@@ -44,10 +44,10 @@ typedef struct _NAMESPACE_LIST{
 
 
 
-RPC_LIST * getRpcByID(NAMESPACE_LIST * namespace,unsigned long  rpcId, uint8_t bowlerMethod);
-RPC_LIST * getRpcByIndex(NAMESPACE_LIST * namespace,uint8_t index);
+RPC_LIST * getRpcByID(NAMESPACE_LIST * ns,unsigned long  rpcId, uint8_t bowlerMethod);
+RPC_LIST * getRpcByIndex(NAMESPACE_LIST * ns,uint8_t index);
 void addNamespaceToList(NAMESPACE_LIST * newNs);
-void addRpcToNamespace(NAMESPACE_LIST * namespace,RPC_LIST * rpc );
+void addRpcToNamespace(NAMESPACE_LIST * ns,RPC_LIST * rpc );
 NAMESPACE_LIST * getNamespaceAtIndex(int index);
 uint8_t getNumberOfNamespaces();
 uint8_t getNumberOfRpcs(int namespaceIndex);
