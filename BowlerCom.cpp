@@ -38,15 +38,20 @@ void BowlerCom::begin(Stream &s)
 	InitByteFifo(&store, privateRXCom, comBuffSize);
 
 }
-
+boolean BowlerCom::PutBowlerPacketLocal(BowlerPacket * p) {
+	int i;
+	for (i = 0; i < (int)GetPacketLegnth(p); i++) {
+		//Grab the response packet one byte at a time and push it out the physical layer
+		BowlerSerial.write((char) p->stream[i]);
+	}
+    return true;
+}
 void BowlerCom::server(void) {
 	byte err;
 	while (Serial.available()>0) {
 
 
 		FifoAddByte(&store, (char) BowlerSerial.read(), &err);
-		digitalWrite(12, HIGH );
-		digitalWrite(11, LOW );
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
 		//Now the Packet struct contains the parsed packet data
@@ -54,14 +59,8 @@ void BowlerCom::server(void) {
 		// The call backs for processing the packet have been called
 		// and the Packet struct now contains the data
 		// to be sent back to the client as a response.
-		int i;
-		for (i = 0; i < (int)GetPacketLegnth(&Packet); i++) {
-			//Grab the response packet one byte at a time and push it out the physical layer
-			BowlerSerial.write((char) Packet.stream[i]);
 
-		}
-		digitalWrite(11, HIGH );
-		digitalWrite(12, LOW );
 	}
+	RunNamespaceAsync(&Packet, &PutBowlerPacketLocal);
 }
 
