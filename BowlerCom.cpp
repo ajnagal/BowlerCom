@@ -14,17 +14,31 @@ void putCharDebug(char a) {
 void EnableDebugTerminal() {
 	//none
 }
-BowlerCom::BowlerCom(int baudrate) {
-	Serial.begin(baudrate);
-	while (!Serial) {
-	    ; // wait for serial port to connect. Needed for Leonardo only
-	  }
-	InitByteFifo(&store, privateRXCom, comBuffSize);
+BowlerCom::BowlerCom(Stream &s) : BowlerSerial(s)
+{
 
-	pinMode(11, OUTPUT);
-	digitalWrite(11, LOW );
-	pinMode(12, OUTPUT);
-	digitalWrite(12, LOW );
+}
+
+/* begin method for overriding default serial bitrate */
+void BowlerCom::begin(void)
+{
+  begin(9600);
+}
+
+/* begin method for overriding default serial bitrate */
+void BowlerCom::begin(long speed)
+{
+  Serial.begin(speed);
+  begin(Serial);
+}
+
+void BowlerCom::begin(Stream &s)
+{
+	BowlerSerial = s;
+	while (!Serial) {
+		    ; // wait for serial port to connect. Needed for Leonardo only
+		  }
+	InitByteFifo(&store, privateRXCom, comBuffSize);
 }
 
 void BowlerCom::server(void) {
@@ -32,7 +46,7 @@ void BowlerCom::server(void) {
 	while (Serial.available()>0) {
 
 
-		FifoAddByte(&store, (char) Serial.read(), &err);
+		FifoAddByte(&store, (char) BowlerSerial.read(), &err);
 		digitalWrite(12, HIGH );
 		digitalWrite(11, LOW );
 	}
@@ -45,7 +59,7 @@ void BowlerCom::server(void) {
 		int i;
 		for (i = 0; i < (int)GetPacketLegnth(&Packet); i++) {
 			//Grab the response packet one byte at a time and push it out the physical layer
-			Serial.write((char) Packet.stream[i]);
+			BowlerSerial.write((char) Packet.stream[i]);
 
 		}
 		digitalWrite(11, HIGH );
