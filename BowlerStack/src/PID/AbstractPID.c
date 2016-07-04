@@ -91,7 +91,7 @@ void InitilizePidController(AbsPID * groups, int numberOfGroups,
             resetPositionPtr == 0 ||
             checkPIDLimitEventsPtr == 0 ||
             onPidConfigurePtr == 0) {
-        println("Null pointer exception in PID Configure", ERROR_PRINT);
+        b_println("Null pointer exception in PID Configure", ERROR_PRINT);
         while (1);
     }
     pidGroupsInternal =groups;
@@ -124,7 +124,7 @@ PidCalibrationType GetPIDCalibrateionState(int group) {
 }
 
 uint8_t ZeroPID(uint8_t chan) {
-    //println("Resetting PID channel from zeroPID:",INFO_PRINT);
+    //b_println("Resetting PID channel from zeroPID:",INFO_PRINT);
     pidReset(chan, 0);
     return true;
 }

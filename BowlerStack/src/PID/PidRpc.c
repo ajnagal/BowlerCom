@@ -120,8 +120,8 @@ uint8_t ConfigPID(BowlerPacket * Packet){
 	getPidGroupDataTable(chan)->config.K.P=KP/100;
 	getPidGroupDataTable(chan)->config.K.I=KI/100;
 	getPidGroupDataTable(chan)->config.K.D=KD/100;
-	//println("Resetting PID channel from Config:",INFO_PRINT);printBowlerPacketDEBUG(Packet,INFO_PRINT);
-	//println("From Config Current setpoint:",INFO_PRINT);p_fl(getPidGroupDataTable(chan)->SetPoint,INFO_PRINT);
+	//b_println("Resetting PID channel from Config:",INFO_PRINT);printBowlerPacketDEBUG(Packet,INFO_PRINT);
+	//b_println("From Config Current setpoint:",INFO_PRINT);p_fl(getPidGroupDataTable(chan)->SetPoint,INFO_PRINT);
 
 	OnPidConfigure(chan);
 
@@ -198,7 +198,7 @@ boolean processPIDPost(BowlerPacket * Packet){
 		break;
 	case RPID:
 		chan = Packet->use.data[0];
-  		println("Resetting PID channel from packet:",ERROR_PRINT);printBowlerPacketDEBUG(Packet,ERROR_PRINT);
+  		b_println("Resetting PID channel from packet:",ERROR_PRINT);printBowlerPacketDEBUG(Packet,ERROR_PRINT);
 
                 pidReset(chan, get32bit(Packet,1));
 		READY(Packet,zone,6);

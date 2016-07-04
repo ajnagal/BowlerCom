@@ -162,7 +162,7 @@ boolean process(BowlerPacket * Packet) {
                         Packet->use.head.RPC != GetRPCValue("_nms") &&
                         Packet->use.head.RPC != GetRPCValue("args")
             ) {//Ignore Power Packet
-        println("Got:", INFO_PRINT);
+        b_println("Got:", INFO_PRINT);
         printPacket(Packet, INFO_PRINT);
     }
     //}
@@ -178,7 +178,7 @@ boolean process(BowlerPacket * Packet) {
         return true;
     } else {
 
-        println("Packet not addressed to me: ", ERROR_PRINT);
+        b_println("Packet not addressed to me: ", ERROR_PRINT);
         printByteArray(Packet->use.head.MAC.v, 6, ERROR_PRINT);
         print_nnl(" is not mine: ", ERROR_PRINT);
         printByteArray(MyMAC.v, 6, ERROR_PRINT);
@@ -217,7 +217,7 @@ uint8_t Bowler_Server(BowlerPacket * Packet, boolean debug) {
                                         Packet->use.head.RPC != GetRPCValue("_nms") &&
                                         Packet->use.head.RPC != GetRPCValue("args")
                     ) {//Ignore Power Packet
-                println("Response:", INFO_PRINT);
+                b_println("Response:", INFO_PRINT);
                 printPacket(Packet, INFO_PRINT);
             }
             //SetColor(0, 0, 1);

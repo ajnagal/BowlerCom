@@ -20,7 +20,7 @@ void allign(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo){
 		FifoReadByteStream(Packet->stream,1,fifo);
 		if((Packet->use.head.ProtocolRevision != BOWLER_VERSION)){
 			if(first==0){
-				println("bad first byte. Fifo=",INFO_PRINT);  // SPI ISR shits out messages when 0xAA fails to match. making this info.
+				b_println("bad first byte. Fifo=",INFO_PRINT);  // SPI ISR shits out messages when 0xAA fails to match. making this info.
 				p_int(calcByteCount(fifo),INFO_PRINT);
 				print_nnl(" [",INFO_PRINT);
 			}
@@ -37,7 +37,7 @@ void allign(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo){
 		}
 	}while(getNumBytes(fifo)>0 && (Packet->use.head.ProtocolRevision != BOWLER_VERSION));
 	if(first>0){
-		//println("##Junked total:",INFO_PRINT);p_int(first,INFO_PRINT);
+		//b_println("##Junked total:",INFO_PRINT);p_int(first,INFO_PRINT);
 	}
 }
 
@@ -53,7 +53,7 @@ boolean _getBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo, boolean
 
 	if (getNumBytes(fifo) < ((_BowlerHeaderSize)+4)) {
 		if(debug){
-			//println("Current num bytes: ",ERROR_PRINT);p_int(getNumBytes(fifo),ERROR_PRINT);
+			//b_println("Current num bytes: ",ERROR_PRINT);p_int(getNumBytes(fifo),ERROR_PRINT);
 		}
 		return false; //Not enough bytes to even be a header, try back later
 	}
@@ -65,9 +65,9 @@ boolean _getBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo, boolean
 
 		  ){
 			if(Packet->use.head.ProtocolRevision != BOWLER_VERSION){
-				println("first",ERROR_PRINT);
+				b_println("first",ERROR_PRINT);
 			}else if(CheckCRC(Packet)==false) {
-				println("crc",ERROR_PRINT);
+				b_println("crc",ERROR_PRINT);
 			}
 			//prHEX8(Packet->use.head.ProtocolRevision,ERROR_PRINT);print_nnl(" Fifo Size=",ERROR_PRINT);p_int(calcByteCount(fifo),ERROR_PRINT);
 			uint8_t b;
@@ -79,12 +79,12 @@ boolean _getBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo, boolean
 			FifoReadByteStream(Packet->stream,_BowlerHeaderSize,fifo);
 		}else{
 			if(debug){
-				//println("Got header");
+				//b_println("Got header");
 			}
 			PacketCheck=true; 
 		}
 		if (getNumBytes(fifo) < minSize) {
-			println("allign packet",ERROR_PRINT);
+			b_println("allign packet",ERROR_PRINT);
 			allign(Packet,fifo);
 			return false; //Not enough bytes to even be a header, try back later
 		}
@@ -96,7 +96,7 @@ boolean _getBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo, boolean
 	int32_t num = getNumBytes(fifo);
 	if (num >=(totalLen) ){
 		if(debug){
-			//println("**Found packet, ");p_int(totalLen);//print_nnl(" Bytes, pulling out of buffer");
+			//b_println("**Found packet, ");p_int(totalLen);//print_nnl(" Bytes, pulling out of buffer");
 		}
 		//StartCritical();
 		getStream(Packet->stream,totalLen,fifo);
@@ -108,7 +108,7 @@ boolean _getBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo, boolean
 		}
 	}
 	if(debug){
-		//println("Header ready, but data is not. Need: ",INFO_PRINT);p_int(totalLen,INFO_PRINT);print_nnl(" have: ",INFO_PRINT);p_int(num ,INFO_PRINT);
+		//b_println("Header ready, but data is not. Need: ",INFO_PRINT);p_int(totalLen,INFO_PRINT);print_nnl(" have: ",INFO_PRINT);p_int(num ,INFO_PRINT);
 	}
 	return false; 
 }
