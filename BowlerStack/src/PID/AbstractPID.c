@@ -6,7 +6,7 @@
  */
 
 
-#include "Bowler/Bowler.h"
+#include "BowlerStack/include/Bowler/Bowler.h"
 
 int number_of_pid_groups = 0;
 

@@ -30,9 +30,8 @@
 							<tool id="de.innot.avreclipse.tool.compiler.winavr.app.debug.1641834337" name="AVR Compiler" superClass="de.innot.avreclipse.tool.compiler.winavr.app.debug">
 								<option id="de.innot.avreclipse.compiler.option.debug.level.927153293" name="Generate Debugging Info" superClass="de.innot.avreclipse.compiler.option.debug.level"/>
 								<option id="de.innot.avreclipse.compiler.option.optimize.1274855618" name="Optimization Level" superClass="de.innot.avreclipse.compiler.option.optimize"/>
-								<option id="de.innot.avreclipse.compiler.option.incpath.316668054" superClass="de.innot.avreclipse.compiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/BowlerStack/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/Platform/include}&quot;"/>
+								<option id="de.innot.avreclipse.compiler.option.incpath.316668054" name="Include Paths (-I)" superClass="de.innot.avreclipse.compiler.option.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom}&quot;"/>
 								</option>
 								<inputType id="de.innot.avreclipse.compiler.winavr.input.283126854" name="C Source Files" superClass="de.innot.avreclipse.compiler.winavr.input"/>
 							</tool>
@@ -41,8 +40,10 @@
 								<option id="de.innot.avreclipse.cppcompiler.option.optimize.896042991" name="Optimization Level" superClass="de.innot.avreclipse.cppcompiler.option.optimize"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.incpath.1181529904" name="Include Paths (-I)" superClass="de.innot.avreclipse.cppcompiler.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/share/arduino/hardware/arduino/cores/arduino"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/BowlerStack/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/Platform/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom}&quot;"/>
+								</option>
+								<option id="de.innot.avreclipse.cppcompiler.option.def.1643769074" superClass="de.innot.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="ARDUINO=105"/>
 								</option>
 								<inputType id="de.innot.avreclipse.cppcompiler.input.1156429499" superClass="de.innot.avreclipse.cppcompiler.input"/>
 							</tool>
