@@ -35,10 +35,8 @@ void BowlerCom::begin(long speed)
 void BowlerCom::begin(Stream &s)
 {
 	BowlerSerial = s;
-	while (!Serial) {
-		    ; // wait for serial port to connect. Needed for Leonardo only
-		  }
 	InitByteFifo(&store, privateRXCom, comBuffSize);
+
 }
 
 void BowlerCom::server(void) {
