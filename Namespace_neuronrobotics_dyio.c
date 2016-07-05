@@ -103,7 +103,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 
 boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
     //int zone = 1;
-    char tmpName[17];
+   char * tmpName="dyarduion";
     int i;
     //uint8_t rev[3];
     switch (Packet->use.head.RPC) {
@@ -122,7 +122,7 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             Packet->use.head.Method = BOWLER_POST;
             break;
         case INFO:
-            GetName(tmpName);
+            //GetName(tmpName);
             i = 0;
             while (tmpName[i] != 0) {
                 Packet->use.data[i] = tmpName[i];
