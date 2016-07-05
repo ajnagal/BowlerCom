@@ -7,6 +7,9 @@
 
 #ifndef ASYNCMANAGER_H_
 #define ASYNCMANAGER_H_
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 //#define ASYN_RDY(i) ((pushAsyncReady(i)==true) &&(IsAsync(i) == true) && (GetPIDGroup(i) == NOT_USED_IN_PID))
 
@@ -64,5 +67,7 @@ void startAdvancedAsyncDefault(uint8_t pin);
 int32_t GetConfigurationDataTable(uint8_t pin);
 void setAsyncLocal(uint8_t channel,boolean async);
 void configAdvancedAsyncNotEqual(uint8_t pin,float time);
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* ASYNCMANAGER_H_ */

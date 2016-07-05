@@ -7,6 +7,9 @@
 
 #ifndef BOWLERRPCREGESTRATION_H_
 #define BOWLERRPCREGESTRATION_H_
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 #define MAX_NUM_RPC 15
 uint8_t addRPC(uint8_t method,const char * rpc,void( *_callback)(BowlerPacket*));
@@ -34,5 +37,7 @@ typedef struct  _METHOD_HANDLER{
 		unsigned char set;
 		methodCallback * callback;
 } METHOD_HANDLER;
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* BOWLERRPCREGESTRATION_H_ */

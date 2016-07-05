@@ -10,6 +10,9 @@
 
 #include "namespace.h"
 #include "Defines.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 //bcs.core
 #define _ERR					0x7272655f // '_err'  The Error RPC
@@ -22,5 +25,7 @@
  */
 NAMESPACE_LIST * getBcsCoreNamespace();
 NAMESPACE_LIST * getBcsRpcNamespace();
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* NAMESPACE_BCS_CORE_H_ */

@@ -7,6 +7,10 @@
 
 #ifndef CHANNELMODE_H_
 #define CHANNELMODE_H_
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 /**
  * Initialize the internal data structures from the eeprom
  */
@@ -45,4 +49,7 @@ boolean setMode(uint8_t pin,uint8_t mode);
  * Private method
  */
 void configPinMode(uint8_t pin,uint8_t mode,uint8_t tris,uint8_t io);
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* CHANNELMODE_H_ */

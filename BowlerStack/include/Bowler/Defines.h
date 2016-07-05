@@ -20,6 +20,10 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #define BOWLER_VERSION			3
 #define _BowlerHeaderSize		11
 #define CRCIndex				10
@@ -169,5 +173,7 @@ typedef union _UINT32_UNION {
 #if !defined(NULL)
 #define NULL 0
 #endif
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* DEFINES_H_ */

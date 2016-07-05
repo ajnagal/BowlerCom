@@ -18,6 +18,9 @@
 
 #ifndef BOWLERSTRUCTDEF_H_
 #define BOWLERSTRUCTDEF_H_
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 //	typedef union _RPC_VALUE {
 //		  unsigned char ASCII[4];
@@ -72,5 +75,7 @@ typedef struct  __attribute__((__packed__)) _INTERPOLATE_DATA
 	float startTime;
 
 } INTERPOLATE_DATA;
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* WASPSTRUCTDEF_H_ */

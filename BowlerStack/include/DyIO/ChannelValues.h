@@ -8,6 +8,10 @@
 #ifndef CHANNELVALUES_H_
 #define CHANNELVALUES_H_
 #include "BowlerStack/include/Bowler/Bowler.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 /**
  * Get/Set the pin state to/from a packet
  * @return if the operatiion was a success
@@ -36,5 +40,7 @@ boolean SetChanVal(uint8_t pin,int32_t bval, float time);
  * Sets the value of a channel into non volitile storage
  */
 boolean SaveValue(uint8_t pin,uint8_t val);
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* CHANNELVALUES_H_ */

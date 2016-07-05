@@ -17,6 +17,10 @@
  */
 #ifndef SCHEDULER_H_
 #define SCHEDULER_H_
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 /**
  * GetTImeTicks
  * @return The number of timer ticks since the chip started running
@@ -76,5 +80,7 @@ typedef struct __attribute__((__packed__)) _RUN_EVERY{
  * @return float of MS after the assigned time that this function is running. A value of 0 means it has not been long enough
  */
 float RunEvery(RunEveryData * data);
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* SCHEDULER_H_ */

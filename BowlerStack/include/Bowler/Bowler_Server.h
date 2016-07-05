@@ -8,6 +8,10 @@
 #ifndef BOWLER_SERVER_H_
 #define BOWLER_SERVER_H_
 #include "FIFO.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 /**
  * Initialize the server
  */
@@ -28,6 +32,8 @@ uint8_t Bowler_Server(BowlerPacket * Packet, boolean debug);
 
 boolean process(BowlerPacket * Packet);
 
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* BOWLER_SERVER_H_ */

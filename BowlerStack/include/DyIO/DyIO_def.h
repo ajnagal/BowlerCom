@@ -22,6 +22,9 @@
 #include "BowlerStack/include/Bowler/AbstractPID.h"
 #ifndef DYIO_DEF_H_
 #define DYIO_DEF_H_
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 //#define ROBOSUB_DEMO
 
@@ -133,6 +136,8 @@ uint32_t getNumberOfSerialRxBytes();
 void SetNewConfigurationDataTable(uint8_t pin, int32_t value);
 int32_t GetConfigurationDataTable(uint8_t pin);
 void SyncDataTable();
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* DYIO_DEF_H_ */

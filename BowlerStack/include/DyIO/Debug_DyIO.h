@@ -8,6 +8,12 @@
 #ifndef DEBUG_DYIO_H_
 #define DEBUG_DYIO_H_
 #include "BowlerStack/include/DyIO/DyIO_def.h"
-void printMode(uint8_t mode, Print_Level l);
+#ifdef __cplusplus
+extern "C"{
+#endif
 
+void printMode(uint8_t mode, Print_Level l);
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* DEBUG_DYIO_H_ */

@@ -8,6 +8,10 @@
 #ifndef NAMESPACE_BCS_IO_SETMODE_H_
 #define NAMESPACE_BCS_IO_SETMODE_H_
 #include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 //bcs.io.setmode
 #define SCHM				0x6D686373// Set channel mode
 #define SACM				0x6D636173// Set all channel modes
@@ -46,5 +50,7 @@ boolean SetAllChannelModes(uint8_t * modeArray);
  * Returns true if all modes set OK
  */
 boolean AbstractSetAllChannelMode(BowlerPacket * Packet);
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* NAMESPACE_BCS_IO_SETMODE_H_ */

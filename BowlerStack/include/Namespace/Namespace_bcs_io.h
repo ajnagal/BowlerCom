@@ -10,6 +10,10 @@
 #include "BowlerStack/include/Bowler/Bowler.h"
 #include "AsyncManager.h"
 #include "BowlerStack/include/Bowler/Scheduler.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 /*
  * This is the case statements for using the DyIO channel modes in a switch statement
 case IS_DI:
@@ -322,5 +326,7 @@ boolean SetAsyncFromPacket(BowlerPacket * Packet);
 boolean ConfigureChannelFromPacket(BowlerPacket * Packet);
 boolean configAdvancedAsync(BowlerPacket * Packet);
 
-
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /* NAMESPACE_BCS_IO_H_ */
