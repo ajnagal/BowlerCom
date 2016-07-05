@@ -10,8 +10,9 @@
 
 #ifdef __cplusplus
 extern "C"{
-#endif
 #include <../../../../libraries/EEPROM/EEPROM.h>
+#endif
+
 void EEInitMAC(void);
 boolean ProvisionMAC(uint8_t * m);
 
