@@ -560,7 +560,19 @@ void printAsync() {
 //    }
 }
 
+void POWER(BowlerPacket * packet){
 
+	UINT16_UNION raw;
+	packet->use.head.Method=BOWLER_GET;
+	packet->use.head.RPC=GetRPCValue("_pwr");
+	packet->use.data[0]=0;
+	packet->use.data[1]=0;
+	raw.Val=0;
+	packet->use.data[2]=raw.byte.SB;
+	packet->use.data[3]=raw.byte.LB;
+	packet->use.data[4]=0;
+	packet->use.head.DataLegnth=4+2+2+1;
+}
 /**
  * Sets the datable value and returns true if the value is new, false if it is the same as it was
  */

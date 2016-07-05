@@ -86,7 +86,7 @@ AVR Baud = 576000 	Pic Baud = 571428	Percent = 0.793650793650785 AVR Baud = 1 	P
 	#define true 1
 	#define false 0
 #else
-#include <Arduino.h>
+//#include <Arduino.h>
 #endif
 
 typedef uint8_t			boolean;

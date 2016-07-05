@@ -1,8 +1,11 @@
 #include <BowlerCom.h>
 
 
+int32_t GetConfigurationDataTable(uint8_t pin){
+	return EEReadValue(pin);
+}
 
-DATA_STRUCT DyioPinFunctionData[NUM_PINS];
+
 boolean setMode(uint8_t pin,uint8_t mode){
 
 }
@@ -113,6 +116,7 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 }
 
 void InitPinFunction(void){
+	DATA_STRUCT DyioPinFunctionData[NUM_PINS];
 	int i;
 	for (i=0;i<NUM_PINS;i++){
 

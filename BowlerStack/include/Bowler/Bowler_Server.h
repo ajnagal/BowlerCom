@@ -32,6 +32,8 @@ uint8_t Bowler_Server(BowlerPacket * Packet, boolean debug);
 
 boolean process(BowlerPacket * Packet);
 
+MAC_ADDR * getMac();
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

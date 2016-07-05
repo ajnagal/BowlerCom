@@ -41,14 +41,14 @@ void initPIDChans(uint8_t group){
 		return;
 	}
 
-	switch(dyPid[group].inputMode){
-	case IS_COUNTER_INPUT_INT:
-	case IS_COUNTER_INPUT_DIR:
-	case IS_COUNTER_INPUT_HOME:
-		dyPid[group].inputChannel = getCounterIntChannnel( channelToCounterGroup(dyPid[group].inputChannel));
-		StartCounterInput(dyPid[group].inputChannel);
-		break;
-	}
+//	switch(dyPid[group].inputMode){
+//	case IS_COUNTER_INPUT_INT:
+//	case IS_COUNTER_INPUT_DIR:
+//	case IS_COUNTER_INPUT_HOME:
+//		dyPid[group].inputChannel = getCounterIntChannnel( channelToCounterGroup(dyPid[group].inputChannel));
+//		StartCounterInput(dyPid[group].inputChannel);
+//		break;
+//	}
 
 //	println_W("PID In chan: ");
 //	p_int_W(dyPid[group].inputChannel);
@@ -58,8 +58,8 @@ void initPIDChans(uint8_t group){
 //	p_int_W(dyPid[group].outputChannel);
 //	println_W(" mode: ");
 	//printMode(dyPid[group].outputMode, WARN_PRINT);
-	SetCoProcMode(dyPid[group].inputChannel,dyPid[group].inputMode);
-	SetCoProcMode(dyPid[group].outputChannel,dyPid[group].outputMode);
+	setMode(dyPid[group].inputChannel,dyPid[group].inputMode);
+	setMode(dyPid[group].outputChannel,dyPid[group].outputMode);
 	//SyncModes();
 
 	if(dyPid[group].inputMode== IS_ANALOG_IN){

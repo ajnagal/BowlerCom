@@ -18,10 +18,12 @@ boolean pwr = false;
 
 boolean heartBeatLock = true;
 int heartBeatLockTime = 1000;
+INTERPOLATE_DATA velocity[MAX_SERVOS];// servo position interpolation
 
-MAC_ADDR MyMAC = {
-    {0x74, 0xf7, 0x26, 0x01, 0x01, 0x01}
-};
+
+uint8_t GetServoPos(uint8_t pin) {
+	return velocity[PIN_TO_SERVO(pin)].set;
+}
 
 void UpdateAVRLED(void) {
     pwr = true; 

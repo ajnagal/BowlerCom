@@ -32,6 +32,10 @@ MAC_ADDR MyMAC = {
 
 boolean ignoreAddressing = false;
 
+MAC_ADDR * getMac(){
+	return &MyMAC;
+}
+
 void setIgnoreAddressing(boolean v){
 	ignoreAddressing =v;
 }
