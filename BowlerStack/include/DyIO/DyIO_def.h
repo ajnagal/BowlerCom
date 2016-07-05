@@ -25,7 +25,7 @@
 
 //#define ROBOSUB_DEMO
 
-#define NUM_PINS   			24
+#define NUM_PINS   			TOTAL_PINS
 
 #define SERVO_BOUND 		0
 
