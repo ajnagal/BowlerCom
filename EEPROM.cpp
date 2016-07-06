@@ -220,4 +220,30 @@ boolean getEEBrownOutDetect(){
 	return tmp?true:false;
 }
 
+void GetEEPRomData(uint8_t start, uint8_t stop, uint8_t * data) {
+//	println_W("Getting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
+	//WORD_VAL raw;
+	uint8_t i = 0;
+	if (start > stop) {
+		//println_W("###ERROR eeprom");
+		return;
+	}
+	for (i = 0; i < (stop - start); i++) {
+		data[i] = EEReadData(i+start);
+	}
+//	println_W("Rx<<");
+//	printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
+}
+
+void SetEEPRomData(uint8_t start, uint8_t stop, uint8_t * data) {
+	//println_W("Setting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
+	//WORD_VAL raw;
+	uint8_t i = 0;
+	if (start >= stop)
+		return;
+
+	for (i = 0; i < (stop - start); i++) {
+		EEWriteData(i+start,data[i]);
+	}
+}
 

@@ -13,7 +13,8 @@ extern "C"{
 #include <../../../../libraries/EEPROM/EEPROM.h>
 #endif
 #include "BowlerStack/include/Bowler/AbstractPID.h"
-
+#include "BowlerStack/include/DyIO/DyIO_def.h"
+#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
 
 void readPPMLink(uint8_t * vals);
 void writePPMLink(uint8_t * vals);

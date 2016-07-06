@@ -311,8 +311,8 @@ void setOutputMine(int group, float v){
 	//print_W("  set ");p_int_W(group);print_W(" to ");p_int_W(set);
 
 	dyPid[group].outVal=set;
-	int32_t val = dyPid[group].outVal;
-	SetChanelValueHW(dyPid[group].outputChannel, 1, &val, 0) ;
+	int32_t o = dyPid[group].outVal;
+	SetChanelValueHW(dyPid[group].outputChannel, 1, &o, 0) ;
 	setPrintLevel(l);
 }
 
