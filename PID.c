@@ -245,9 +245,10 @@ PidLimitEvent * checkPIDLimitEventsMine(uint8_t group){
 int resetPositionMine(int group, int current){
 	if(dyPid[group].inputChannel==DYPID_NON_USED)
 			return current;
-	if(dyPid[group].inputMode == IS_COUNTER_INPUT_INT){
-		SetCounterInput(dyPid[group].inputChannel,current);
-	}else if(dyPid[group].inputMode == IS_ANALOG_IN){
+//	if(dyPid[group].inputMode == IS_COUNTER_INPUT_INT){
+//		SetCounterInput(dyPid[group].inputChannel,current);
+//	}else
+	if(dyPid[group].inputMode == IS_ANALOG_IN){
 		current=GetValFromAsync(dyPid[group].inputChannel);
 	}else if(dyPid[group].inputMode == IS_DI){
 		current=GetDigitalValFromAsync(dyPid[group].inputChannel);
@@ -262,11 +263,11 @@ float getPositionMine(int group){
 	int32_t pos = 0;
 
 	switch(dyPid[group].inputMode){
-	case IS_COUNTER_INPUT_INT:
-	case IS_COUNTER_INPUT_DIR:
-	case IS_COUNTER_INPUT_HOME:
-		pos=GetCounterByChannel( dyPid[group].inputChannel );
-		break;
+//	case IS_COUNTER_INPUT_INT:
+//	case IS_COUNTER_INPUT_DIR:
+//	case IS_COUNTER_INPUT_HOME:
+//		pos=GetCounterByChannel( dyPid[group].inputChannel );
+//		break;
 	case IS_ANALOG_IN:
 		pos=GetValFromAsync(dyPid[group].inputChannel);
 		break;
@@ -310,8 +311,8 @@ void setOutputMine(int group, float v){
 	//print_W("  set ");p_int_W(group);print_W(" to ");p_int_W(set);
 
 	dyPid[group].outVal=set;
-
-	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);
+	int32_t val = dyPid[group].outVal;
+	SetChanelValueHW(dyPid[group].outputChannel, 1, &val, 0) ;
 	setPrintLevel(l);
 }
 

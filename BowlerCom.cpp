@@ -61,20 +61,20 @@ void BowlerCom::server(void) {
 	RunNamespaceAsync(&Packet, &PutBowlerPacket);
 }
 void BowlerCom::addDyIO() {
-	InitPinFunction();
-	initAdvancedAsync();
-
-	addNamespaceToList(get_bcsIoNamespace());
-	//println_I("Adding IO.Setmode Namespace");
-	addNamespaceToList(get_bcsIoSetmodeNamespace());
-	//println_I("Adding DyIO Namespace");
-	addNamespaceToList(get_neuronRoboticsDyIONamespace());
-	//println_I("Adding PID Namespace");
-	addNamespaceToList(getBcsPidNamespace());
-	//println_I("Adding DyIO PID Namespace");
-	addNamespaceToList(get_bcsPidDypidNamespace());
-	//println_I("Adding Safe Namespace");
-	addNamespaceToList( get_bcsSafeNamespace());
+//	InitPinFunction();
+//	initAdvancedAsync();
+//
+//	addNamespaceToList(get_bcsIoNamespace());
+//	//println_I("Adding IO.Setmode Namespace");
+//	addNamespaceToList(get_bcsIoSetmodeNamespace());
+//	//println_I("Adding DyIO Namespace");
+//	addNamespaceToList(get_neuronRoboticsDyIONamespace());
+//	//println_I("Adding PID Namespace");
+//	addNamespaceToList(getBcsPidNamespace());
+//	//println_I("Adding DyIO PID Namespace");
+//	addNamespaceToList(get_bcsPidDypidNamespace());
+//	//println_I("Adding Safe Namespace");
+//	addNamespaceToList( get_bcsSafeNamespace());
 
 }
 
