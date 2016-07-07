@@ -56,7 +56,7 @@ void BowlerCom::server(void) {
 		// The call backs for processing the packet have been called
 		// and the Packet struct now contains the data
 		// to be sent back to the client as a response.
-
+		PutBowlerPacket(&Packet);
 	}
 	RunNamespaceAsync(&Packet, &PutBowlerPacket);
 }

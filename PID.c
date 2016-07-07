@@ -73,7 +73,7 @@ void initPIDChans(uint8_t group){
 
 }
 boolean asyncCallback(BowlerPacket *Packet){
-	PutBowlerPacketLocal(Packet);// This only works with USB and UART
+	PutBowlerPacket(Packet);// This only works with USB and UART
     return true; 
 }
 void InitPID(void){

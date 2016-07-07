@@ -44,7 +44,7 @@ Print_Level getPrintLevel();
 /**
  * Lets you set a custom printstream function pointer
  */
-void setPrintStream(int (*sendToStreamPtr)(uint8_t * ,int));
+//void setPrintStream(int (*sendToStreamPtr)(uint8_t * ,int));
 
 void EnableDebugTerminal(void);
 ///**
