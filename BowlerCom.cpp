@@ -70,7 +70,6 @@ void BowlerCom::server(void) {
 }
 void BowlerCom::addDyIO() {
 	InitPinFunction();
-	initAdvancedAsync();
 
 	addNamespaceToList(get_bcsIoNamespace());
 	//println_I("Adding IO.Setmode Namespace");

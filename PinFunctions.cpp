@@ -126,11 +126,10 @@ void InitPinFunction(void){
 	DATA_STRUCT DyioPinFunctionData[NUM_PINS];
 	int i;
 	for (i=0;i<NUM_PINS;i++){
-
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN=IS_PIN_ANALOG(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM=IS_PIN_PWM(i);
-		DyioPinFunctionData[i].FUNCTION.HAS_UART_T=false; 
-		DyioPinFunctionData[i].FUNCTION.HAS_UART_R=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_UART_T=IS_PIN_DIGITAL(i) && i%2==0;//even pins are tx
+		DyioPinFunctionData[i].FUNCTION.HAS_UART_R=IS_PIN_DIGITAL(i) && i%2!=0;// odd pins are rx
 		DyioPinFunctionData[i].FUNCTION.HAS_SPI_C=false; 
 		DyioPinFunctionData[i].FUNCTION.HAS_SPI_I=false; 
 		DyioPinFunctionData[i].FUNCTION.HAS_SPI_O=false; 
@@ -156,4 +155,7 @@ void InitPinFunction(void){
 				);
 
 	InitilizeBcsIoSetmode(&setMode);
+
+
+	initAdvancedAsync();// after the IO namespace is set up
 }
