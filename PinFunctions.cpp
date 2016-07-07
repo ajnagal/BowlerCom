@@ -118,7 +118,7 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 
     return true;
 }
-int32_t GetChanVal(uint8_t pin) {
+uint16_t GetChanVal(uint8_t pin) {
 
     return 0;
 }

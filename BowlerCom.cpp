@@ -89,6 +89,11 @@ void BowlerCom::startDebugPint(SoftwareSerial * port){
 		return;
 	serialPort = port;
 	setPrintLevelInfoPrint();
-	println_E("Welcome To Arduino DyIO!");
+	println_I("\n\n\n##############################");
+	println_I(      "  Welcome To Arduino Bowler!");
+	println_I(      "##############################\n");
+	println_E("Error Prints enabled");
+	println_W("Warning Prints enabled");
+	println_I("Info Prints enabled");
 }
 
