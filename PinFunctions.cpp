@@ -2,12 +2,13 @@
 
 
 int32_t GetConfigurationDataTable(uint8_t pin){
-	return EEReadValue(pin);
+	return EEReadMode(pin);
 }
 
 
 boolean setMode(uint8_t pin,uint8_t mode){
-
+	_EEWriteMode(pin,mode);
+	return true;
 }
 
 
@@ -21,7 +22,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
  *
  */
 boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float ms) {
-    uint8_t mode = GetChannelMode(pin);
+    //uint8_t mode = GetChannelMode(pin);
 
 	return true;
 }
@@ -32,7 +33,7 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
  * Data is stored into numValues and data
  */
 boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
-    uint8_t mode = GetChannelMode(pin);
+    //uint8_t mode = GetChannelMode(pin);
 
 	numValues[0] = 1;
 

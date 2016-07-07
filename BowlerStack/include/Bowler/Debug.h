@@ -83,7 +83,7 @@ void EnableDebugTerminal(void);
  * print the null terminated string with a newline inserted at the begining of the string
  */
 //#define b_println(A,B) printfDEBUG(__FILE__,DEBUG_PRINT);printfDEBUG(A,B)
-#define b_println(A,B) printfDEBUG(A,B)
+#define b_println(A,B) printfDEBUG((char *)A,B)
 
 #define printStream(A,B,C) printByteArray(A,B,C);
 

@@ -23,6 +23,7 @@ public:
 	void begin(Stream &s);
 	boolean PutBowlerPacketLocal(BowlerPacket * p);
 	void addDyIO();
+	void startDebugPint(int tx, int rx, int baud);
 	Stream &BowlerSerial;
 	byte privateRXCom[comBuffSize];
 	BYTE_FIFO_STORAGE store;

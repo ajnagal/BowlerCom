@@ -3,13 +3,19 @@
  */
 #include <Arduino.h>
 #include <BowlerCom.h>
+#include <../../../../libraries/SoftwareSerial/SoftwareSerial.h>
+static BowlerCom * ref;
+static SoftwareSerial * serialPort = NULL;
 
-BowlerCom * ref;
 float getMs(void) {
 	return ((float) micros()) * 1000.0f;
 }
 void putCharDebug(char a) {
 	// none
+	if(serialPort!=NULL){
+		serialPort->print(a);
+	}
+
 }
 void EnableDebugTerminal() {
 	//none
@@ -61,20 +67,26 @@ void BowlerCom::server(void) {
 	RunNamespaceAsync(&Packet, &PutBowlerPacket);
 }
 void BowlerCom::addDyIO() {
-//	InitPinFunction();
-//	initAdvancedAsync();
-//
-//	addNamespaceToList(get_bcsIoNamespace());
-//	//println_I("Adding IO.Setmode Namespace");
-//	addNamespaceToList(get_bcsIoSetmodeNamespace());
-//	//println_I("Adding DyIO Namespace");
-//	addNamespaceToList(get_neuronRoboticsDyIONamespace());
-//	//println_I("Adding PID Namespace");
-//	addNamespaceToList(getBcsPidNamespace());
-//	//println_I("Adding DyIO PID Namespace");
-//	addNamespaceToList(get_bcsPidDypidNamespace());
-//	//println_I("Adding Safe Namespace");
-//	addNamespaceToList( get_bcsSafeNamespace());
+	InitPinFunction();
+	initAdvancedAsync();
 
+	addNamespaceToList(get_bcsIoNamespace());
+	//println_I("Adding IO.Setmode Namespace");
+	addNamespaceToList(get_bcsIoSetmodeNamespace());
+	//println_I("Adding DyIO Namespace");
+	addNamespaceToList(get_neuronRoboticsDyIONamespace());
+	//println_I("Adding PID Namespace");
+	addNamespaceToList(getBcsPidNamespace());
+	//println_I("Adding DyIO PID Namespace");
+	addNamespaceToList(get_bcsPidDypidNamespace());
+	//println_I("Adding Safe Namespace");
+	addNamespaceToList( get_bcsSafeNamespace());
+
+}
+void BowlerCom::startDebugPint(int tx, int rx, int baud){
+	serialPort = new SoftwareSerial(tx,rx);
+	serialPort->begin(baud);
+	setPrintLevelInfoPrint();
+	println_E("Welcome To Arduino DyIO!");
 }
 
