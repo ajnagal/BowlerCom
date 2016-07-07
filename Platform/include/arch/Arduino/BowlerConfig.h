@@ -9,6 +9,7 @@
 #define EndCritical()   interrupts()
 
 
+/* Borrwoing heavily from Boards.h - Hardware Abstraction Layer for Firmata library */
 // Normally Servo.h must be included before Firmata.h (which then includes
 // this file).  If Servo.h wasn't included, this allows the code to still
 // compile, but without support for any Servos.  Hopefully that's what the

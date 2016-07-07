@@ -3,7 +3,7 @@
  */
 #include <Arduino.h>
 #include <BowlerCom.h>
-#include <../../../../libraries/SoftwareSerial/SoftwareSerial.h>
+
 static BowlerCom * ref;
 static SoftwareSerial * serialPort = NULL;
 
@@ -83,9 +83,10 @@ void BowlerCom::addDyIO() {
 	addNamespaceToList( get_bcsSafeNamespace());
 
 }
-void BowlerCom::startDebugPint(int tx, int rx, int baud){
-	serialPort = new SoftwareSerial(tx,rx);
-	serialPort->begin(baud);
+void BowlerCom::startDebugPint(SoftwareSerial * port){
+	if(port == NULL)
+		return;
+	serialPort = port;
 	setPrintLevelInfoPrint();
 	println_E("Welcome To Arduino DyIO!");
 }

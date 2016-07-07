@@ -11,7 +11,7 @@
 #include "BowlerStack/include/Namespace/AsyncManager.h"
 #include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
 #include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
-/* Borrwoing heavily from Boards.h - Hardware Abstraction Layer for Firmata library */
+#include <../../../../libraries/SoftwareSerial/SoftwareSerial.h>
 
 class BowlerCom {
 public:
@@ -23,7 +23,7 @@ public:
 	void begin(Stream &s);
 	boolean PutBowlerPacketLocal(BowlerPacket * p);
 	void addDyIO();
-	void startDebugPint(int tx, int rx, int baud);
+	void startDebugPint(SoftwareSerial * port);
 	Stream &BowlerSerial;
 	byte privateRXCom[comBuffSize];
 	BYTE_FIFO_STORAGE store;
