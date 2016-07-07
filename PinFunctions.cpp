@@ -2,12 +2,14 @@
 
 
 int32_t GetConfigurationDataTable(uint8_t pin){
-	return EEReadMode(pin);
+	return EEReadValue(pin);
 }
 
 
 boolean setMode(uint8_t pin,uint8_t mode){
 	_EEWriteMode(pin,mode);
+	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+
 	return true;
 }
 
@@ -23,7 +25,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
  */
 boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float ms) {
     //uint8_t mode = GetChannelMode(pin);
-
+	SetChanVal(pin,data[0],ms);
 	return true;
 }
 
@@ -37,7 +39,7 @@ boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
 
 	numValues[0] = 1;
 
-	data[0] = 0;
+	data[0] = GetChanVal(pin);
 
 	return true;
 
@@ -81,6 +83,7 @@ boolean GetAllChanelValueHW(int32_t * data) {
 
 boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
 
+	EEWriteValue(pin,data[0]);
 
     return true;
 }
@@ -115,7 +118,10 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 
     return true;
 }
+int32_t GetChanVal(uint8_t pin) {
 
+    return 0;
+}
 void InitPinFunction(void){
 	DATA_STRUCT DyioPinFunctionData[NUM_PINS];
 	int i;

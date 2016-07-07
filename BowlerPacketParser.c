@@ -17,7 +17,7 @@ void allign(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo){
 	int first = 0;
 	do
 	{
-		FifoReadByteStream(Packet->stream,1,fifo);
+		FifoReadByteStream(Packet->stream,1,fifo);// peak but dont read yet
 		if((Packet->use.head.ProtocolRevision != BOWLER_VERSION)){
 			if(first==0){
 				b_println("bad first byte. Fifo=",INFO_PRINT);  // SPI ISR shits out messages when 0xAA fails to match. making this info.
@@ -31,13 +31,13 @@ void allign(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo){
 			if(getNumBytes(fifo)==0)
 				return;
 			//StartCritical();
-			getStream(& b,1,fifo);
+			FifoGetByte(fifo,& b);// dropping bad byte
 			//EndCritical();
 
 		}
 	}while(getNumBytes(fifo)>0 && (Packet->use.head.ProtocolRevision != BOWLER_VERSION));
-	if(first>0){
-		//b_println("##Junked total:",INFO_PRINT);p_int(first,INFO_PRINT);
+	if(first>=0){
+		b_println("] ##Junked total:",INFO_PRINT);p_int(first,INFO_PRINT);
 	}
 }
 

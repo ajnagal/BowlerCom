@@ -52,9 +52,11 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 }
 void BowlerCom::server(void) {
 	byte err;
+	byte newByte = 0;
 	while (Serial.available() > 0) {
-
-		FifoAddByte(&store, (char) BowlerSerial.read(), &err);
+		newByte = BowlerSerial.read();
+		println_I("Adding byte: ");prHEX8(newByte,INFO_PRINT);
+		FifoAddByte(&store, (char) newByte, &err);
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
 		//Now the Packet struct contains the parsed packet data
