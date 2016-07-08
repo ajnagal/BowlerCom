@@ -175,6 +175,20 @@
 #else
 #error "Please edit Boards.h with a hardware abstraction for this board"
 #endif
+#include <avr/pgmspace.h>
+void showString (PGM_P s,Print_Level l,char newLine);
 
+#undef print_nnl
+#undef b_println
+
+/**
+ * print the null terminated string with no new lines
+ */
+#define print_nnl(A,B) showString(PSTR(A),B,0)
+
+/**
+ * print the null terminated string with a newline inserted at the begining of the string
+ */
+#define b_println(A,B) showString(PSTR(A),B,1)
 
 #endif

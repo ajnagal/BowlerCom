@@ -294,9 +294,6 @@ NAMESPACE_LIST * get_bcsIoNamespace() {
         addRpcToNamespace(&bcsIo, & bcsIo_schv_c);
         addRpcToNamespace(&bcsIo, & bcsIo_asyn_c);
 
-        //IO stack initilizations
-        //initAdvancedAsync();
-
     }
 
     return &bcsIo; //Return pointer to the struct

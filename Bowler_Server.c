@@ -59,9 +59,9 @@ void Process_Self_Packet(BowlerPacket * Packet) {
             foundRpc++;
             currentNamespaceIndexForPacket = namespaceIndex;
             println_I("Rpc: ");
-            print_I((char *)rpc->rpc);
+            printfDEBUG_NNL((char *)rpc->rpc,INFO_PRINT);
             print_I(" found in namespace: ");
-            print_I((char *)tmp->namespaceString);
+            printfDEBUG_NNL((char *)tmp->namespaceString,INFO_PRINT);
         }
         //Null check and move to next namespace
         tmp = tmp->next;

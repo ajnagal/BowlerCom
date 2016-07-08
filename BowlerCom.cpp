@@ -43,6 +43,19 @@ void BowlerCom::begin(Stream &s) {
 	InitByteFifo(&store, privateRXCom, comBuffSize);
 
 }
+void showString (PGM_P s,Print_Level l,char newLine) {
+	if(!okToprint(l)){
+		return;
+	}
+	if(newLine){
+		putCharDebug('\n');
+		putCharDebug('\r');
+	}
+	setColor(l);
+	char c;
+	while ((c = pgm_read_byte(s++)) != 0)
+		putCharDebug(c);
+}
 uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 	uint16_t i;
 	for (i = 0; i < datalength; i++) {

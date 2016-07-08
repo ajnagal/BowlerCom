@@ -271,12 +271,14 @@ boolean GetName(char * name){
 		}
 		name[i] = 0;// Null terminated strings
 	}
-	println_E("Getting name: ");println_E(name);
+	println_I("Getting name: ");
+	printfDEBUG(name,INFO_PRINT);
 	return isAsciiMine(name[0]);
 }
 void SetName(char * name){
 	uint8_t i = 0;
-	println_E("Setting name: ");println_E(name);
+	println_W("Setting name: ");
+	printfDEBUG(name,WARN_PRINT);
 	while (isAsciiMine(name[i])) {
 		EEWriteData(NAMESTART+i,name[i]);
 	}
