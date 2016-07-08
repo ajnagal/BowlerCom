@@ -263,13 +263,13 @@ boolean GetName(char * name){
 	uint8_t i = 0;
 	//printPacket(&downstreamPacketTemp,WARN_PRINT);
 	if( isAsciiMine(EEReadData(NAMESTART))){
-		while (EEReadData(NAMESTART+i) != '\0') {
+		while (isAsciiMine(EEReadData(NAMESTART+i))) {
 			name[i] = EEReadData(NAMESTART+i);
 			i++;
-			if (i == NAMESIZE-1)
+			if (i == NAMESIZE)
 				break;
 		}
-		name[i] = '\0';
+		name[i] = 0;// Null terminated strings
 	}
 	println_E("Getting name: ");println_E(name);
 	return isAsciiMine(name[0]);
@@ -277,7 +277,7 @@ boolean GetName(char * name){
 void SetName(char * name){
 	uint8_t i = 0;
 	println_E("Setting name: ");println_E(name);
-	while (name[i] != '\0') {
+	while (isAsciiMine(name[i])) {
 		EEWriteData(NAMESTART+i,name[i]);
 	}
 }
