@@ -16,7 +16,7 @@
  * limitations under the License.
  *
  */
-#if defined(ARDUINO)
+
 #include <BowlerCom.h>
 void sendStr(const char *str);
 Print_Level level = NO_PRINT;

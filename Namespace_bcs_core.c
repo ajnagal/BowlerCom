@@ -1,4 +1,4 @@
-#if defined(ARDUINO)
+
 #include <BowlerCom.h>
 
 /**

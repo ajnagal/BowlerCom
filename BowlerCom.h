@@ -6,9 +6,10 @@
 #define ARDUBCS_H
 #define comBuffSize 256
 #include <Arduino.h>
-#include <EEPROM.h>
-#include <SoftwareSerial.h>
-
+#ifdef __cplusplus
+	#include <EEPROM.h>
+	#include <SoftwareSerial.h>
+#endif
 #include "BowlerStack/include/Bowler/Bowler.h"
 #include "BowlerStack/include/DyIO/PID.h"
 #include "BowlerStack/include/DyIO/DyIO_def.h"
