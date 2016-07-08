@@ -166,7 +166,7 @@ uint8_t loadEEDone=false;
 void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group){
 
 	GetEEPRomData((pidValSize*group),(pidValSize*group)+pidValSize,tmpVals.stream);
-	uint8_t i = group;
+	//uint8_t i = group;
 
 	if(tmpVals.data.outputChannel==tmpVals.data.inputChannel)
 		return;

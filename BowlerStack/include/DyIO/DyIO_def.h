@@ -56,7 +56,7 @@ extern "C"{
 #define FLAG_BLOCK 0
 #define FLAG_OK    1
 
-#define NUM_PID_GROUPS 6
+#define NUM_PID_GROUPS 4
 #define NOT_USED_IN_PID 0xff
 
 struct _local_pid{

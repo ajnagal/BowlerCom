@@ -125,14 +125,15 @@ void _SetChannelMode(uint8_t pin,uint8_t mode ) {
         return ;
     }
     //print_nnl("Set Channel Mode ",ERROR_PRINT);printMode(mode,ERROR_PRINT);
-    getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+    //getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+    setMode(pin,mode);
 }
 
 uint8_t GetChannelMode(uint8_t pin) {
     if (pin < 0 || pin > GetNumberOfIOChannels()) {
         return 0xff;
     }
-    return getBcsIoDataTable(pin)->PIN.currentChannelMode;
+    return EEReadMode(pin);
 }
 
 RunEveryData * getPinsScheduler(int pin) {
@@ -283,7 +284,7 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
 //        		else
         			data[i] = tmp;
 			}else{
-				data[i] = getBcsIoDataTable(i)->PIN.currentValue;
+				data[i] = GetChanVal(i);
 			}
 
         }
@@ -334,7 +335,7 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
 		if(mode== IS_UART_RX){
 			setDataTableCurrentValue(pin,data);
 		}else{
-			data = getBcsIoDataTable(pin)->PIN.currentValue;
+			data = GetChanVal(pin);
 		}
 	}
 
@@ -362,7 +363,7 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
                 }else if(GetChannelMode(i)== IS_UART_RX){
                 	setDataTableCurrentValue(i,tmp);
     			}else{
-                    tmp = getBcsIoDataTable(i)->PIN.currentValue;
+                    tmp = GetChanVal(i);
     			}
             }
 
@@ -578,18 +579,19 @@ boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
 	if(pin>=GetNumberOfIOChannels()){
 		//println_E("Pin out of index! : "); p_int_E(pin);
 	}
-	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-		//Print_Level l = INFO_PRINT;
-//		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
-//		println(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
-//		print_nnl(" set to ",l);p_int(value,l);
-//		print_nnl(" on pin ",l);p_int(pin,l);
-//		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
-		// THis is the only place this variable should be set
-		getBcsIoDataTable(pin)->PIN.currentValue =value;
-//		print_nnl(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
-		return true;
-	}
+//	if(value !=GetChanVal(i) ){
+//		//Print_Level l = INFO_PRINT;
+////		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
+////		println(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+////		print_nnl(" set to ",l);p_int(value,l);
+////		print_nnl(" on pin ",l);p_int(pin,l);
+////		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
+//		// THis is the only place this variable should be set
+//		getBcsIoDataTable(pin)->PIN.currentValue =value;
+//
+////		print_nnl(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
+//		return true;
+//	}
 	return false;
 }
 

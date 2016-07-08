@@ -67,11 +67,11 @@ typedef enum _PidCalibrationType {
 } PidCalibrationType;
 
 typedef struct __attribute__((__packed__)) _PidLimitEvent {
-    int group;
+    byte group;
     PidLimitType type;
     float time;
-    signed long int value;
-    signed long int latchTickError;
+    int32_t value;
+    int32_t latchTickError;
     //	boolean stopOnIndex;
 }
 PidLimitEvent;
