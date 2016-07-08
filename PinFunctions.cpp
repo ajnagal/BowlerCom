@@ -1,5 +1,5 @@
 #include <BowlerCom.h>
-
+static DATA_STRUCT DyioPinFunctionData[NUM_PINS];
 
 int32_t GetConfigurationDataTable(uint8_t pin){
 	return EEReadValue(pin);
@@ -123,7 +123,7 @@ int32_t GetChanVal(uint8_t pin) {
     return 0;
 }
 void InitPinFunction(void){
-	DATA_STRUCT DyioPinFunctionData[NUM_PINS];
+
 	int i;
 	for (i=0;i<NUM_PINS;i++){
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN=IS_PIN_ANALOG(i);
