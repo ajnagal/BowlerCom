@@ -4,8 +4,7 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/DyIO/PID.h"
+#include <BowlerCom.h>
 //char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 RunEveryData pid = {0, 5};
 RunEveryData vel = {0, 100};

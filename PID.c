@@ -5,12 +5,7 @@
  *      Author: hephaestus
  */
 
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/DyIO/PID.h"
-#include "BowlerStack/include/DyIO/DyIO_def.h"
-#include "BowlerStack/include/Namespace/AsyncManager.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
+#include <BowlerCom.h>
 AbsPID 			pidGroups[NUM_PID_GROUPS];
 DYIO_PID 		dyPid[NUM_PID_GROUPS];
 PidLimitEvent	limits[NUM_PID_GROUPS];

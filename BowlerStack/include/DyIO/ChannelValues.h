@@ -25,7 +25,7 @@ boolean SetAllChannelValue(BowlerPacket * Packet);
  * Internaly checks the pin mode and calls the approprate method to access it
  * @return the value of that channel
  */
-uint16_t GetChanVal(uint8_t pin);
+int32_t GetChanVal(uint8_t pin);
 
 /**
  * Sets the value of a channel(primitive only, no stream channels with this method)

@@ -5,10 +5,7 @@
  * @author hephaestus
  */
 
-
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
-
+#include <BowlerCom.h>
 //char ioNSName[] = "bcs.io.*;0.3;;";
 
 boolean noAsyncMode=false;

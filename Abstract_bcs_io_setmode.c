@@ -4,9 +4,7 @@
  *  Created on: Mar 24, 2013
  *      Author: hephaestus
  */
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
-
+#include <BowlerCom.h>
 
 boolean (*setChanelModeHWPtr)(uint8_t  ,uint8_t)=NULL;
 /*

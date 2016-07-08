@@ -4,7 +4,7 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "BowlerStack/include/Bowler/Bowler.h"
+#include <BowlerCom.h>
 int getHeartBeatTime();
 boolean getHeartBeatLock();
 void setHeartBeatState(boolean hb, int time);

@@ -4,9 +4,7 @@
  *  Created on: Feb 17, 2010
  *      Author: hephaestus
  */
-
-#include "BowlerStack/include/Bowler/Bowler.h"
-
+#include <BowlerCom.h>
 
 
 extern MAC_ADDR MyMAC;

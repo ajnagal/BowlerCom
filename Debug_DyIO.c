@@ -1,7 +1,5 @@
 
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
-
+#include <BowlerCom.h>
 //int maxNumCharsInModes=0;
 //char *  printModeStrings[]={
 //		"NO_CHANGE",

@@ -4,12 +4,8 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/DyIO/PID.h"
-#include "BowlerStack/include/DyIO/DyIO_def.h"
-#include "BowlerStack/include/Namespace/AsyncManager.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
+#include <BowlerCom.h>
+
 //char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
 
 RunEveryData ppm = {0, 50};

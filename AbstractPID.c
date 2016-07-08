@@ -5,11 +5,7 @@
  * @author Kevin Harrington
  */
 
-#if defined(ARDUINO)
-#include "BowlerStack/include/Bowler/Bowler.h"
-#else
-#include "Bowler/Bowler.h"
-#endif
+#include <BowlerCom.h>
 int number_of_pid_groups = 0;
 
 AbsPID * pidGroupsInternal = NULL;

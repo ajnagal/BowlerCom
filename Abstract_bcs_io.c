@@ -5,9 +5,7 @@
  *      Author: hephaestus
  */
 
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
-
+#include <BowlerCom.h>
 
   int NumberOfIOChannels = 0;
   DATA_STRUCT * dataPtr = NULL;

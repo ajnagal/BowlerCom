@@ -1,8 +1,4 @@
-#if defined(ARDUINO)
-#include "BowlerStack/include/Bowler/Bowler.h"
-#else
-#include "Bowler/Bowler.h"
-#endif
+#include <BowlerCom.h>
 #if !defined(NULL)
 #define NULL 0
 #endif

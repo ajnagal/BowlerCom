@@ -1,8 +1,5 @@
 #if defined(ARDUINO)
-#include "BowlerStack/include/Bowler/Bowler.h"
-#else
-#include "Bowler/Bowler.h"
-#endif
+#include <BowlerCom.h>
 
 /**
  * Initializes core and returns a pointer to the namespace list

@@ -4,9 +4,7 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "BowlerStack/include/Bowler/Bowler.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
-
+#include <BowlerCom.h>
 //char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
 boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {

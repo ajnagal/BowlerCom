@@ -15,12 +15,7 @@
  * limitations under the License.
  *
  */
-#if defined(ARDUINO)
-#include "BowlerStack/include/Bowler/Bowler.h"
-#else
-#include "Bowler/Bowler.h"
-#endif
-
+#include <BowlerCom.h>
 #define schedSet 18
 #define stepSize (schedSet/6.0)
 //RunEveryData sched[]={{0.0,schedSet},{stepSize,schedSet},{stepSize*2,schedSet},{stepSize*3,schedSet},{stepSize*4,schedSet},{stepSize*5,schedSet}};
