@@ -32,7 +32,7 @@ void allign(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo){
 
 		}
 	}while(getNumBytes(fifo)>0 && (Packet->use.head.ProtocolRevision != BOWLER_VERSION));
-	if(first>=0){
+	if(first>0){
 		b_println("] ##Junked total:",INFO_PRINT);p_int(first,INFO_PRINT);
 	}
 }

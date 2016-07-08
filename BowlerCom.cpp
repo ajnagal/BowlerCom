@@ -55,7 +55,7 @@ void BowlerCom::server(void) {
 	byte newByte = 0;
 	while (Serial.available() > 0) {
 		newByte = BowlerSerial.read();
-		println_I("Adding byte: ");prHEX8(newByte,INFO_PRINT);
+		//println_I("Adding byte: ");prHEX8(newByte,INFO_PRINT);
 		FifoAddByte(&store, (char) newByte, &err);
 	}
 	if (GetBowlerPacket(&Packet, &store)) {

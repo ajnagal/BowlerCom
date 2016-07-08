@@ -10,17 +10,14 @@
 	#include <EEPROM.h>
 	#include <SoftwareSerial.h>
 #endif
+
 #include "BowlerStack/include/Bowler/Bowler.h"
 #include "BowlerStack/include/DyIO/PID.h"
 #include "BowlerStack/include/DyIO/DyIO_def.h"
 #include "BowlerStack/include/Namespace/AsyncManager.h"
 #include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
 #include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
-#include "BowlerStack/include/DyIO/PID.h"
-#include "BowlerStack/include/DyIO/DyIO_def.h"
-#include "BowlerStack/include/Namespace/AsyncManager.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
-#include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
+
 //#include <../../../../libraries/SoftwareSerial/SoftwareSerial.h>
 
 #ifdef __cplusplus
