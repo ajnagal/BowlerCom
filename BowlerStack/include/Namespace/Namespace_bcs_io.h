@@ -148,19 +148,19 @@ typedef struct __attribute__((__packed__))  _PIN_MAP
 	
 } PIN_MAP;
 
-typedef struct __attribute__((__packed__))  _Downstream_Data
-{
-
-
-	uint32_t  currentConfiguration;
-	uint8_t ServoPositionUpstream;
-	//Used to detect any hardware state change and synchronize
-	boolean changeValue;
-	boolean changeConfiguration;
-	boolean changeMode;
-
-} Downstream_Data;
-
+//typedef struct __attribute__((__packed__))  _Downstream_Data
+//{
+//
+//
+//	uint32_t  currentConfiguration;
+//	uint8_t ServoPositionUpstream;
+//	//Used to detect any hardware state change and synchronize
+//	boolean changeValue;
+//	boolean changeConfiguration;
+//	boolean changeMode;
+//
+//} Downstream_Data;
+//
 
 
 typedef struct __attribute__((__packed__)) _DATA

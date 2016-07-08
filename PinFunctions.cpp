@@ -1,5 +1,5 @@
 #include <BowlerCom.h>
-static DATA_STRUCT DyioPinFunctionData[NUM_PINS];
+static DATA_STRUCT DyioPinFunctionData[TOTAL_PINS];
 
 int32_t GetConfigurationDataTable(uint8_t pin){
 	return EEReadValue(pin);
@@ -125,7 +125,7 @@ int32_t GetChanVal(uint8_t pin) {
 void InitPinFunction(void){
 
 	int i;
-	for (i=0;i<NUM_PINS;i++){
+	for (i=0;i<TOTAL_PINS;i++){
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN=IS_PIN_ANALOG(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM=IS_PIN_PWM(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_UART_T=IS_PIN_DIGITAL(i) && i%2==0;//even pins are tx
@@ -143,7 +143,7 @@ void InitPinFunction(void){
 		DyioPinFunctionData[i].FUNCTION.HAS_PPM=false; 
 	}
 
-	InitilizeBcsIo(	NUM_PINS,
+	InitilizeBcsIo(	TOTAL_PINS,
 					DyioPinFunctionData,
 					&SetChanelValueHW,
 					&GetChanelValueHW,

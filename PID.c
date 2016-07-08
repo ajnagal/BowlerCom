@@ -23,12 +23,6 @@ PidLimitEvent * checkPIDLimitEventsMine(uint8_t group);
 
 RunEveryData force[NUM_PID_GROUPS];
 
-void fail(){
-	while(true) {
-		//(1,1,0);
-		buttonCheck(1);
-	}
-}
 
 void initPIDChans(uint8_t group){
 

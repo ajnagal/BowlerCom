@@ -8,7 +8,7 @@
 
 //char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
 
-RunEveryData ppm = {0, 50};
+
 
 boolean pwr = false; 
 
@@ -101,7 +101,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 
 boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
     //int zone = 1;
-   char * tmpName="dyarduion";
+   char * tmpName="arduion";
     int i;
     //uint8_t rev[3];
     switch (Packet->use.head.RPC) {
@@ -120,12 +120,11 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             Packet->use.head.Method = BOWLER_POST;
             break;
         case INFO:
-            //GetName(tmpName);
+            GetName(tmpName);
             i = 0;
             while (tmpName[i] != 0) {
                 Packet->use.data[i] = tmpName[i];
                 i++;
-                //buttonCheck(15);
             }
             Packet->use.data[i] = '\0';
             Packet->use.head.Method = BOWLER_POST;
@@ -150,7 +149,8 @@ boolean neuronRoboticsDyIOProcessor_p(BowlerPacket * Packet) {
 
 boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
     uint8_t zone = 3;
-    char tmpName[17];
+
+    char tmpName[nameSize];
     int i;
     switch (Packet->use.head.RPC) {
         case _MAC:
@@ -174,7 +174,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
                 ERR(Packet, zone, 3);
                 break;
             } else
-                for (i = 0; i < 17; i++) {
+                for (i = 0; i < nameSize; i++) {
                     tmpName[i] = '\0';
                 }
             //println_I("Setting name: ");
@@ -185,7 +185,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
             for (i = 0; i < Packet->use.head.DataLegnth - 4; i++) {
                 tmpName[i] = Packet->use.data[i];
             }
-//            SetName(tmpName);
+            SetName(tmpName);
             READY(Packet, zone, 4);
             break;
         default:

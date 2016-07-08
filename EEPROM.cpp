@@ -248,3 +248,37 @@ void SetEEPRomData(uint8_t start, uint8_t stop, uint8_t * data) {
 	}
 }
 
+uint8_t isAsciiMine(char  str) {
+	if (str < 48) {
+		return false;
+	}
+	if (str > 122) {
+		return false;
+	}
+	return true;
+}
+
+boolean GetName(char * name){
+	//WORD_VAL raw;
+	uint8_t i = 0;
+	//printPacket(&downstreamPacketTemp,WARN_PRINT);
+	if( isAsciiMine(EEReadData(NAMESTART))){
+		while (EEReadData(NAMESTART+i) != '\0') {
+			name[i] = EEReadData(NAMESTART+i);
+			i++;
+			if (i == NAMESIZE-1)
+				break;
+		}
+		name[i] = '\0';
+	}
+	println_E("Getting name: ");println_E(name);
+	return isAsciiMine(name[0]);
+}
+void SetName(char * name){
+	uint8_t i = 0;
+	println_E("Setting name: ");println_E(name);
+	while (name[i] != '\0') {
+		EEWriteData(NAMESTART+i,name[i]);
+	}
+}
+

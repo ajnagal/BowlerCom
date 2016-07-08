@@ -28,7 +28,7 @@ extern "C"{
 
 //#define ROBOSUB_DEMO
 
-#define NUM_PINS   			TOTAL_PINS
+//#define NUM_PINS   			TOTAL_PINS
 
 #define SERVO_BOUND 		0
 
@@ -110,7 +110,7 @@ typedef struct _EESTORAGE
 #define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)
 #define BROWNOUT_START  (PPM_END+1)
 #define BROWNOUT_END 	(BROWNOUT_START+1)
-
+#define  nameSize 17
 
 
 
@@ -136,6 +136,10 @@ uint32_t getNumberOfSerialRxBytes();
 void SetNewConfigurationDataTable(uint8_t pin, int32_t value);
 int32_t GetConfigurationDataTable(uint8_t pin);
 void SyncDataTable();
+/**
+ * Formulate a Power packet
+ */
+void POWER(BowlerPacket * packet);
 #ifdef __cplusplus
 } // extern "C"
 #endif
