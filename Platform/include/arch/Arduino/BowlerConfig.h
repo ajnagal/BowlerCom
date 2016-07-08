@@ -5,6 +5,9 @@
 #include <Arduino.h>
 
 #include "BowlerStack/include/DyIO/EEPROM.h"
+#ifdef __cplusplus
+extern "C"{
+#endif
 #define StartCritical() noInterrupts()
 #define EndCritical()   interrupts()
 
@@ -176,6 +179,7 @@
 #error "Please edit Boards.h with a hardware abstraction for this board"
 #endif
 #include <avr/pgmspace.h>
+
 void showString (PGM_P s,Print_Level l,char newLine);
 
 #undef print_nnl
@@ -190,5 +194,7 @@ void showString (PGM_P s,Print_Level l,char newLine);
  * print the null terminated string with a newline inserted at the begining of the string
  */
 #define b_println(A,B) showString(PSTR(A),B,1)
-
+#ifdef __cplusplus
+}
+#endif
 #endif
