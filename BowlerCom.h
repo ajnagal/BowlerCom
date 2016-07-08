@@ -31,12 +31,15 @@
 		void begin(Stream &s);
 		boolean PutBowlerPacketLocal(BowlerPacket * p);
 		void addDyIO();
+		void addDyIOPID();
 		void startDebugPint(SoftwareSerial * port);
 		Stream &BowlerSerial;
 		byte privateRXCom[comBuffSize];
 		BYTE_FIFO_STORAGE store;
 		BowlerPacket Packet;
-
+	private:
+		boolean addedDyIO;
+		boolean addedPID;
 	};
 #endif
 #endif

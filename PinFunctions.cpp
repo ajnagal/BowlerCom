@@ -158,9 +158,5 @@ void InitPinFunction(void){
 
 
 	initAdvancedAsync();// after the IO namespace is set up
-	 InitPID(new AbsPID[NUM_PID_GROUPS],
-			 new DYIO_PID [NUM_PID_GROUPS],
-			 new PidLimitEvent[NUM_PID_GROUPS]
 
-	 );
 }

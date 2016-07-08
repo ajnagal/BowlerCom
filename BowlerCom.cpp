@@ -23,7 +23,8 @@ void EnableDebugTerminal() {
 BowlerCom::BowlerCom(Stream &s) :
 		BowlerSerial(s) {
 	ref = this;
-
+	addedDyIO=false;
+	addedPID=false;
 }
 
 /* begin method for overriding default serial bitrate */
@@ -69,6 +70,10 @@ void BowlerCom::server(void) {
 	RunNamespaceAsync(&Packet, &PutBowlerPacket);
 }
 void BowlerCom::addDyIO() {
+	if(addedDyIO){
+		return;
+	}else
+		addedDyIO=true;
 	InitPinFunction();
 
 	addNamespaceToList(get_bcsIoNamespace());
@@ -76,13 +81,26 @@ void BowlerCom::addDyIO() {
 	addNamespaceToList(get_bcsIoSetmodeNamespace());
 	//println_I("Adding DyIO Namespace");
 	addNamespaceToList(get_neuronRoboticsDyIONamespace());
-	//println_I("Adding PID Namespace");
-	addNamespaceToList(getBcsPidNamespace());
-	//println_I("Adding DyIO PID Namespace");
 	addNamespaceToList(get_bcsPidDypidNamespace());
 	//println_I("Adding Safe Namespace");
 	addNamespaceToList( get_bcsSafeNamespace());
 
+}
+void BowlerCom::addDyIOPID() {
+	if(addedPID){
+		return;
+	}else
+		addedPID=true;
+	addDyIO();
+	InitPID(new AbsPID[NUM_PID_GROUPS],
+			 new DYIO_PID [NUM_PID_GROUPS],
+			 new PidLimitEvent[NUM_PID_GROUPS]
+
+	);
+	//println_I("Adding PID Namespace");
+	addNamespaceToList(getBcsPidNamespace());
+	//println_I("Adding DyIO PID Namespace");
+	addNamespaceToList(get_bcsPidDypidNamespace());
 }
 void BowlerCom::startDebugPint(SoftwareSerial * port){
 	if(port == NULL)
@@ -92,8 +110,8 @@ void BowlerCom::startDebugPint(SoftwareSerial * port){
 	println_I("\n\n\n##############################");
 	println_I(      "  Welcome To Arduino Bowler!");
 	println_I(      "##############################\n");
-	println_E("Error Prints enabled");
-	println_W("Warning Prints enabled");
-	println_I("Info Prints enabled");
+	println_E("Error Prints");
+	println_W("Warning Prints");
+	println_I("Info Prints");
 }
 
