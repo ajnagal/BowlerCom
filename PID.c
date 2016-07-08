@@ -6,9 +6,9 @@
  */
 
 #include <BowlerCom.h>
-AbsPID 			pidGroups[NUM_PID_GROUPS];
-DYIO_PID 		dyPid[NUM_PID_GROUPS];
-PidLimitEvent	limits[NUM_PID_GROUPS];
+AbsPID 		*	pidGroups;
+DYIO_PID 	*	dyPid;
+PidLimitEvent *	limits;
 
 #define DYPID_NON_USED 0xff
 
@@ -65,7 +65,10 @@ boolean asyncCallback(BowlerPacket *Packet){
 	PutBowlerPacket(Packet);// This only works with USB and UART
     return true; 
 }
-void InitPID(void){
+void InitPID(AbsPID * g,DYIO_PID * d,PidLimitEvent * l){
+	pidGroups	=g;
+	dyPid 	=d;
+	limits=l;
 	//println_I("Starting PID initialization ");
 	uint8_t i;
 	//uint16_t loop;
