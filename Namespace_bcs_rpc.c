@@ -5,6 +5,7 @@
 //const char rpcNSName[] = "bcs.rpc.*;0.3;;";
 
 boolean _rpc(BowlerPacket * Packet) {
+	//printBowlerPacketDEBUG(&Packet,WARN_PRINT);
     Packet->use.head.Method = BOWLER_POST;
     Packet->use.head.RPC = GetRPCValue("_rpc");
     int index = 0;
@@ -30,6 +31,7 @@ boolean _rpc(BowlerPacket * Packet) {
     }
 
     Packet->use.head.DataLegnth = 4 + index;
+    //printBowlerPacketDEBUG(&Packet,ERROR_PRINT);
     return true;
 }
 

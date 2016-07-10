@@ -28,6 +28,7 @@ BowlerCom::BowlerCom(Stream &s) :
 	ref = this;
 	addedDyIO = false;
 	addedPID = false;
+	Bowler_Init();
 }
 
 /* begin method for overriding default serial bitrate */
