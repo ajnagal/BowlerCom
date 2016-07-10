@@ -58,8 +58,10 @@ extern "C"{
 
 #define NUM_PID_GROUPS 4
 #define NOT_USED_IN_PID 0xff
+#define lockCodeValue  0x37
 
 struct _local_pid{
+		uint8_t lockCode;
         unsigned 					:5;
         unsigned		Async		:1;
         unsigned		Polarity	:1;

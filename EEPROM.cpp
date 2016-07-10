@@ -111,7 +111,8 @@ void EEWriteBaud(uint32_t val){
 
 uint8_t EEReadData(uint16_t addr){
 	uint8_t val=0;
-	if((addr+DATASTART_AVR)>=1024){
+	if((addr+DATASTART_AVR)>=4096){
+		println_E("Attempting Overwrite of EEPROM!")
 		return 0;
 	}
 	val =  eeReadByte((DATASTART_AVR+addr));
@@ -121,7 +122,8 @@ uint8_t EEReadData(uint16_t addr){
 	return val;
 }
 void EEWriteData(uint16_t addr,uint8_t data){
-	if((addr+DATASTART_AVR)>=1024){
+	if((addr+DATASTART_AVR)>=4096){
+		println_E("Attempting Overwrite of EEPROM!")
 		return;
 	}
 	eeWriteByte((DATASTART_AVR+addr),data);
@@ -181,7 +183,10 @@ void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group){
 
 	GetEEPRomData((pidValSize*group),(pidValSize*group)+pidValSize,tmpVals.stream);
 	//uint8_t i = group;
-
+	if(lockCodeValue !=tmpVals.data.lockCode ){
+		WritePIDvalues( pid,  dy, group);
+		return;
+	}
 	if(tmpVals.data.outputChannel==tmpVals.data.inputChannel)
 		return;
 	if(tmpVals.data.outputChannel>=GetNumberOfIOChannels() ||tmpVals.data.inputChannel>=GetNumberOfIOChannels() )
@@ -205,6 +210,7 @@ void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group){
 void WritePIDvalues(AbsPID * pid, DYIO_PID * dy,int group){
 	uint8_t i = group;
 	pid_vales tmpVals;
+	tmpVals.data.lockCode =lockCodeValue;
 	tmpVals.data.Enabled= pid->config.Enabled;
 	tmpVals.data.Polarity=pid->config.Polarity;
 	tmpVals.data.Async=pid->config.Async;

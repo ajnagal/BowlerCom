@@ -117,6 +117,7 @@ void InitPID(AbsPID * g,DYIO_PID * d,PidLimitEvent * l){
 		}
 		force[i].MsTime=0;
 		force[i].setPoint=200;
+
 	}
 
 	InitilizePidController( pidGroups,
