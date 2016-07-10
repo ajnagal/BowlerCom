@@ -76,6 +76,8 @@ void BowlerCom::server(void) {
 		FifoAddByte(&store, (char) newByte, &err);
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
+		if(Packet.use.head.RPC!=_PNG)
+			printBowlerPacketDEBUG(&Packet,INFO_PRINT);
 		//Now the Packet struct contains the parsed packet data
 		Process_Self_Packet(&Packet);
 		// The call backs for processing the packet have been called
@@ -91,13 +93,13 @@ void BowlerCom::addDyIO() {
 	} else
 		addedDyIO = true;
 	//InitPinFunction(functionData);
+	InitPinFunction(new DATA_STRUCT[TOTAL_PINS]);
 
 	addNamespaceToList(get_bcsIoNamespace());
 	//println_I("Adding IO.Setmode Namespace");
 	addNamespaceToList(get_bcsIoSetmodeNamespace());
 	//println_I("Adding DyIO Namespace");
 	addNamespaceToList(get_neuronRoboticsDyIONamespace());
-	addNamespaceToList(get_bcsPidDypidNamespace());
 	//println_I("Adding Safe Namespace");
 	addNamespaceToList(get_bcsSafeNamespace());
 

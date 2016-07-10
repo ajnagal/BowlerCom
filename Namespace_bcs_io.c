@@ -42,7 +42,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
             pidAsyncCallbackPtr(Packet);
         }
     }
-    //println_W("Done ");print_W(ioNSName);
+    println_I("Done bcs.io");
     return false; 
 }
 

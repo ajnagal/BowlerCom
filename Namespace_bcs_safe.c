@@ -12,7 +12,7 @@ void setHeartBeatState(boolean hb, int time);
 //char safeNSName[] = "bcs.safe.*;0.3;;";
 
 boolean bcsSafeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
-    //println_W("Async ");print_W(safeNSName);
+    println_I("Safe Async ");
 
     return false; 
 }

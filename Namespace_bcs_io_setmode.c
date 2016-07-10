@@ -9,7 +9,7 @@
 
 boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //no async
-    //println_W("No Async ");print_W(setModeNSName);
+    println_W("Setmode async ");
     return false; 
 }
 
