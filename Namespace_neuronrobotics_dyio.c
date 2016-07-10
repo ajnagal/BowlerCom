@@ -14,12 +14,10 @@ boolean pwr = false;
 
 boolean heartBeatLock = false;
 int heartBeatLockTime = 1000;
-INTERPOLATE_DATA velocity[MAX_SERVOS];// servo position interpolation
 
 
-uint8_t GetServoPos(uint8_t pin) {
-	return velocity[PIN_TO_SERVO(pin)].set;
-}
+
+
 
 void UpdateAVRLED(void) {
     pwr = true; 
@@ -93,8 +91,11 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 //    if(getNumberOfSPIRxBytes()>0){
 //    	UpstreamPushSPIlStream();
 //	}
-
-
+	int i = 0;
+	for (i = 0; i < GetNumberOfIOChannels(); i++) {
+		updateServos( i);
+		setDataTableCurrentValue(i, GetChanVal(i));
+	}
 
     return false; 
 }

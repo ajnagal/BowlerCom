@@ -2,13 +2,15 @@
 
 DATA_STRUCT * DyioPinFunctionData;
 Servo myservo[MAX_SERVOS];  // create servo object to control a servo
-boolean startupFlag=false;
+INTERPOLATE_DATA velocity[MAX_SERVOS];  // servo position interpolation
+
+boolean startupFlag = false;
 int32_t GetConfigurationDataTable(uint8_t pin) {
 	return EEReadValue(pin);
 }
 
 boolean setMode(uint8_t pin, uint8_t mode) {
-	if (GetChannelMode(pin) == mode &&startupFlag)
+	if (GetChannelMode(pin) == mode && startupFlag)
 		return true;
 	if (GetChannelMode(pin) == IS_SERVO) {
 		myservo[PIN_TO_SERVO(pin)].detach();
@@ -191,15 +193,15 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		//Get mode from EEPROm
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
-		setMode(i,mode);
+		setMode(i, mode);
 		// Get value using hardware setting.
 		int32_t currentValue;
-		if(isOutputMode(mode)==true){
-			currentValue=GetConfigurationDataTable(i);
-		}else{
-			currentValue= GetChanVal(i);
+		if (isOutputMode(mode) == true) {
+			currentValue = GetConfigurationDataTable(i);
+		} else {
+			currentValue = GetChanVal(i);
 		}
-		setDataTableCurrentValue(i,currentValue);
+		setDataTableCurrentValue(i, currentValue);
 		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
 	}
 
@@ -210,5 +212,79 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 	InitilizeBcsIoSetmode(&setMode);
 
 	initAdvancedAsync();  // after the IO namespace is set up
-	startupFlag=true;
+	startupFlag = true;
+}
+
+uint8_t GetServoPos(uint8_t pin) {
+	return velocity[PIN_TO_SERVO(pin)].set;
+}
+void SetServoPos(uint8_t pin, uint16_t val, float time) {
+	SetServoPosDataTable(pin, val, time);
+
+	getInterpolatedPin(pin);
+}
+void updateServos(int i) {
+
+	if (GetChannelMode(i) == IS_SERVO)
+		myservo[PIN_TO_SERVO(i)].write(getInterpolatedPin(PIN_TO_SERVO(i)));
+
+}
+
+void SetServoPosDataTable(uint8_t pin, uint8_t val, float time) {
+	if (time < 30 || isnan(velocity[pin].set)) {
+		velocity[pin].setTime = 0;
+		velocity[pin].start = (float) val;
+	} else {
+		// Set the start value to the pervious value
+		velocity[pin].setTime = time;
+		velocity[pin].start = velocity[pin].set;
+	}
+	velocity[pin].set = (float) val;
+	velocity[pin].startTime = getMs();
+}
+
+uint8_t getInterpolatedPin(uint8_t pin) {
+	if (GetChannelMode(pin) != IS_SERVO) {
+		return 0;
+	}
+	//char cSREG;
+	//cSREG = SREG;
+	/* store SREG value */
+	/*
+	 disable interrupts during timed sequence */
+	//StartCritical();
+	float ip = interpolate(&velocity[pin], getMs());
+	//SREG = cSREG;
+	boolean error = false;
+	if (ip > (255 - SERVO_BOUND)) {
+		println_W("Upper=");
+		error = true;
+	}
+	if (ip < SERVO_BOUND) {
+		println_W("Lower=");
+		error = true;
+	}
+	int dataTableSet = (getDataTableCurrentValue(pin) & 0x000000ff);
+	int interpolatorSet = ((int32_t) velocity[pin].set);
+	float time = (float) ((getDataTableCurrentValue(pin) >> 16) & 0x0000ffff);
+
+	if (dataTableSet != interpolatorSet) {
+//		println_W("Setpoint=");
+//				error = true;
+		SetServoPosDataTable(pin, dataTableSet, time);
+		//myservo[PIN_TO_SERVO(pin)].write(bval);
+	}
+	if (error) {
+//		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
+//		print_W(" Data Table=");p_int_W(dataTableSet);
+//		println_W("set=      \t");p_fl_W(velocity[pin].set);
+//		println_W("start=    \t");p_fl_W(velocity[pin].start);
+//		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
+//		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
+		ip = velocity[pin].set;
+		SetServoPosDataTable(pin, dataTableSet, time);
+	}
+	int tmp = (int) ip;
+
+	return tmp;
 }

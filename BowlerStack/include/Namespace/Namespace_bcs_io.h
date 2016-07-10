@@ -222,7 +222,7 @@ boolean isOutputMode(uint8_t mode);
 #define setDataTableCurrentValue(A, B) 	 _setDataTableCurrentValue(A,B);
 
 #define getDataTableCurrentValue(A) (getBcsIoDataTable(A)->PIN.currentValue)
-uint8_t GetServoPos(uint8_t pin);
+
 
 /**
  * Sets the datable value and returns true if the value is new, false if it is the same as it was

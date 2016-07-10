@@ -137,6 +137,20 @@ uint8_t GetSerialRxData(uint8_t * data);
 uint32_t getNumberOfSerialRxBytes();
 void SetNewConfigurationDataTable(uint8_t pin, int32_t value);
 int32_t GetConfigurationDataTable(uint8_t pin);
+/**
+ * A function for updating the servos intrpolation state
+ */
+void updateServos(int pinIndex);
+/**
+ * A function for reading the state of the interpolation stack
+ */
+uint8_t GetServoPos(uint8_t pin);
+
+/**
+ * A function for setting the state of the interpolation stack
+ */
+void SetServoPos(uint8_t pin, uint16_t value, float ms);
+
 void SyncDataTable();
 /**
  * Formulate a Power packet
