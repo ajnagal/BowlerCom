@@ -136,6 +136,7 @@ typedef struct __attribute__((__packed__)) _FUNCTION_MAP
 
 typedef struct __attribute__((__packed__))  _PIN_MAP
 {
+	int32_t currentValue;
 	int32_t			asyncDataPreviousVal;
 	//int32_t			asyncDataCurrentVal;
 	uint8_t		asyncDataType;
@@ -220,7 +221,7 @@ boolean isOutputMode(uint8_t mode);
 //#define setDataTableCurrentValue(A, B) 	println(__FILE__,(isOutputMode(GetChannelMode(A)) && isNewDataTableValue(A,B) )?ERROR_PRINT:INFO_PRINT); _setDataTableCurrentValue(A,B);
 #define setDataTableCurrentValue(A, B) 	 _setDataTableCurrentValue(A,B);
 
-#define getDataTableCurrentValue(A) (GetChanVal(A))
+#define getDataTableCurrentValue(A) (getBcsIoDataTable(A)->PIN.currentValue)
 uint8_t GetServoPos(uint8_t pin);
 
 /**
