@@ -119,7 +119,7 @@ typedef struct _EESTORAGE
 boolean ConfigChannel(BowlerPacket * Packet);
 void ClearPinState(uint8_t pin);
 void InitPins(void);
-void InitPinFunction(void);
+
 
 boolean pinHasFunction(uint8_t pin, uint8_t function);
 void runDyIOMain(void);

@@ -122,8 +122,8 @@ int32_t GetChanVal(uint8_t pin) {
 
     return 0;
 }
-void InitPinFunction(void){
-	DyioPinFunctionData = new DATA_STRUCT[TOTAL_PINS];
+void InitPinFunction(DATA_STRUCT * functionData){
+	DyioPinFunctionData =functionData;
 	int i;
 	for (i=0;i<TOTAL_PINS;i++){
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN=IS_PIN_ANALOG(i);

@@ -6,13 +6,16 @@
 
 static BowlerCom * ref;
 static SoftwareSerial * serialPort = NULL;
-
+//DATA_STRUCT functionData[TOTAL_PINS];
+//AbsPID mypidGroups[NUM_PID_GROUPS];
+//DYIO_PID mydyPid[NUM_PID_GROUPS];
+//PidLimitEvent mylimits[NUM_PID_GROUPS];
 float getMs(void) {
 	return ((float) micros()) * 1000.0f;
 }
 void putCharDebug(char a) {
 	// none
-	if(serialPort!=NULL){
+	if (serialPort != NULL) {
 		serialPort->print(a);
 	}
 
@@ -23,8 +26,8 @@ void EnableDebugTerminal() {
 BowlerCom::BowlerCom(Stream &s) :
 		BowlerSerial(s) {
 	ref = this;
-	addedDyIO=false;
-	addedPID=false;
+	addedDyIO = false;
+	addedPID = false;
 }
 
 /* begin method for overriding default serial bitrate */
@@ -43,18 +46,18 @@ void BowlerCom::begin(Stream &s) {
 	InitByteFifo(&store, privateRXCom, comBuffSize);
 
 }
-void showString (PGM_P s,Print_Level l,char newLine) {
-	if(!okToprint(l)){
+void showString(PGM_P s,Print_Level l,char newLine) {
+	if(!okToprint(l)) {
 		return;
 	}
-	if(newLine){
+	if(newLine) {
 		putCharDebug('\n');
 		putCharDebug('\r');
 	}
 	setColor(l);
 	char c;
 	while ((c = pgm_read_byte(s++)) != 0)
-		putCharDebug(c);
+	putCharDebug(c);
 }
 uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 	uint16_t i;
@@ -83,11 +86,11 @@ void BowlerCom::server(void) {
 	RunNamespaceAsync(&Packet, &PutBowlerPacket);
 }
 void BowlerCom::addDyIO() {
-	if(addedDyIO){
+	if (addedDyIO) {
 		return;
-	}else
-		addedDyIO=true;
-	InitPinFunction();
+	} else
+		addedDyIO = true;
+	//InitPinFunction(functionData);
 
 	addNamespaceToList(get_bcsIoNamespace());
 	//println_I("Adding IO.Setmode Namespace");
@@ -96,33 +99,36 @@ void BowlerCom::addDyIO() {
 	addNamespaceToList(get_neuronRoboticsDyIONamespace());
 	addNamespaceToList(get_bcsPidDypidNamespace());
 	//println_I("Adding Safe Namespace");
-	addNamespaceToList( get_bcsSafeNamespace());
+	addNamespaceToList(get_bcsSafeNamespace());
 
 }
 void BowlerCom::addDyIOPID() {
-	if(addedPID){
+	if (addedPID) {
 		return;
-	}else
-		addedPID=true;
+	} else
+		addedPID = true;
 	addDyIO();
-	InitPID(new AbsPID[NUM_PID_GROUPS],
-			 new DYIO_PID [NUM_PID_GROUPS],
-			 new PidLimitEvent[NUM_PID_GROUPS]
-
-	);
+//	InitPID(mypidGroups,
+//			mydyPid,
+//			mylimits
+//			);
+	InitPID(new AbsPID [NUM_PID_GROUPS],
+				new DYIO_PID [NUM_PID_GROUPS],
+				new PidLimitEvent [NUM_PID_GROUPS]
+				);
 	//println_I("Adding PID Namespace");
 	addNamespaceToList(getBcsPidNamespace());
 	//println_I("Adding DyIO PID Namespace");
 	addNamespaceToList(get_bcsPidDypidNamespace());
 }
-void BowlerCom::startDebugPint(SoftwareSerial * port){
-	if(port == NULL)
+void BowlerCom::startDebugPint(SoftwareSerial * port) {
+	if (port == NULL)
 		return;
 	serialPort = port;
 	setPrintLevelInfoPrint();
 	println_I("\n\n\n##############################");
-	println_I(      "  Welcome To Arduino Bowler!");
-	println_I(      "##############################\n");
+	println_I("  Welcome To Arduino Bowler!");
+	println_I("##############################\n");
 	println_E("Error Prints");
 	println_W("Warning Prints");
 	println_I("Info Prints");

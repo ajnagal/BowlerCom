@@ -229,6 +229,10 @@ uint8_t GetServoPos(uint8_t pin);
 boolean _setDataTableCurrentValue(uint8_t pin, int32_t value);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
+/**
+ * Callback function for initializing the stack
+ */
+void InitPinFunction(DATA_STRUCT * DyioPinFunctionData);
 
 /**
  * Initialize Bcs.IO namespace
