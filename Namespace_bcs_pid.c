@@ -13,7 +13,7 @@ boolean pidAsyncEventCallbackLocal(BowlerPacket *Packet, boolean(*pidAsyncCallba
 
     //    println_I("\n");
     //    printPIDvals(0);
-	println_I("PID COms");
+	//println_I("PID COms");
     RunPIDComs(Packet, pidAsyncCallbackPtr);
     return false;
 }
