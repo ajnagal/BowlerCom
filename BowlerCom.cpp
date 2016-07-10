@@ -6,6 +6,7 @@
 
 static BowlerCom * ref;
 static SoftwareSerial * serialPort = NULL;
+boolean comsStarted = false;
 //DATA_STRUCT functionData[TOTAL_PINS];
 //AbsPID mypidGroups[NUM_PID_GROUPS];
 //DYIO_PID mydyPid[NUM_PID_GROUPS];
@@ -68,6 +69,11 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 	}
 	return true;
 }
+boolean PutBowlerPacketDummy(BowlerPacket * Packet){
+	//do nothing
+	return true;
+}
+
 void BowlerCom::server(void) {
 	byte err;
 	byte newByte = 0;
@@ -85,8 +91,12 @@ void BowlerCom::server(void) {
 		// and the Packet struct now contains the data
 		// to be sent back to the client as a response.
 		PutBowlerPacket(&Packet);
+		comsStarted=true;
 	}
-	RunNamespaceAsync(&Packet, &PutBowlerPacket);
+	if(comsStarted)
+		RunNamespaceAsync(&Packet, &PutBowlerPacket);
+	else
+		RunNamespaceAsync(&Packet, &PutBowlerPacketDummy);
 }
 void BowlerCom::addDyIO() {
 	if (addedDyIO) {
