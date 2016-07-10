@@ -78,7 +78,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with no new lines
  */
-#define print_nnl(A,B) printfDEBUG_NNL(A,B)
+#define print_nnl(A,B) printfDEBUG_NNL((char *)A,B)
 
 /**
  * print the null terminated string with a newline inserted at the begining of the string
@@ -103,7 +103,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with no new lines
  */
-#define print_E(A) printfDEBUG_NNL(A,ERROR_PRINT)
+#define print_E(A) printfDEBUG_NNL((char *)A,ERROR_PRINT)
 
 /**
  * print the null terminated string with a newline inserted at the begining of the string
@@ -128,7 +128,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with no new lines
  */
-#define print_W(A) printfDEBUG_NNL(A,WARN_PRINT)
+#define print_W(A) printfDEBUG_NNL((char *)A,WARN_PRINT)
 
 /**
  * print the null terminated string with a newline inserted at the begining of the string
@@ -153,7 +153,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with no new lines
  */
-#define print_I(A) printfDEBUG_NNL(A,INFO_PRINT)
+#define print_I(A) printfDEBUG_NNL((char *)A,INFO_PRINT)
 
 /**
  * Clears the print termainal 
