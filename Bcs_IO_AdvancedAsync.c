@@ -53,18 +53,18 @@ boolean IsAsync(uint8_t channel){
 	}
 }
 
-void printAsyncType(uint8_t t){
+void printAsyncType(uint8_t t, Print_Level l){
 	switch(getBcsIoDataTable(t)->PIN.asyncDataType){
 	case AUTOSAMP:
-		print_I("AUTOSAMP");return;
+		print_nnl("AUTOSAMP",l);return;
 	case NOTEQUAL:
-		print_I("NOTEQUAL");return;
+		print_nnl("NOTEQUAL",l);return;
 	case DEADBAND:
-		print_I("DEADBAND");return;
+		print_nnl("DEADBAND",l);return;
 	case THRESHHOLD:
-		print_I("THRESHHOLD");return;
+		print_nnl("THRESHHOLD",l);return;
 	default:
-		print_I("UNKNOWN: "); p_int_I(t);return;
+		print_nnl("UNKNOWN: ",l); p_int(t,l);return;
 	}
 }
 void configAdvancedAsyncNotEqual(uint8_t pin,float time){
@@ -247,7 +247,7 @@ boolean pushAsyncReady( uint8_t pin){
 		default:
 			println_E("\nNo type defined!! chan: ");p_int_E(pin);
 			print_E(" mode: ");printMode(GetChannelMode(pin),ERROR_PRINT);
-			print_E(" type: ");printAsyncType(getBcsIoDataTable(pin)->PIN.asyncDataType);
+			print_E(" type: ");printAsyncType(getBcsIoDataTable(pin)->PIN.asyncDataType,ERROR_PRINT);
 			startAdvancedAsyncDefault(pin);
 			break;
 		}

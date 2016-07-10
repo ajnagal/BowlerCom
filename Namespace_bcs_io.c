@@ -24,7 +24,8 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
         if (pushAsyncReady(i)) {
         	println_W("Pin Async ");p_int_W(i);
         	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
-        	print_W(" type= ");printAsyncType(i);
+        	print_W(" type = ");printAsyncType(i,WARN_PRINT);
+        	print_W(" mode = ");printMode(i,WARN_PRINT);
             update = true; 
         }
     }

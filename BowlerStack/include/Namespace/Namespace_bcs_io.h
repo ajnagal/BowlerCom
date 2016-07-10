@@ -177,7 +177,7 @@ int32_t get32bit(BowlerPacket * Packet, uint8_t offset);
 void printMode(uint8_t mode, Print_Level l);
 void printModes();
 void printAsync();
-void printAsyncType(uint8_t t);
+void printAsyncType(uint8_t t, Print_Level l);
 void printConfigurations();
 void printValues();
 
