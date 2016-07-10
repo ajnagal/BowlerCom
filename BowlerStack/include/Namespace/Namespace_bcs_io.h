@@ -81,8 +81,10 @@ case IS_PPM_IN:
 #define IS_DC_MOTOR_VEL			0x14
 #define IS_DC_MOTOR_DIR			0x15
 #define IS_PPM_IN				0x16
+#define IS_DEBUG_TX				0x17
+#define IS_DEBUG_RX				0x18
 
-#define IO_MODE_MAX				(IS_PPM_IN+1)
+#define IO_MODE_MAX				(IS_DEBUG_RX+1)
 
 #define _isStremChannelMode(A) ( (A==IS_UART_TX)||\
 								(A==IS_UART_RX)||\

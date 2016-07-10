@@ -19,9 +19,16 @@
 #include "BowlerStack/include/Namespace/Namespace_bcs_io_setmode.h"
 #include "BowlerStack/include/Namespace/Namespace_bcs_io.h"
 
-//#include <../../../../libraries/SoftwareSerial/SoftwareSerial.h>
 
 #ifdef __cplusplus
+/**
+ * Start the serial debugger
+ */
+void startDebugPint(SoftwareSerial * port);
+/**
+ * BowlerCom Class
+ * This class is for handeling the Bowler Communications on a stream.
+ */
 	class BowlerCom {
 	public:
 		BowlerCom(Stream &s);
@@ -33,7 +40,7 @@
 		boolean PutBowlerPacketLocal(BowlerPacket * p);
 		void addDyIO();
 		void addDyIOPID();
-		void startDebugPint(SoftwareSerial * port);
+
 		Stream &BowlerSerial;
 		byte privateRXCom[comBuffSize];
 		BYTE_FIFO_STORAGE store;

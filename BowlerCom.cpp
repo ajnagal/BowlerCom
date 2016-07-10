@@ -133,7 +133,7 @@ void BowlerCom::addDyIOPID() {
 	//println_I("Adding DyIO PID Namespace");
 	addNamespaceToList(get_bcsPidDypidNamespace());
 }
-void BowlerCom::startDebugPint(SoftwareSerial * port) {
+void startDebugPint(SoftwareSerial * port) {
 	if (port == NULL)
 		return;
 	serialPort = port;
