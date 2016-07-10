@@ -10,7 +10,7 @@ RunEveryData pid = {0, 5};
 RunEveryData vel = {0, 100};
 
 boolean bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
-   println_I("DyPID Async ");
+   //println_I("DyPID Async ");
     if (RunEvery(&pid) > 0) {
         //clearPrint();
         RunPIDControl();

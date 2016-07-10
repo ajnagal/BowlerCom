@@ -38,6 +38,7 @@ void pushAllPIDPositions(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(Bow
         int i;
         for(i=0;i<getNumberOfPidChannels();i++){
                 PID_Temp.Val=getPidGroupDataTable(i)->CurrentState;
+                getPidGroupDataTable(i)->lastPushedValue = getPidGroupDataTable(i)->CurrentState;
                 Packet->use.data[0+(i*4)]=PID_Temp.byte.FB;
                 Packet->use.data[1+(i*4)]=PID_Temp.byte.TB;
                 Packet->use.data[2+(i*4)]=PID_Temp.byte.SB;
