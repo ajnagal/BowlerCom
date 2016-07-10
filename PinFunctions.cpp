@@ -1,5 +1,14 @@
 #include <BowlerCom.h>
+/**
+ * Private functions
+ */
+uint8_t getInterpolatedPin(uint8_t pin);
+void SetServoPos(uint8_t pin, uint16_t val, float time);
+void SetServoPosDataTable(uint8_t pin, uint16_t val, float time);
 
+/**
+ * Data structures
+ */
 DATA_STRUCT * DyioPinFunctionData;
 Servo myservo[MAX_SERVOS];  // create servo object to control a servo
 INTERPOLATE_DATA velocity[MAX_SERVOS];  // servo position interpolation
@@ -230,7 +239,7 @@ void updateServos(int i) {
 
 }
 
-void SetServoPosDataTable(uint8_t pin, uint8_t val, float time) {
+void SetServoPosDataTable(uint8_t pin, uint16_t val, float time) {
 	if (time < 30 || isnan(velocity[pin].set)) {
 		velocity[pin].setTime = 0;
 		velocity[pin].start = (float) val;
