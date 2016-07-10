@@ -347,6 +347,16 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
     return true;
 }
 
+uint8_t getDefaultMode(uint8_t pin){
+	int i;
+	for (i = 0; i < IO_MODE_MAX; i++) {
+		if (pinHasFunction(pin, i)) {
+			return i;
+		}
+	}
+	return HIGH_IMPEDANCE;
+}
+
 boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
     int32_t * data = (int32_t *) (&Packet->use.data[1]);
     if (getAllChanelValueHWPtr != NULL) {

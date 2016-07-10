@@ -60,7 +60,7 @@ void _EEWriteMode(uint8_t pin,uint8_t mode){
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	//SetChannelModeDataTable(pin,mode);
 	if(!checkMode( mode)){
-		mode = IS_DI;
+		mode = getDefaultMode( pin);
 	}
 	while(EEReadMode(pin) != mode){
 		//println_W("Mode Set Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
@@ -72,7 +72,7 @@ void _EEWriteMode(uint8_t pin,uint8_t mode){
 uint8_t EEReadMode(uint8_t pin){
 	uint8_t mode =eeReadByte((uint16_t)(MODESTART+pin));
 	if(!checkMode( mode)){
-		mode = IS_DI;
+		mode =  getDefaultMode( pin);
 	}
 	return mode;
 }

@@ -312,6 +312,11 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data);
  */
 boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data);
 
+/**
+ * Gets the default mode for a pin by searching its availible modes.
+ */
+uint8_t getDefaultMode(uint8_t pin);
+
 //Callbacks
 boolean GetChannelModeFromPacket(BowlerPacket * Packet);
 boolean GetAllChannelModeFromPacket(BowlerPacket * Packet);

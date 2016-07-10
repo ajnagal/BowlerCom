@@ -67,6 +67,7 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 		//Grab the response packet one byte at a time and push it out the physical layer
 		ref->BowlerSerial.write((char) buffer[i]);
 	}
+	ref->BowlerSerial.flush();
 	return true;
 }
 boolean PutBowlerPacketDummy(BowlerPacket * Packet){
@@ -83,8 +84,6 @@ void BowlerCom::server(void) {
 		FifoAddByte(&store, (char) newByte, &err);
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
-		if(Packet.use.head.RPC!=_PNG)
-			printBowlerPacketDEBUG(&Packet,INFO_PRINT);
 		//Now the Packet struct contains the parsed packet data
 		Process_Self_Packet(&Packet);
 		// The call backs for processing the packet have been called

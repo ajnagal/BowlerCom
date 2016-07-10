@@ -12,7 +12,7 @@
 
 boolean pwr = false; 
 
-boolean heartBeatLock = true;
+boolean heartBeatLock = false;
 int heartBeatLockTime = 1000;
 INTERPOLATE_DATA velocity[MAX_SERVOS];// servo position interpolation
 

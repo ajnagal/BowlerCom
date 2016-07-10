@@ -141,6 +141,10 @@ void InitPinFunction(DATA_STRUCT * functionData){
 		DyioPinFunctionData[i].FUNCTION.HAS_COUNTER_OUTPUT_H = false; 
 		DyioPinFunctionData[i].FUNCTION.HAS_DC_MOTOR = false; 
 		DyioPinFunctionData[i].FUNCTION.HAS_PPM=false; 
+
+		int32_t currentValue = GetChanVal(i);
+		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
+		DyioPinFunctionData[i].PIN.currentValue = currentValue;
 	}
 
 	InitilizeBcsIo(	TOTAL_PINS,
