@@ -247,7 +247,7 @@ boolean pushAsyncReady( uint8_t pin){
 		default:
 			println_E("\nNo type defined!! chan: ");p_int_E(pin);
 			print_E(" mode: ");printMode(GetChannelMode(pin),ERROR_PRINT);
-			print_E(" type: ");printAsyncType(getBcsIoDataTable(pin)->PIN.asyncDataType,ERROR_PRINT);
+			print_E(" type: ");printAsyncType(pin,ERROR_PRINT);
 			startAdvancedAsyncDefault(pin);
 			break;
 		}

@@ -34,7 +34,8 @@ int mystrlen(const char * s){
 }
 
 //char * unknown = "UNKNOWN";
-void printMode(uint8_t mode, Print_Level l){
+void printMode(uint8_t pin, Print_Level l){
+	uint8_t mode =GetChannelMode(pin);
 	print_nnl("  Mode 0x",l);prHEX8(mode,l);
 
 	switch(mode){

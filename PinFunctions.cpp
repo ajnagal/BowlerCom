@@ -9,6 +9,7 @@ int32_t GetConfigurationDataTable(uint8_t pin){
 boolean setMode(uint8_t pin,uint8_t mode){
 	_EEWriteMode(pin,mode);
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	println_I("New Mode set: ");printMode(pin,INFO_PRINT);
 
 	return true;
 }
