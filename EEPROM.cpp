@@ -49,9 +49,19 @@ boolean ProvisionMAC(uint8_t * m){
 	}
 }
 
+boolean checkMode(uint8_t mode){
+	if(IS_DI<=mode && IO_MODE_MAX >mode){
+		return true;
+	}
+	return false;
+}
+
 void _EEWriteMode(uint8_t pin,uint8_t mode){
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	//SetChannelModeDataTable(pin,mode);
+	if(!checkMode( mode)){
+		mode = IS_DI;
+	}
 	while(EEReadMode(pin) != mode){
 		//println_W("Mode Set Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
 
@@ -60,7 +70,11 @@ void _EEWriteMode(uint8_t pin,uint8_t mode){
 }
 
 uint8_t EEReadMode(uint8_t pin){
-	return eeReadByte((uint16_t)(MODESTART+pin));
+	uint8_t mode =eeReadByte((uint16_t)(MODESTART+pin));
+	if(!checkMode( mode)){
+		mode = IS_DI;
+	}
+	return mode;
 }
 
 
