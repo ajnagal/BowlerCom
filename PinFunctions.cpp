@@ -1,4 +1,5 @@
 #include <BowlerCom.h>
+
 DATA_STRUCT * DyioPinFunctionData;
 
 int32_t GetConfigurationDataTable(uint8_t pin){
@@ -7,9 +8,23 @@ int32_t GetConfigurationDataTable(uint8_t pin){
 
 
 boolean setMode(uint8_t pin,uint8_t mode){
+	if(GetChannelMode(pin)==mode)
+		return true;
 	_EEWriteMode(pin,mode);
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	println_I("New Mode set: ");printMode(pin,INFO_PRINT);
+
+	switch(GetChannelMode(pin)){
+	case IS_DI:
+		pinMode(PIN_TO_DIGITAL(pin), INPUT);
+		break;
+	case IS_DO:
+		pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+		break;
+	case IS_ANALOG_IN:
+		// arduino analogs are not changable
+		break;
+	}
 
 	return true;
 }
@@ -116,12 +131,31 @@ boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
 }
 
 boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
-	print_E("\r\n");p_int_E(pin);print_E(" Set value of pin to ");p_int_E(bval);
+	print_W("\r\n");p_int_E(pin);print_W(" Set value of pin to ");p_int_W(bval);
+	switch(GetChannelMode(pin)){
+
+		case IS_DO:
+			digitalWrite(PIN_TO_DIGITAL(pin), bval==0?LOW:HIGH);
+			break;
+		case IS_ANALOG_IN:
+			// arduino analogs are not changable
+			break;
+		}
+
     return true;
 }
 int32_t GetChanVal(uint8_t pin) {
+	switch(GetChannelMode(pin)){
+	case IS_DI:
+		return digitalRead(PIN_TO_DIGITAL(pin));
+		break;
+	case IS_ANALOG_IN:
+		// arduino analogs are not changable
+		analogRead(PIN_TO_ANALOG(pin));
+		break;
+	}
 
-    return 0;
+    return getDataTableCurrentValue(pin);
 }
 void InitPinFunction(DATA_STRUCT * functionData){
 	DyioPinFunctionData =functionData;

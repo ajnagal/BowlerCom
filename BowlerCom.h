@@ -9,6 +9,7 @@
 #ifdef __cplusplus
 	#include <EEPROM.h>
 	#include <SoftwareSerial.h>
+	#include <Servo.h>
 #endif
 
 #include "BowlerStack/include/Bowler/Bowler.h"

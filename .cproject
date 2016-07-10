@@ -32,6 +32,7 @@
 									<listOptionValue builtIn="false" value="/usr/share/arduino/hardware/arduino/variants/standard"/>
 									<listOptionValue builtIn="false" value="/usr/share/arduino/libraries/EEPROM/"/>
 									<listOptionValue builtIn="false" value="/usr/share/arduino/libraries/SoftwareSerial"/>
+									<listOptionValue builtIn="false" value="/usr/share/arduino/libraries/Servo"/>
 								</option>
 								<option id="de.innot.avreclipse.compiler.option.def.1409957412" name="Define Syms (-D)" superClass="de.innot.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ARDUINO=105"/>
@@ -47,6 +48,7 @@
 									<listOptionValue builtIn="false" value="/usr/share/arduino/hardware/arduino/variants/standard"/>
 									<listOptionValue builtIn="false" value="/usr/share/arduino/libraries/EEPROM/"/>
 									<listOptionValue builtIn="false" value="/usr/share/arduino/libraries/SoftwareSerial"/>
+									<listOptionValue builtIn="false" value="/usr/share/arduino/libraries/Servo"/>
 								</option>
 								<option id="de.innot.avreclipse.cppcompiler.option.def.621104481" name="Define Syms (-D)" superClass="de.innot.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ARDUINO=105"/>
