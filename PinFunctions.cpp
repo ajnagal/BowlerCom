@@ -12,7 +12,6 @@ void SetServoPosDataTable(uint8_t pin, uint16_t val, float time);
 DATA_STRUCT * DyioPinFunctionData;
 Servo myservo[MAX_SERVOS];  // create servo object to control a servo
 INTERPOLATE_DATA velocity[MAX_SERVOS];  // servo position interpolation
-SoftwareSerial * mySerial; // RX, TX
 
 boolean startupFlag = false;
 int32_t GetConfigurationDataTable(uint8_t pin) {
@@ -25,10 +24,7 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 	if (GetChannelMode(pin) == IS_SERVO) {
 		myservo[PIN_TO_SERVO(pin)].detach();
 	}
-	if (GetChannelMode(pin) == IS_DEBUG_RX || GetChannelMode(pin) == IS_DEBUG_TX) {
-		mySerial->end();
-		startDebugPint(NULL);
-	}
+
 	_EEWriteMode(pin, mode);
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	println_I("New Mode set: ");
