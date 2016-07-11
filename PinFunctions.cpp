@@ -24,14 +24,19 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 		print_I(" to New Mode ");
 		printMode(pin,mode, INFO_PRINT);
 	if(pin<2){
+		println_I("Bailing because this is the communications channel");
 		return true;
 	}
-	if (GetChannelMode(pin) == mode && startupFlag)
+	if (GetChannelMode(pin) == mode && startupFlag){
+		println_I("Bailing because this mode ia already set");
 		return true;
+	}
 	if (GetChannelMode(pin) == IS_SERVO) {
+		println_I("Detaching servo");
 		myservo[PIN_TO_SERVO(pin)].detach();
 	}
 	if(GetChannelMode(pin) == IS_DEBUG_RX || GetChannelMode(pin) == IS_DEBUG_TX){
+		println_I("Bailing because this is the debug channel");
 		return false;
 	}
 
@@ -237,14 +242,16 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
 		setMode(i, mode);
+
 		// Get value using hardware setting.
 		int32_t currentValue;
 		if (isOutputMode(mode) == true) {
+
 			currentValue = GetConfigurationDataTable(i);
 		} else {
 			currentValue = GetChanVal(i);
 		}
-		setDataTableCurrentValue(i, currentValue);
+		DyioPinFunctionData[i].PIN.currentValue= currentValue;
 		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
 	}
 
