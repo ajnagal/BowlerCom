@@ -25,7 +25,7 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 	if (GetChannelMode(pin) == IS_SERVO) {
 		myservo[PIN_TO_SERVO(pin)].detach();
 	}
-	if (GetChannelMode(pin) == IS_DEBUG_RX||GetChannelMode(pin) == IS_DEBUG_TX) {
+	if (GetChannelMode(pin) == IS_DEBUG_RX || GetChannelMode(pin) == IS_DEBUG_TX) {
 		mySerial->end();
 		startDebugPint(NULL);
 	}
@@ -48,16 +48,8 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 		myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
 		break;
 	case IS_DEBUG_TX:
-		mySerial = new SoftwareSerial(pin-1,pin);
-		_EEWriteMode(pin-1, IS_DEBUG_RX);
-		mySerial->begin(1000000);
-		startDebugPint(mySerial);
-		break;
 	case IS_DEBUG_RX:
-		mySerial = new SoftwareSerial(pin,pin+1);
-		_EEWriteMode(pin+1, IS_DEBUG_TX);
-		mySerial->begin(1000000);
-		startDebugPint(mySerial);
+		// do not change the mode of these pins
 		break;
 	}
 
@@ -178,6 +170,10 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 	case IS_SERVO:
 		myservo[PIN_TO_SERVO(pin)].write(bval);
 		break;
+	case IS_DEBUG_TX:
+	case IS_DEBUG_RX:
+		// do not change the mode of these pins
+		break;
 	}
 
 	return true;
@@ -190,6 +186,10 @@ int32_t GetChanVal(uint8_t pin) {
 		return analogRead(PIN_TO_ANALOG(pin));
 	case IS_SERVO:
 		return GetServoPos(pin);
+	case IS_DEBUG_TX:
+	case IS_DEBUG_RX:
+		// do not change the mode of these pins
+		break;
 	}
 
 	return getDataTableCurrentValue(pin);

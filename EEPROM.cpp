@@ -74,6 +74,7 @@ uint8_t EEReadMode(uint8_t pin){
 	if(!checkMode( mode)){
 		mode =  getDefaultMode( pin);
 	}
+
 	return mode;
 }
 
