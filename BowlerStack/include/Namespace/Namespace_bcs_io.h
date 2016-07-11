@@ -176,7 +176,6 @@ void set16bit(BowlerPacket * Packet,int16_t val, uint8_t offset);
 void set32bit(BowlerPacket * Packet,int32_t val, uint8_t offset);
 int32_t get16bit(BowlerPacket * Packet, uint8_t offset);
 int32_t get32bit(BowlerPacket * Packet, uint8_t offset);
-void printMode(uint8_t mode, Print_Level l);
 void printModes();
 void printAsync();
 void printAsyncType(uint8_t t, Print_Level l);

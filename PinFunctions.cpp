@@ -19,16 +19,25 @@ int32_t GetConfigurationDataTable(uint8_t pin) {
 }
 
 boolean setMode(uint8_t pin, uint8_t mode) {
+	println_I("Setting Pin ");
+		p_int_I(pin);
+		print_I(" to New Mode ");
+		printMode(pin,mode, INFO_PRINT);
+	if(pin<2){
+		return true;
+	}
 	if (GetChannelMode(pin) == mode && startupFlag)
 		return true;
 	if (GetChannelMode(pin) == IS_SERVO) {
 		myservo[PIN_TO_SERVO(pin)].detach();
 	}
+	if(GetChannelMode(pin) == IS_DEBUG_RX || GetChannelMode(pin) == IS_DEBUG_TX){
+		return false;
+	}
 
 	_EEWriteMode(pin, mode);
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
-	println_I("New Mode set: ");
-	printMode(pin, INFO_PRINT);
+
 
 	switch (GetChannelMode(pin)) {
 	case IS_DI:
@@ -44,8 +53,14 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 		myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
 		break;
 	case IS_DEBUG_TX:
+		pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+		pinMode(PIN_TO_DIGITAL(pin-1), INPUT);
+		_EEWriteMode(pin-1, IS_DEBUG_RX);
+		break;
 	case IS_DEBUG_RX:
-		// do not change the mode of these pins
+		pinMode(PIN_TO_DIGITAL(pin+1), OUTPUT);
+		pinMode(PIN_TO_DIGITAL(pin), INPUT);
+		_EEWriteMode(pin+1, IS_DEBUG_TX);
 		break;
 	}
 
@@ -152,6 +167,9 @@ boolean GetStreamHW(uint8_t pin, uint8_t* numValues, uint8_t * data) {
 }
 
 boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
+	if(pin<2){
+		return true;
+	}
 	print_W("\r\n");
 	p_int_E(pin);
 	print_W(" Set value of pin to ");
@@ -175,6 +193,9 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 	return true;
 }
 int32_t GetChanVal(uint8_t pin) {
+	if(pin<2){
+		return 0;
+	}
 	switch (GetChannelMode(pin)) {
 	case IS_DI:
 		return digitalRead(PIN_TO_DIGITAL(pin));
@@ -194,6 +215,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 	DyioPinFunctionData = functionData;
 	int i;
 	for (i = 0; i < TOTAL_PINS; i++) {
+		println_I("Initializing ");p_int_I(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN = IS_PIN_ANALOG(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM = IS_PIN_PWM(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_UART_T = IS_PIN_DIGITAL(i)

@@ -32,10 +32,7 @@ int mystrlen(const char * s){
 	while(s[i++]);
 	return i;
 }
-
-//char * unknown = "UNKNOWN";
-void printMode(uint8_t pin, Print_Level l){
-	uint8_t mode =GetChannelMode(pin);
+void printModeLocal(uint8_t mode,  Print_Level l){
 	print_nnl("  Mode 0x",l);prHEX8(mode,l);
 
 	switch(mode){
@@ -108,5 +105,15 @@ case IS_PPM_IN				:
 		break;
 
 	}
+
+}
+
+
+//char * unknown = "UNKNOWN";
+void printMode(uint8_t pin,uint8_t newMode,  Print_Level l){
+	uint8_t mode =GetChannelMode(pin);
+	printModeLocal( mode,   l);
+	print_nnl(" new mode ",l);
+	printModeLocal( newMode,   l);
 
 }

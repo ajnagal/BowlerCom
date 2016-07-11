@@ -12,7 +12,7 @@
 extern "C"{
 #endif
 
-void printMode(uint8_t mode, Print_Level l);
+void printMode(uint8_t pin,uint8_t newMode,  Print_Level l);
 #ifdef __cplusplus
 } // extern "C"
 #endif

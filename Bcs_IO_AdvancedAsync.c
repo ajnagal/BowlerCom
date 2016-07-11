@@ -137,7 +137,7 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 void startAdvancedAsyncDefault(uint8_t pin){
 	//println_W("Starting advanced async on channel: ");p_int_W(pin);
-	int mode =GetChannelMode(pin);
+	//int mode =GetChannelMode(pin);
 
 	//getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=0xffffffff;;
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
@@ -240,7 +240,7 @@ boolean pushAsyncReady( uint8_t pin){
 			break;
 		default:
 			println_E("\nNo type defined!! chan: ");p_int_E(pin);
-			print_E(" mode: ");printMode(GetChannelMode(pin),ERROR_PRINT);
+			print_E(" mode: ");printMode(pin,GetChannelMode(pin),ERROR_PRINT);
 			print_E(" type: ");printAsyncType(pin,ERROR_PRINT);
 			startAdvancedAsyncDefault(pin);
 			break;

@@ -18,6 +18,7 @@ void putCharDebug(char a) {
 	// none
 	if (serialPort != NULL) {
 		serialPort->print(a);
+		serialPort->flush();
 	}
 
 }
@@ -102,15 +103,15 @@ void BowlerCom::addDyIO() {
 		return;
 	} else
 		addedDyIO = true;
-	//InitPinFunction(functionData);
+	println_I("Initializing Pins");
 	InitPinFunction(new DATA_STRUCT[TOTAL_PINS]);
-
+	println_I("Adding IO Namespace");
 	addNamespaceToList(get_bcsIoNamespace());
-	//println_I("Adding IO.Setmode Namespace");
+	println_I("Adding IO.Setmode Namespace");
 	addNamespaceToList(get_bcsIoSetmodeNamespace());
-	//println_I("Adding DyIO Namespace");
+	println_I("Adding DyIO Namespace");
 	addNamespaceToList(get_neuronRoboticsDyIONamespace());
-	//println_I("Adding Safe Namespace");
+	println_I("Adding Safe Namespace");
 	addNamespaceToList(get_bcsSafeNamespace());
 
 }
@@ -128,9 +129,9 @@ void BowlerCom::addDyIOPID() {
 				new DYIO_PID [NUM_PID_GROUPS],
 				new PidLimitEvent [NUM_PID_GROUPS]
 				);
-	//println_I("Adding PID Namespace");
+	println_I("Adding PID Namespace");
 	addNamespaceToList(getBcsPidNamespace());
-	//println_I("Adding DyIO PID Namespace");
+	println_I("Adding DyIO PID Namespace");
 	addNamespaceToList(get_bcsPidDypidNamespace());
 }
 void startDebugPint(SoftwareSerial * port) {

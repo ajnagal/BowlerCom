@@ -63,7 +63,7 @@ void _EEWriteMode(uint8_t pin,uint8_t mode){
 		mode = getDefaultMode( pin);
 	}
 	while(EEReadMode(pin) != mode){
-		//println_W("Mode Set Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
+		println_W("Mode Set Pin :");p_int_W(pin);printMode(pin,mode,WARN_PRINT);
 
 		eeWriteByte((uint16_t)(MODESTART+pin),mode);
 	}
