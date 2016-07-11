@@ -220,7 +220,6 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 	DyioPinFunctionData = functionData;
 	int i;
 	for (i = 0; i < TOTAL_PINS; i++) {
-		p_int_I(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN = IS_PIN_ANALOG(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM = IS_PIN_PWM(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_UART_T = IS_PIN_DIGITAL(i)
