@@ -345,6 +345,12 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
 }
 
 uint8_t getDefaultMode(uint8_t pin){
+	if(pin==0){
+		return IS_DEBUG_RX;
+	}
+	if(pin==1){
+		return IS_DEBUG_TX;
+	}
 	int i;
 	for (i = 0; i < IO_MODE_MAX; i++) {
 		if (pinHasFunction(pin, i)) {
@@ -446,6 +452,10 @@ boolean isOutputMode(uint8_t mode){
 }
 
 boolean pinHasFunction(uint8_t pin, uint8_t function) {
+	if(pin ==0)
+		return function==IS_DEBUG_RX;
+	if(pin ==1)
+			return function==IS_DEBUG_TX;
     switch (function) {
         case IS_DI:
             return IS_PIN_DIGITAL(pin);
@@ -498,12 +508,14 @@ boolean getFunctionList(BowlerPacket * Packet) {
     int chan = Packet->use.data[0];
 
     int index = 1;
-    int i = 0;
-    for (i = 0; i < IO_MODE_MAX; i++) {
-        if (pinHasFunction(chan, i)) {
-            Packet->use.data[index++] = i;
-        }
-    }
+
+	int i = 0;
+	for (i = 0; i < IO_MODE_MAX; i++) {
+		if (pinHasFunction(chan, i)) {
+			Packet->use.data[index++] = i;
+		}
+	}
+
     Packet->use.data[0] = index - 1;
     Packet->use.head.DataLegnth = 4 + index;
     FixPacket(Packet);

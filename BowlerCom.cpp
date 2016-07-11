@@ -101,8 +101,8 @@ void BowlerCom::server(void) {
 void BowlerCom::addDyIO() {
 	if (addedDyIO) {
 		return;
-	} else
-		addedDyIO = true;
+	}
+	addedDyIO = true;
 	println_I("Initializing Pins");
 	InitPinFunction(new DATA_STRUCT[TOTAL_PINS]);
 	println_I("Adding IO Namespace");
@@ -118,8 +118,8 @@ void BowlerCom::addDyIO() {
 void BowlerCom::addDyIOPID() {
 	if (addedPID) {
 		return;
-	} else
-		addedPID = true;
+	}
+	addedPID = true;
 	addDyIO();
 //	InitPID(mypidGroups,
 //			mydyPid,

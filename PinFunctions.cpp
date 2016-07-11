@@ -216,10 +216,10 @@ int32_t GetChanVal(uint8_t pin) {
 	return getDataTableCurrentValue(pin);
 }
 void InitPinFunction(DATA_STRUCT * functionData) {
+	println_W("Initializing DYIO Functions");
 	DyioPinFunctionData = functionData;
 	int i;
 	for (i = 0; i < TOTAL_PINS; i++) {
-		println_I("Initializing ");
 		p_int_I(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN = IS_PIN_ANALOG(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM = IS_PIN_PWM(i);
@@ -239,15 +239,14 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		DyioPinFunctionData[i].FUNCTION.HAS_DC_MOTOR = false;
 		DyioPinFunctionData[i].FUNCTION.HAS_PPM = false;
 	}
-
+	println_W("Initializing IO Functions");
 	InitilizeBcsIo( TOTAL_PINS, DyioPinFunctionData, &SetChanelValueHW,
 			&GetChanelValueHW, &SetAllChanelValueHW, &GetAllChanelValueHW,
 			&ConfigureChannelHW, &SetStreamHW, &GetStreamHW);
-
+	println_W("Initializing Setmode Functions");
 	InitilizeBcsIoSetmode(&setMode);
-
+	println_W("Initializing Advanced Async Functions");
 	initAdvancedAsync();  // after the IO namespace is set up
-	startupFlag = true;
 	//Initialize pina after stack is initialized
 	for (i = 0; i < TOTAL_PINS; i++) {
 		println_I("Initializing ");
@@ -268,6 +267,8 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		DyioPinFunctionData[i].PIN.currentValue = currentValue;
 		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
 	}
+	startupFlag = true;
+
 }
 
 uint8_t GetServoPos(uint8_t pin) {

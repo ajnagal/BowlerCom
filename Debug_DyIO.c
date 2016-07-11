@@ -103,6 +103,12 @@ case IS_DC_MOTOR_DIR		:
 case IS_PPM_IN				:
 		print_nnl(" IS_PPM_IN",l);
 		break;
+case IS_DEBUG_RX				:
+		print_nnl(" IS_DEBUG_RX",l);
+		break;
+case IS_DEBUG_TX				:
+		print_nnl(" IS_DEBUG_TX",l);
+		break;
 default:
 	print_nnl(" Unknown Mode 0x",l);prHEX8(mode,l);
 	}
