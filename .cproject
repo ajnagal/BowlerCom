@@ -52,6 +52,7 @@
 								</option>
 								<option id="de.innot.avreclipse.cppcompiler.option.def.621104481" name="Define Syms (-D)" superClass="de.innot.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ARDUINO=105"/>
+									<listOptionValue builtIn="false" value="ARDUINO_ARCH_AVR"/>
 								</option>
 								<inputType id="de.innot.avreclipse.cppcompiler.input.1977460538" superClass="de.innot.avreclipse.cppcompiler.input"/>
 							</tool>

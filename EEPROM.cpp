@@ -112,7 +112,7 @@ void EEWriteBaud(uint32_t val){
 
 uint8_t EEReadData(uint16_t addr){
 	uint8_t val=0;
-	if((addr+DATASTART_AVR)>=4096){
+	if((addr+DATASTART_AVR)>=(EEPROM_SIZE*4)){
 		println_E("Attempting Overwrite of EEPROM!")
 		return 0;
 	}
@@ -123,7 +123,7 @@ uint8_t EEReadData(uint16_t addr){
 	return val;
 }
 void EEWriteData(uint16_t addr,uint8_t data){
-	if((addr+DATASTART_AVR)>=4096){
+	if((addr+DATASTART_AVR)>=(EEPROM_SIZE*4)){
 		println_E("Attempting Overwrite of EEPROM!")
 		return;
 	}

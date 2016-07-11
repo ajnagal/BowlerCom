@@ -7,7 +7,15 @@
 #define comBuffSize 256
 #include <Arduino.h>
 #ifdef __cplusplus
+	#ifdef ARDUINO_ARCH_ARC32
+#if !defined(EEPROM_SIZE)
+	#include <CurieEEPROM.h>
+#endif
+	#endif
+	#ifdef ARDUINO_ARCH_AVR
 	#include <EEPROM.h>
+	#define EEPROM_SIZE 1024 //EEPROM size in dwords
+	#endif
 	#include <SoftwareSerial.h>
 	#include <Servo.h>
 #endif
