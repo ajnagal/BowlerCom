@@ -130,10 +130,6 @@ void _SetChannelMode(uint8_t pin,uint8_t mode ) {
 }
 
 uint8_t GetChannelMode(uint8_t pin) {
-    if (pin < 0 || pin > GetNumberOfIOChannels()) {
-        return 0xff;
-    }
-
     return EEReadMode(pin);
 }
 

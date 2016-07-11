@@ -33,7 +33,7 @@ int mystrlen(const char * s){
 	return i;
 }
 void printModeLocal(uint8_t mode,  Print_Level l){
-	//print_nnl("  Mode 0x",l);prHEX8(mode,l);
+	//
 
 	switch(mode){
 case NO_CHANGE	 	 		:
@@ -103,7 +103,8 @@ case IS_DC_MOTOR_DIR		:
 case IS_PPM_IN				:
 		print_nnl(" IS_PPM_IN",l);
 		break;
-
+default:
+	print_nnl(" Unknown Mode 0x",l);prHEX8(mode,l);
 	}
 
 }

@@ -20,14 +20,14 @@ int32_t GetConfigurationDataTable(uint8_t pin) {
 
 boolean setMode(uint8_t pin, uint8_t mode) {
 	println_I("Setting Pin ");
-		p_int_I(pin);
-		print_I(" to New Mode ");
-		printMode(pin,mode, INFO_PRINT);
-	if(pin<2){
+	p_int_I(pin);
+	print_I(" to New Mode ");
+	printMode(pin, mode, INFO_PRINT);
+	if (pin < 2) {
 		println_I("Bailing because this is the communications channel");
 		return true;
 	}
-	if (GetChannelMode(pin) == mode && startupFlag){
+	if (GetChannelMode(pin) == mode && startupFlag) {
 		println_I("Bailing because this mode ia already set");
 		return true;
 	}
@@ -35,14 +35,13 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 		println_I("Detaching servo");
 		myservo[PIN_TO_SERVO(pin)].detach();
 	}
-	if(GetChannelMode(pin) == IS_DEBUG_RX || GetChannelMode(pin) == IS_DEBUG_TX){
+	if (GetChannelMode(pin) == IS_DEBUG_RX || GetChannelMode(pin) == IS_DEBUG_TX) {
 		println_I("Bailing because this is the debug channel");
 		return false;
 	}
 
 	_EEWriteMode(pin, mode);
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
-
 
 	switch (GetChannelMode(pin)) {
 	case IS_DI:
@@ -59,13 +58,13 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 		break;
 	case IS_DEBUG_TX:
 		pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
-		pinMode(PIN_TO_DIGITAL(pin-1), INPUT);
-		_EEWriteMode(pin-1, IS_DEBUG_RX);
+		pinMode(PIN_TO_DIGITAL(pin - 1), INPUT);
+		_EEWriteMode(pin - 1, IS_DEBUG_RX);
 		break;
 	case IS_DEBUG_RX:
-		pinMode(PIN_TO_DIGITAL(pin+1), OUTPUT);
+		pinMode(PIN_TO_DIGITAL(pin + 1), OUTPUT);
 		pinMode(PIN_TO_DIGITAL(pin), INPUT);
-		_EEWriteMode(pin+1, IS_DEBUG_TX);
+		_EEWriteMode(pin + 1, IS_DEBUG_TX);
 		break;
 	}
 
@@ -172,7 +171,7 @@ boolean GetStreamHW(uint8_t pin, uint8_t* numValues, uint8_t * data) {
 }
 
 boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
-	if(pin<2){
+	if (pin < 2) {
 		return true;
 	}
 	print_W("\r\n");
@@ -198,7 +197,7 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 	return true;
 }
 int32_t GetChanVal(uint8_t pin) {
-	if(pin<2){
+	if (pin < 2) {
 		return 0;
 	}
 	switch (GetChannelMode(pin)) {
@@ -220,7 +219,8 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 	DyioPinFunctionData = functionData;
 	int i;
 	for (i = 0; i < TOTAL_PINS; i++) {
-		println_I("Initializing ");p_int_I(i);
+		println_I("Initializing ");
+		p_int_I(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN = IS_PIN_ANALOG(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM = IS_PIN_PWM(i);
 		DyioPinFunctionData[i].FUNCTION.HAS_UART_T = IS_PIN_DIGITAL(i)
@@ -238,6 +238,20 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		DyioPinFunctionData[i].FUNCTION.HAS_COUNTER_OUTPUT_H = false;
 		DyioPinFunctionData[i].FUNCTION.HAS_DC_MOTOR = false;
 		DyioPinFunctionData[i].FUNCTION.HAS_PPM = false;
+	}
+
+	InitilizeBcsIo( TOTAL_PINS, DyioPinFunctionData, &SetChanelValueHW,
+			&GetChanelValueHW, &SetAllChanelValueHW, &GetAllChanelValueHW,
+			&ConfigureChannelHW, &SetStreamHW, &GetStreamHW);
+
+	InitilizeBcsIoSetmode(&setMode);
+
+	initAdvancedAsync();  // after the IO namespace is set up
+	startupFlag = true;
+	//Initialize pina after stack is initialized
+	for (i = 0; i < TOTAL_PINS; i++) {
+		println_I("Initializing ");
+		p_int_I(i);
 		//Get mode from EEPROm
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
@@ -251,18 +265,9 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		} else {
 			currentValue = GetChanVal(i);
 		}
-		DyioPinFunctionData[i].PIN.currentValue= currentValue;
+		DyioPinFunctionData[i].PIN.currentValue = currentValue;
 		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
 	}
-
-	InitilizeBcsIo( TOTAL_PINS, DyioPinFunctionData, &SetChanelValueHW,
-			&GetChanelValueHW, &SetAllChanelValueHW, &GetAllChanelValueHW,
-			&ConfigureChannelHW, &SetStreamHW, &GetStreamHW);
-
-	InitilizeBcsIoSetmode(&setMode);
-
-	initAdvancedAsync();  // after the IO namespace is set up
-	startupFlag = true;
 }
 
 uint8_t GetServoPos(uint8_t pin) {
