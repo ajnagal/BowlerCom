@@ -48,24 +48,21 @@ extern "C"{
 
 // Arduino 101
 #elif  defined(__ARDUINO_ARC__)
-#if defined(NUM_ANALOG_INPUTS) && NUM_ANALOG_INPUTS == 6
-#define TOTAL_ANALOG_PINS       6
-#define TOTAL_PINS              20 // 14 digital + 6 analog
-#else
-#define TOTAL_ANALOG_PINS       8
-#define TOTAL_PINS              22 // 14 digital + 8 analog
-#endif
+#defined TOTAL_DIGITAL 14
+//analog pins plus IMU pins
+#define TOTAL_ANALOG_PINS       6+(3+3)
+#define TOTAL_PINS              TOTAL_ANALOG_PINS+TOTAL_DIGITAL
 #define VERSION_BLINK_PIN       13
 #define IS_PIN_DIGITAL(p)       ((p) >= 2 && (p) <= 19)
-#define IS_PIN_ANALOG(p)        ((p) >= 14 && (p) < 14 + TOTAL_ANALOG_PINS)
+#define IS_PIN_ANALOG(p)        ((p) >= TOTAL_DIGITAL && (p) < TOTAL_PINS)
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
 #define IS_PIN_SERVO(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SERVOS)
 #define IS_PIN_I2C(p)           ((p) == 18 || (p) == 19)
 #define PIN_TO_DIGITAL(p)       (p)
-#define PIN_TO_ANALOG(p)        ((p) - 14)
+#define PIN_TO_ANALOG(p)        ((p) - TOTAL_DIGITAL)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
-#define ARDUINO_PINOUT_OPTIMIZE 1
+
 
 // Wiring (and board)
 #elif defined(WIRING)
