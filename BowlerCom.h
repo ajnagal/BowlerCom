@@ -51,11 +51,12 @@ void startDebugPint(Stream * port);
 		byte privateRXCom[comBuffSize];
 		BYTE_FIFO_STORAGE store;
 		BowlerPacket Packet;
+		Stream * comPort;
 	private:
 		boolean addedDyIO;
 		boolean addedPID;
 		void begin_local(Stream * port);
-		Stream * comPort;
+
 	};
 #endif
 #endif
