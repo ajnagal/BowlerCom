@@ -5,7 +5,7 @@
 #include <BowlerCom.h>
 
 static BowlerCom * ref;
-static SoftwareSerial * serialPort = NULL;
+static Stream * serialPort = NULL;
 boolean comsStarted = false;
 //DATA_STRUCT functionData[TOTAL_PINS];
 //AbsPID mypidGroups[NUM_PID_GROUPS];
@@ -30,23 +30,25 @@ BowlerCom::BowlerCom()
 	ref = this;
 	addedDyIO = false;
 	addedPID = false;
+	comPort=NULL;
 	Bowler_Init();
 }
 
 /* begin method for overriding default serial bitrate */
-void BowlerCom::begin(void) {
-	begin(9600);
+void BowlerCom::begin(Stream * port) {
+	begin_local( port);
 }
 
 /* begin method for overriding default serial bitrate */
 void BowlerCom::begin(long speed) {
 	Serial.begin(speed);
 	while (!Serial);    // wait for the serial port to open
-	begin_local();
+	begin_local(&Serial);
 }
 
-void BowlerCom::begin_local() {
+void BowlerCom::begin_local(Stream * port) {
 	InitByteFifo(&store, privateRXCom, comBuffSize);
+	comPort = port;
 
 }
 void showString(PGM_P s,Print_Level l,char newLine) {
@@ -66,9 +68,9 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 	uint16_t i;
 	for (i = 0; i < datalength; i++) {
 		//Grab the response packet one byte at a time and push it out the physical layer
-		Serial.write((char) buffer[i]);
+		ref->comPort->write((char) buffer[i]);
 	}
-	Serial.flush();
+	ref->comPort->flush();
 	return true;
 }
 boolean PutBowlerPacketDummy(BowlerPacket * Packet){
@@ -79,8 +81,8 @@ boolean PutBowlerPacketDummy(BowlerPacket * Packet){
 void BowlerCom::server(void) {
 	byte err;
 	byte newByte = 0;
-	while (Serial.available() > 0) {
-		newByte = Serial.read();
+	while (comPort->available() > 0) {
+		newByte = comPort->read();
 		//println_I("Adding byte: ");prHEX8(newByte,INFO_PRINT);
 		FifoAddByte(&store, (char) newByte, &err);
 	}
@@ -134,7 +136,7 @@ void BowlerCom::addDyIOPID() {
 	println_I("Adding DyIO PID Namespace");
 	addNamespaceToList(get_bcsPidDypidNamespace());
 }
-void startDebugPint(SoftwareSerial * port) {
+void startDebugPint(Stream * port) {
 	if (port == NULL)
 		return;
 	serialPort = port;

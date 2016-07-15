@@ -145,8 +145,8 @@ uint8_t eeReadByte(uint16_t addr){
 //	EECR |= (1<<EERE);
 //	/* Return data from Data Register */
 //	return EEDR;
-	if((EEPROM_SIZE) >=addr ){
-			println_E("Writing off eeprom addr: ");p_int_W(addr);
+	if((EEPROM_SIZE) <=addr ){
+			println_E("Reading off eeprom addr: ");p_int_W(addr);
 			return 0;
 		}
 	return EEPROM.read(addr);
@@ -155,7 +155,7 @@ uint8_t eeReadByte(uint16_t addr){
 void eeWriteByte(uint16_t addr,uint8_t val){
 	if (eeReadByte(addr)==val)
 		return;
-	if((EEPROM_SIZE) >=addr ){
+	if((EEPROM_SIZE) <=addr ){
 		println_E("Writing off eeprom addr: ");p_int_W(addr);
 		return;
 	}

@@ -19,56 +19,65 @@ int32_t GetConfigurationDataTable(uint8_t pin) {
 }
 
 boolean setMode(uint8_t pin, uint8_t mode) {
-	println_I("Setting Pin ");
-	p_int_I(pin);
-	print_I(" to New Mode ");
-	printMode(pin, mode, INFO_PRINT);
-	if (pin < 2) {
-		println_I("Bailing because this is the communications channel");
+	if (pinHasFunction(pin, mode)) {
+		println_I("Setting Pin ");
+		p_int_I(pin);
+		print_I(" to New Mode ");
+		printMode(pin, mode, INFO_PRINT);
+		if (pin < 2) {
+			println_I("Bailing because this is the communications channel");
+			return true;
+		}
+		if (GetChannelMode(pin) == mode && startupFlag) {
+			println_I("Bailing because this mode ia already set");
+			return true;
+		}
+		if (GetChannelMode(pin) == IS_SERVO) {
+			println_I("Detaching servo");
+			myservo[PIN_TO_SERVO(pin)].detach();
+		}
+		if (GetChannelMode(pin) == IS_DEBUG_RX
+				|| GetChannelMode(pin) == IS_DEBUG_TX) {
+			println_I("Bailing because this is the debug channel");
+			return false;
+		}
+
+		_EEWriteMode(pin, mode);
+		//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+
+		switch (GetChannelMode(pin)) {
+		case IS_DI:
+			pinMode(PIN_TO_DIGITAL(pin), INPUT);
+			digitalWrite(pin, HIGH);       // turn on pullup resistors
+			break;
+		case IS_DO:
+			pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+			break;
+		case IS_ANALOG_IN:
+			// arduino analogs are not changable
+			break;
+		case IS_SERVO:
+			myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
+			break;
+		case IS_DEBUG_TX:
+			pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+			pinMode(PIN_TO_DIGITAL(pin - 1), INPUT);
+			_EEWriteMode(pin - 1, IS_DEBUG_RX);
+			break;
+		case IS_DEBUG_RX:
+			pinMode(PIN_TO_DIGITAL(pin + 1), OUTPUT);
+			pinMode(PIN_TO_DIGITAL(pin), INPUT);
+			_EEWriteMode(pin + 1, IS_DEBUG_TX);
+			break;
+		}
+
 		return true;
 	}
-	if (GetChannelMode(pin) == mode && startupFlag) {
-		println_I("Bailing because this mode ia already set");
-		return true;
-	}
-	if (GetChannelMode(pin) == IS_SERVO) {
-		println_I("Detaching servo");
-		myservo[PIN_TO_SERVO(pin)].detach();
-	}
-	if (GetChannelMode(pin) == IS_DEBUG_RX || GetChannelMode(pin) == IS_DEBUG_TX) {
-		println_I("Bailing because this is the debug channel");
-		return false;
-	}
-
-	_EEWriteMode(pin, mode);
-	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
-
-	switch (GetChannelMode(pin)) {
-	case IS_DI:
-		pinMode(PIN_TO_DIGITAL(pin), INPUT);
-		break;
-	case IS_DO:
-		pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
-		break;
-	case IS_ANALOG_IN:
-		// arduino analogs are not changable
-		break;
-	case IS_SERVO:
-		myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
-		break;
-	case IS_DEBUG_TX:
-		pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
-		pinMode(PIN_TO_DIGITAL(pin - 1), INPUT);
-		_EEWriteMode(pin - 1, IS_DEBUG_RX);
-		break;
-	case IS_DEBUG_RX:
-		pinMode(PIN_TO_DIGITAL(pin + 1), OUTPUT);
-		pinMode(PIN_TO_DIGITAL(pin), INPUT);
-		_EEWriteMode(pin + 1, IS_DEBUG_TX);
-		break;
-	}
-
-	return true;
+	println_E("CAN NOT BE MODE Pin ");
+	p_int_E(pin);
+	print_E(" to New Mode ");
+	printMode(pin, mode, ERROR_PRINT);
+	return false;
 }
 
 /**
@@ -255,7 +264,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		//Get mode from EEPROm
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
-		setMode(i, mode);
+		//setMode(i, mode);
 
 		// Get value using hardware setting.
 		int32_t currentValue;

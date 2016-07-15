@@ -32,7 +32,7 @@
 /**
  * Start the serial debugger
  */
-void startDebugPint(SoftwareSerial * port);
+void startDebugPint(Stream * port);
 /**
  * BowlerCom Class
  * This class is for handeling the Bowler Communications on a stream.
@@ -42,7 +42,7 @@ void startDebugPint(SoftwareSerial * port);
 		BowlerCom();
 		void server(void);
 		/* Arduino constructors */
-		void begin();
+		void begin(Stream * port);
 		void begin(long);
 		boolean PutBowlerPacketLocal(BowlerPacket * p);
 		void addDyIO();
@@ -54,7 +54,8 @@ void startDebugPint(SoftwareSerial * port);
 	private:
 		boolean addedDyIO;
 		boolean addedPID;
-		void begin_local();
+		void begin_local(Stream * port);
+		Stream * comPort;
 	};
 #endif
 #endif
