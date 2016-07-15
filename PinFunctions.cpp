@@ -250,6 +250,8 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 	for (i = 0; i < TOTAL_PINS; i++) {
 		println_I("Initializing ");
 		p_int_I(i);
+		print_I(" of ");
+		p_int_I(TOTAL_PINS);
 		//Get mode from EEPROm
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
