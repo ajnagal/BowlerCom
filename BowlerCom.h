@@ -44,18 +44,17 @@ void startDebugPint(SoftwareSerial * port);
 		/* Arduino constructors */
 		void begin();
 		void begin(long);
-		void begin(Stream *s);
 		boolean PutBowlerPacketLocal(BowlerPacket * p);
 		void addDyIO();
 		void addDyIOPID();
 
-		Stream * BowlerSerial;
 		byte privateRXCom[comBuffSize];
 		BYTE_FIFO_STORAGE store;
 		BowlerPacket Packet;
 	private:
 		boolean addedDyIO;
 		boolean addedPID;
+		void begin_local();
 	};
 #endif
 #endif

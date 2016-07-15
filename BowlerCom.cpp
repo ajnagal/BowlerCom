@@ -31,7 +31,6 @@ BowlerCom::BowlerCom()
 	addedDyIO = false;
 	addedPID = false;
 	Bowler_Init();
-	begin();
 }
 
 /* begin method for overriding default serial bitrate */
@@ -43,11 +42,10 @@ void BowlerCom::begin(void) {
 void BowlerCom::begin(long speed) {
 	Serial.begin(speed);
 	while (!Serial);    // wait for the serial port to open
-	begin(&Serial);
+	begin_local();
 }
 
-void BowlerCom::begin(Stream *s) {
-	BowlerSerial = s;
+void BowlerCom::begin_local() {
 	InitByteFifo(&store, privateRXCom, comBuffSize);
 
 }
@@ -68,9 +66,9 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 	uint16_t i;
 	for (i = 0; i < datalength; i++) {
 		//Grab the response packet one byte at a time and push it out the physical layer
-		ref->BowlerSerial->write((char) buffer[i]);
+		Serial.write((char) buffer[i]);
 	}
-	ref->BowlerSerial->flush();
+	Serial.flush();
 	return true;
 }
 boolean PutBowlerPacketDummy(BowlerPacket * Packet){
@@ -82,7 +80,7 @@ void BowlerCom::server(void) {
 	byte err;
 	byte newByte = 0;
 	while (Serial.available() > 0) {
-		newByte = BowlerSerial->read();
+		newByte = Serial.read();
 		//println_I("Adding byte: ");prHEX8(newByte,INFO_PRINT);
 		FifoAddByte(&store, (char) newByte, &err);
 	}
