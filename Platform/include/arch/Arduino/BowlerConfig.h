@@ -48,7 +48,7 @@ extern "C"{
 
 // Arduino 101
 #elif  defined(__ARDUINO_ARC__)
-#defined TOTAL_DIGITAL 14
+#define TOTAL_DIGITAL 14
 //analog pins plus IMU pins
 #define TOTAL_ANALOG_PINS       6+(3+3)
 #define TOTAL_PINS              TOTAL_ANALOG_PINS+TOTAL_DIGITAL
