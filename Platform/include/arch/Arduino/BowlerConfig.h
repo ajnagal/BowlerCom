@@ -50,7 +50,7 @@ extern "C"{
 #elif  defined(__ARDUINO_ARC__)
 #define TOTAL_DIGITAL 14
 //analog pins plus IMU pins
-#define TOTAL_ANALOG_PINS       6+(3+3)
+#define TOTAL_ANALOG_PINS       6+6
 #define TOTAL_PINS              TOTAL_ANALOG_PINS+TOTAL_DIGITAL
 #define VERSION_BLINK_PIN       13
 #define IS_PIN_DIGITAL(p)       ((p) >= 2 && (p) <= 19)

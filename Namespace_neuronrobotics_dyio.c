@@ -92,8 +92,9 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 //    	UpstreamPushSPIlStream();
 //	}
 	int i = 0;
+	updateServos();
 	for (i = 0; i < GetNumberOfIOChannels(); i++) {
-		updateServos( i);
+
 		setDataTableCurrentValue(i, GetChanVal(i));
 	}
 

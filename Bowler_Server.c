@@ -26,7 +26,7 @@ MAC_ADDR MyMAC = {
     {0x74, 0xf7, 0x26, 0x01, 0x01, 0x01}
 };
 
-boolean ignoreAddressing = false;
+boolean ignoreAddressing = true;
 
 MAC_ADDR * getMac(){
 	return &MyMAC;

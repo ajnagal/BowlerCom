@@ -1,7 +1,12 @@
 #include <BowlerCom.h>
-/**
- * Private functions
- */
+#ifdef ARDUINO_ARCH_ARC32
+#include "CurieIMU.h"
+#endif
+int ax, ay, az;         // accelerometer values
+int gx, gy, gz;         // gyrometer values
+		/**
+		 * Private functions
+		 */
 uint8_t getInterpolatedPin(uint8_t pin);
 void SetServoPos(uint8_t pin, uint16_t val, float time);
 void SetServoPosDataTable(uint8_t pin, uint16_t val, float time);
@@ -29,17 +34,12 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 			return true;
 		}
 		if (GetChannelMode(pin) == mode && startupFlag) {
-			println_I("Bailing because this mode ia already set");
+			println_I("Bailing because this mode is already set");
 			return true;
 		}
 		if (GetChannelMode(pin) == IS_SERVO) {
 			println_I("Detaching servo");
 			myservo[PIN_TO_SERVO(pin)].detach();
-		}
-		if (GetChannelMode(pin) == IS_DEBUG_RX
-				|| GetChannelMode(pin) == IS_DEBUG_TX) {
-			println_I("Bailing because this is the debug channel");
-			return false;
 		}
 
 		_EEWriteMode(pin, mode);
@@ -60,13 +60,13 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 			myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
 			break;
 		case IS_DEBUG_TX:
-			pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
-			pinMode(PIN_TO_DIGITAL(pin - 1), INPUT);
+//			pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+//			pinMode(PIN_TO_DIGITAL(pin - 1), INPUT);
 			_EEWriteMode(pin - 1, IS_DEBUG_RX);
 			break;
 		case IS_DEBUG_RX:
-			pinMode(PIN_TO_DIGITAL(pin + 1), OUTPUT);
-			pinMode(PIN_TO_DIGITAL(pin), INPUT);
+//			pinMode(PIN_TO_DIGITAL(pin + 1), OUTPUT);
+//			pinMode(PIN_TO_DIGITAL(pin), INPUT);
 			_EEWriteMode(pin + 1, IS_DEBUG_TX);
 			break;
 		}
@@ -195,7 +195,7 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 	case IS_ANALOG_IN:
 		// arduino analogs are not changable
 	case IS_SERVO:
-		myservo[PIN_TO_SERVO(pin)].write(bval);
+		SetServoPos(pin, bval, time);
 		break;
 	case IS_DEBUG_TX:
 	case IS_DEBUG_RX:
@@ -213,7 +213,23 @@ int32_t GetChanVal(uint8_t pin) {
 	case IS_DI:
 		return digitalRead(PIN_TO_DIGITAL(pin));
 	case IS_ANALOG_IN:
-		return analogRead(PIN_TO_ANALOG(pin));
+		if (PIN_TO_ANALOG(pin) < 6)
+			return analogRead(PIN_TO_ANALOG(pin));
+		switch (PIN_TO_ANALOG(pin) - 6) {
+		case 0:
+			return ax;
+		case 1:
+			return ay;
+		case 2:
+			return az;
+		case 3:
+			return gx;
+		case 4:
+			return gy;
+		case 5:
+			return gz;
+		}
+		break;
 	case IS_SERVO:
 		return GetServoPos(pin);
 	case IS_DEBUG_TX:
@@ -264,7 +280,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		//Get mode from EEPROm
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
-		//setMode(i, mode);
+		setMode(i, mode);
 
 		// Get value using hardware setting.
 		int32_t currentValue;
@@ -278,7 +294,46 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
 	}
 	startupFlag = true;
+#ifdef ARDUINO_ARCH_ARC32
+	// initialize device
+	println_I("Initializing IMU device...");
+	CurieIMU.begin();
 
+	// verify connection
+	println_I("Testing device connections...");
+	if (CurieIMU.begin()) {
+		println_I("CurieIMU connection successful");
+	} else {
+		println_E("CurieIMU connection failed");
+	}
+	println_I("About to calibrate. Make sure your board is stable and upright");
+	delay(5000);
+
+	// The board must be resting in a horizontal position for
+	// the following calibration procedure to work correctly!
+	println_I("Starting Gyroscope calibration and enabling offset compensation...");
+	CurieIMU.autoCalibrateGyroOffset();
+	print_I(" Done");
+
+	println_I("Starting Acceleration calibration and enabling offset compensation...");
+	CurieIMU.autoCalibrateAccelerometerOffset(X_AXIS, 0);
+	CurieIMU.autoCalibrateAccelerometerOffset(Y_AXIS, 0);
+	CurieIMU.autoCalibrateAccelerometerOffset(Z_AXIS, 1);
+	print_I(" Done");
+
+	println_I("Internal sensor offsets AFTER calibration...");
+	p_int_I(CurieIMU.getAccelerometerOffset(X_AXIS));
+	print_I("\t");// -76
+	p_int_I(CurieIMU.getAccelerometerOffset(Y_AXIS));
+	print_I("\t");// -2359
+	p_int_I(CurieIMU.getAccelerometerOffset(Z_AXIS));
+	print_I("\t");// 1688
+	p_int_I(CurieIMU.getGyroOffset(X_AXIS));
+	print_I("\t");// 0
+	p_int_I(CurieIMU.getGyroOffset(Y_AXIS));
+	print_I("\t");// 0
+	p_int_I(CurieIMU.getGyroOffset(Z_AXIS));
+#endif
 }
 
 uint8_t GetServoPos(uint8_t pin) {
@@ -289,10 +344,15 @@ void SetServoPos(uint8_t pin, uint16_t val, float time) {
 
 	getInterpolatedPin(pin);
 }
-void updateServos(int i) {
+void updateServos() {
+#ifdef ARDUINO_ARCH_ARC32
+	CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
+#endif
 
-	if (GetChannelMode(i) == IS_SERVO)
-		myservo[PIN_TO_SERVO(i)].write(getInterpolatedPin(PIN_TO_SERVO(i)));
+	for (int i = 0; i < MAX_SERVOS; i++) {
+		if (GetChannelMode(i) == IS_SERVO)
+			myservo[PIN_TO_SERVO(i)].write(getInterpolatedPin(PIN_TO_SERVO(i)));
+	}
 
 }
 

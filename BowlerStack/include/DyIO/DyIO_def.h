@@ -140,7 +140,7 @@ int32_t GetConfigurationDataTable(uint8_t pin);
 /**
  * A function for updating the servos intrpolation state
  */
-void updateServos(int pinIndex);
+void updateServos();
 /**
  * A function for reading the state of the interpolation stack
  */

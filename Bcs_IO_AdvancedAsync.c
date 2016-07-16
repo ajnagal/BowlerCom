@@ -201,11 +201,11 @@ boolean pushAsyncReady( uint8_t pin){
 		case NOTEQUAL:
 			//
 			if(aval != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
-				println_I("not equ ");p_int_I(pin);
-				print_I("\t");
-				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal);
-				print_I("\t");
-				p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+				//println_I("not equ ");p_int_I(pin);
+				//print_I("\t");
+				//p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal);
+				//print_I("\t");
+				//p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = aval;
 				return true; 
 			}
@@ -215,13 +215,13 @@ boolean pushAsyncReady( uint8_t pin){
 			db = getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval;
 
 			if(!bound(last,aval,db,db)){
-				println_I("deadband");p_int_I(pin);
+				//println_I("deadband");p_int_I(pin);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=aval;
 				return true; 
 			}
 			break;
 		case THRESHHOLD:
-			println_I("treshhold");p_int_I(pin);
+			//println_I("treshhold");p_int_I(pin);
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatathreshholdval;
 

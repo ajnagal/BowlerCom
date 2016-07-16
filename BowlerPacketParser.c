@@ -143,7 +143,7 @@ void FixPacket(BowlerPacket * Packet){
 boolean PutBowlerPacket(BowlerPacket * Packet){
 	Packet->use.head.ResponseFlag=1;
 	FixPacket(Packet);
-	if(Packet->use.head.Method ==BOWLER_ASYN)
-		printPacket(Packet,WARN_PRINT);
+//	if(Packet->use.head.Method ==BOWLER_ASYN)
+//		printPacket(Packet,WARN_PRINT);
 	return putStream(Packet->stream,GetPacketLegnth(Packet));
 }

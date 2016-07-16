@@ -6,7 +6,9 @@
 
 static BowlerCom * ref;
 static Stream * serialPort = NULL;
-boolean comsStarted = false;
+
+static Stream * comPort = NULL;
+static boolean comsStarted = false;
 //DATA_STRUCT functionData[TOTAL_PINS];
 //AbsPID mypidGroups[NUM_PID_GROUPS];
 //DYIO_PID mydyPid[NUM_PID_GROUPS];
@@ -68,9 +70,12 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 	uint16_t i;
 	for (i = 0; i < datalength; i++) {
 		//Grab the response packet one byte at a time and push it out the physical layer
-		ref->comPort->write((char) buffer[i]);
+		comPort->write((char) buffer[i]);
 	}
-	ref->comPort->flush();
+	comPort->flush();
+	BowlerPacket* Packet = (BowlerPacket*)buffer;
+	if(Packet->use.head.Method!= BOWLER_ASYN)
+		printPacket(Packet,INFO_PRINT);
 	return true;
 }
 boolean PutBowlerPacketDummy(BowlerPacket * Packet){
@@ -87,12 +92,15 @@ void BowlerCom::server(void) {
 		FifoAddByte(&store, (char) newByte, &err);
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
+		printPacket(&Packet,WARN_PRINT);
 		//Now the Packet struct contains the parsed packet data
-		Process_Self_Packet(&Packet);
+		process(&Packet);
+
 		// The call backs for processing the packet have been called
 		// and the Packet struct now contains the data
 		// to be sent back to the client as a response.
 		PutBowlerPacket(&Packet);
+
 		comsStarted=true;
 	}
 	if(comsStarted)
@@ -127,6 +135,7 @@ void BowlerCom::addDyIOPID() {
 //			mydyPid,
 //			mylimits
 //			);
+	println_I("Initializing PID");
 	InitPID(new AbsPID [NUM_PID_GROUPS],
 				new DYIO_PID [NUM_PID_GROUPS],
 				new PidLimitEvent [NUM_PID_GROUPS]
