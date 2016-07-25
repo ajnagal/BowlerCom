@@ -47,17 +47,17 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 
 		switch (GetChannelMode(pin)) {
 		case IS_DI:
-			pinMode(PIN_TO_DIGITAL(pin), INPUT);
+			//pinMode(PIN_TO_DIGITAL(pin), INPUT);
 			digitalWrite(pin, HIGH);       // turn on pullup resistors
 			break;
 		case IS_DO:
-			pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+			//pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
 			break;
 		case IS_ANALOG_IN:
 			// arduino analogs are not changable
 			break;
 		case IS_SERVO:
-			myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
+			//myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
 			break;
 		case IS_DEBUG_TX:
 //			pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
