@@ -37,7 +37,7 @@ void setup() {
 
   //com.addDyIOPID();
 
-  println_I("Starting DyIO");
+  println_E("Starting DyIO");
  
 }
 
