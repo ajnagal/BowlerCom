@@ -1,5 +1,6 @@
 #ifdef ARDUINO_ARCH_ARC32
 #include <CurieEEPROM.h>
+#include <CurieBLE.h>
 #endif
 #ifdef ARDUINO_ARCH_AVR 
 #include <EEPROM.h>
@@ -35,7 +36,7 @@ void setup() {
   // start dyio framework and load DyIO namespace
   com.addDyIO();  
 
-  //com.addDyIOPID();
+  com.addDyIOPID();
 
   println_E("Starting DyIO");
  

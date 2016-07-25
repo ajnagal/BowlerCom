@@ -12,6 +12,7 @@
 #if !defined(EEPROM_SIZE)
 	#include <CurieEEPROM.h>
 #endif
+#include <CurieBLE.h>
 	#endif
 	#ifdef ARDUINO_ARCH_AVR
 	#include <EEPROM.h>
