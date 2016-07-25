@@ -213,6 +213,7 @@ int32_t GetChanVal(uint8_t pin) {
 	case IS_DI:
 		return digitalRead(PIN_TO_DIGITAL(pin));
 	case IS_ANALOG_IN:
+#ifdef ARDUINO_ARCH_ARC32
 		if (PIN_TO_ANALOG(pin) < 6)
 			return analogRead(PIN_TO_ANALOG(pin));
 		switch (PIN_TO_ANALOG(pin) - 6) {
@@ -229,6 +230,9 @@ int32_t GetChanVal(uint8_t pin) {
 		case 5:
 			return gz;
 		}
+#else
+		return analogRead(PIN_TO_ANALOG(pin));
+#endif
 		break;
 	case IS_SERVO:
 		return GetServoPos(pin);
@@ -345,6 +349,7 @@ void SetServoPos(uint8_t pin, uint16_t val, float time) {
 	getInterpolatedPin(pin);
 }
 void updateServos() {
+	//println_E("Update");
 #ifdef ARDUINO_ARCH_ARC32
 	CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
 #endif

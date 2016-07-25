@@ -12,6 +12,8 @@ extern "C"{
 #define EndCritical()   interrupts()
 
 
+
+
 /* Borrwoing heavily from Boards.h - Hardware Abstraction Layer for Firmata library */
 // Normally Servo.h must be included before Firmata.h (which then includes
 // this file).  If Servo.h wasn't included, this allows the code to still
@@ -215,6 +217,14 @@ extern "C"{
 	 * print the null terminated string with a newline inserted at the begining of the string
 	 */
 	#define b_println(A,B) showString(PSTR(A),B,1)
+#endif
+
+
+#if (TOTAL_PINS*4+2)>FullPacketDataSize
+	#warning This device has too many pins TOTAL_PINS
+	#undef TOTAL_PINS
+	#define TOTAL_PINS ((FullPacketDataSize-2)/4)
+
 #endif
 
 #ifdef __cplusplus

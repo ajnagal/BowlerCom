@@ -5,6 +5,7 @@
 #ifndef ARDUBCS_H
 #define ARDUBCS_H
 #define comBuffSize 256
+
 #include <Arduino.h>
 #ifdef __cplusplus
 	#ifdef ARDUINO_ARCH_ARC32
