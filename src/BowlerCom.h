@@ -51,6 +51,17 @@ void startDebugPint(Stream * port);
 		byte privateRXCom[comBuffSize];
 		BYTE_FIFO_STORAGE store;
 		BowlerPacket Packet;
+		boolean SetChanVal(uint8_t pin, int32_t bval, float time);
+		int32_t GetChanVal(uint8_t pin);
+		/**
+		 * This Function is used to alter the mode of the pin (See DYIO_def.h for modes)
+		 * Setting the higest bit (|=0x80) will enable the mode as async
+		 *
+		 * @param pin The pin refers to the dyio channel to be altered
+		 * @param mode the mode to set the pin to
+		 * @return If the mode change was successfull
+		 */
+		boolean setMode(uint8_t pin,uint8_t mode);
 	private:
 		boolean addedDyIO;
 		boolean addedPID;

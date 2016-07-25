@@ -35,6 +35,24 @@ BowlerCom::BowlerCom()
 	comPort=NULL;
 	Bowler_Init();
 }
+/**
+ * This Function is used to alter the mode of the pin (See DYIO_def.h for modes)
+ * Setting the higest bit (|=0x80) will enable the mode as async
+ *
+ * @param pin The pin refers to the dyio channel to be altered
+ * @param mode the mode to set the pin to
+ * @return If the mode change was successfull
+ */
+boolean BowlerCom::setMode(uint8_t pin,uint8_t mode){
+	return setMode(pin,mode);
+}
+
+boolean BowlerCom::SetChanVal(uint8_t pin, int32_t bval, float time){
+	return SetChanVal(pin,bval,time);
+}
+int32_t BowlerCom::GetChanVal(uint8_t pin){
+	return GetChanVal(pin);
+}
 
 /* begin method for overriding default serial bitrate */
 void BowlerCom::begin(Stream * port) {

@@ -12,9 +12,10 @@
  */
  int baudrate = 9600;
 #include <BowlerCom.h>
-
+int txPin =11;
+int rxPin =10;
 BowlerCom com;
-SoftwareSerial mySerial(10,11); // RX, TX
+SoftwareSerial mySerial(rxPin,txPin); // RX, TX
 
 boolean on=false;
 
@@ -29,6 +30,10 @@ void setup() {
   setPrintLevelInfoPrint();
   
   println_E("Adding namespaces");
+  // ensure DyIO leaves these pins alone
+  _EEWriteMode(txPin, IS_DEBUG_TX);
+  _EEWriteMode(rxPin, IS_DEBUG_RX);
+  // start dyio framework and load DyIO namespace
   com.addDyIO();  
   //setMode(11,IS_DEBUG_TX);
   setMode(13,IS_DO);
@@ -40,10 +45,8 @@ void setup() {
 
 void loop() {
   com.server();
-  SetChanVal(13, on?1:0, 0);
+  SetChanVal(13, (on=!on)?1:0, 0);
   
-  //on=!on;
   //println_I("Bowlewr Server");
 }
-
 
