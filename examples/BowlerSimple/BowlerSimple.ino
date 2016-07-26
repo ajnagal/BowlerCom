@@ -18,7 +18,8 @@ void setup() {
   com.begin(&Serial);
   //pass the printing stream to the printing interface
   startDebugPint(&mySerial);
- 
+
+  setPrintLevelErrorPrint();
 }
 
 void loop() {

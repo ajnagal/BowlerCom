@@ -58,6 +58,7 @@ void setup() {
 
 	startDebugPint(&mySerial);
 
+	  setPrintLevelErrorPrint();
 	// add the new RPC to its namespace
 	addRpcToNamespace(&testns, &test_ns_test_get);
 	//add namespace to stack
