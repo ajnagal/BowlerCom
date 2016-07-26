@@ -14,8 +14,9 @@ void setup() {
   mySerial.begin(baudrate);
   Serial.begin(baudrate);
   while (!Serial ||!mySerial );    // wait for the serial port to open
+  //Pass the communications stream to Bowler Server
   com.begin(&Serial);
-  
+  //pass the printing stream to the printing interface
   startDebugPint(&mySerial);
  
 }
