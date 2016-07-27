@@ -55,8 +55,11 @@ void setup() {
 	com.begin(&Serial);
 
 	startDebugPint(&mySerial);
-
+	//setPrintLevelInfoPrint();
+	//setPrintLevelWarningPrint();
 	setPrintLevelErrorPrint();
+	//setPrintLevelNoPrint();
+	
 	//Load the namespace data
 	testns.rpcSet = NULL;
 	testns.asyncEventCheck = NULL;//a function pointer for calling every time the server is called

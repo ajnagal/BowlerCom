@@ -91,7 +91,7 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 		comPort->write((char) buffer[i]);
 	}
 	comPort->flush();
-	BowlerPacket* Packet = (BowlerPacket*) buffer;
+//	BowlerPacket* Packet = (BowlerPacket*) buffer;
 //	if(Packet->use.head.Method!= BOWLER_ASYN)
 //		printPacket(Packet,INFO_PRINT);
 	return true;
@@ -118,11 +118,11 @@ void BowlerCom::server(void) {
 		// and the Packet struct now contains the data
 		// to be sent back to the client as a response.
 		PutBowlerPacket(&Packet);
-		if (Packet.use.head.RPC != GetRPCValue("_pwr")
-				&& Packet.use.head.RPC != GetRPCValue("_png")
-				&& Packet.use.head.RPC != GetRPCValue("_rpc") &&
-				Packet.use.head.RPC != GetRPCValue("_nms") &&
-				Packet.use.head.RPC != GetRPCValue("args")) {//Ignore Power Packet
+		if (Packet.use.head.RPC != GetRPCValue((char*)"_pwr")
+				&& Packet.use.head.RPC != GetRPCValue((char*)"_png")
+				&& Packet.use.head.RPC != GetRPCValue((char*)"_rpc") &&
+				Packet.use.head.RPC != GetRPCValue((char*)"_nms") &&
+				Packet.use.head.RPC != GetRPCValue((char*)"args")) {//Ignore Power Packet
 			b_println("Response:", INFO_PRINT);
 			printPacket(&Packet, INFO_PRINT);
 		}
