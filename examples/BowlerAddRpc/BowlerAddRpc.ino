@@ -4,16 +4,17 @@
  */
 int baudrate = 9600;
 #include <BowlerCom.h>
+ 
 int txPin = 11;
 int rxPin = 10;
 BowlerCom com;
 SoftwareSerial mySerial(rxPin, txPin); // RX, TX
 
 #define comBuffSize 256
-static BYTE privateRXCom[comBuffSize];
-static BYTE_FIFO_STORAGE store;
-static BYTE err, i;
-static BowlerPacket Packet;
+uint8_t privateRXCom[comBuffSize];
+BYTE_FIFO_STORAGE store;
+uint8_t err, i;
+BowlerPacket Packet;
 boolean processTest(BowlerPacket * Packet) {
 	// process packet here
 	uint8_t i = 0;
@@ -31,22 +32,9 @@ boolean processTest(BowlerPacket * Packet) {
 	Packet->use.data[1] = 1; // set the boolean as 1 or 0
 	Packet->use.data[2] = size; // set the size of the array of floats
 }
-NAMESPACE_LIST testns = { "test.ns.*;1.0;;", // The string defining the namespace
-		NULL, // the first element in the RPC list
-		NULL, // async for this namespace, no async yet
-		NULL // no initial elements to the other namesapce field.
-		};
-RPC_LIST test_ns_test_get = { BOWLER_GET, "test", &processTest,
-// see c-bowler/BowlerStack/include/Bowler/Defines.h for all datatypes
-		{ BOWLER_FIXED1K, // fixed point value scaled by 1000 to an integer
-				BOWLER_I32STR, // a list of numbers as 32 bit signed integers
-				0 }, // receive arguments
-		BOWLER_POST, // response method
-		{ BOWLER_I08, //8 bit ints
-				BOWLER_BOOL, // boolean values
-				BOWLER_FIXED1K_STR, 0 }, // Response arguments
-		NULL //next list element, null when declared
-		};
+
+NAMESPACE_LIST testns;
+RPC_LIST test_ns_test_get;
 
 void setup() {
 
@@ -58,7 +46,35 @@ void setup() {
 
 	startDebugPint(&mySerial);
 
-	  setPrintLevelErrorPrint();
+	setPrintLevelErrorPrint();
+	//Load the namespace data
+	testns.rpcSet=NULL;
+	testns.asyncEventCheck=NULL;
+	testns.next=NULL;
+	strcpy( testns.namespaceString, "test.ns.*;1.0;;" );
+	//Load the RPC data
+	//This is the bowler method for this RPC
+	test_ns_test_get.bowlerMethod=BOWLER_GET;
+	//This is the callback function pointer for execution of the method
+	test_ns_test_get.callback = &processTest;
+		//This is the array of argument data types
+	const char arguments[] ={ BOWLER_FIXED1K, // fixed point value scaled by 1000 to an integer
+			BOWLER_I32STR, // a list of numbers as 32 bit signed integers
+			0 };
+	strcpy((char*) test_ns_test_get.arguments, arguments );
+		//This is the bowler method for this RPC
+	test_ns_test_get.responseMethod = BOWLER_POST;
+		//This is the array of argument data types
+	const char responseArguments[] = { BOWLER_I08, //8 bit ints
+			BOWLER_BOOL, // boolean values
+			BOWLER_FIXED1K_STR, 0 };
+	strcpy((char*)test_ns_test_get.responseArguments,responseArguments);
+		
+	//This is the linked list field
+	test_ns_test_get.next =  NULL;
+	//This is the 4 byte code for of the RPC
+	strcpy( (char*)test_ns_test_get.rpc, "test" );
+	
 	// add the new RPC to its namespace
 	addRpcToNamespace(&testns, &test_ns_test_get);
 	//add namespace to stack
