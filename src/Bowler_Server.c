@@ -159,7 +159,7 @@ boolean process(BowlerPacket * Packet) {
     if (Packet->use.head.RPC != GetRPCValue("_pwr") &&
             Packet->use.head.RPC != GetRPCValue("_png") &&
             Packet->use.head.RPC != GetRPCValue("_rpc") &&
-                        Packet->use.head.RPC != GetRPCValue("_nms") &&
+                       // Packet->use.head.RPC != GetRPCValue("_nms") &&
                         Packet->use.head.RPC != GetRPCValue("args")
             ) {//Ignore Power Packet
         b_println("Got:", INFO_PRINT);
