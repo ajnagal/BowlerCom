@@ -4,7 +4,7 @@
  */
 int baudrate = 9600;
 #include <BowlerCom.h>
- 
+
 int txPin = 11;
 int rxPin = 10;
 BowlerCom com;
@@ -46,40 +46,39 @@ void setup() {
 
 	startDebugPint(&mySerial);
 
-	setPrintLevelErrorPrint();
+	//setPrintLevelErrorPrint();
 	//Load the namespace data
-	testns.rpcSet=NULL;
-	testns.asyncEventCheck=NULL;
-	testns.next=NULL;
-	strcpy( testns.namespaceString, "test.ns.*;1.0;;" );
+	testns.rpcSet = NULL;
+	testns.asyncEventCheck = NULL;//a function pointer for calling every time the server is called
+	testns.next = NULL;
+	strcpy(testns.namespaceString, "test.ns.*;1.0;;");
 	//Load the RPC data
 	//This is the bowler method for this RPC
-	test_ns_test_get.bowlerMethod=BOWLER_GET;
+	test_ns_test_get.bowlerMethod = BOWLER_GET;
 	//This is the callback function pointer for execution of the method
 	test_ns_test_get.callback = &processTest;
-		//This is the array of argument data types
-	const char arguments[] ={ BOWLER_FIXED1K, // fixed point value scaled by 1000 to an integer
-			BOWLER_I32STR, // a list of numbers as 32 bit signed integers
-			0 };
-	strcpy((char*) test_ns_test_get.arguments, arguments );
-		//This is the bowler method for this RPC
+	//This is the array of argument data types
+	test_ns_test_get.arguments[0] = BOWLER_FIXED1K;
+	test_ns_test_get.arguments[1] = BOWLER_I32STR; // a list of numbers as 32 bit signed integers
+	test_ns_test_get.arguments[2] = 0;
+	//This is the bowler method for this RPC
 	test_ns_test_get.responseMethod = BOWLER_POST;
-		//This is the array of argument data types
-	const char responseArguments[] = { BOWLER_I08, //8 bit ints
-			BOWLER_BOOL, // boolean values
-			BOWLER_FIXED1K_STR, 0 };
-	strcpy((char*)test_ns_test_get.responseArguments,responseArguments);
-		
+	//This is the array of argument data types
+	test_ns_test_get.responseArguments[0] = BOWLER_I08; //8 bit ints
+	test_ns_test_get.responseArguments[1] = BOWLER_BOOL; // boolean values
+	test_ns_test_get.responseArguments[2] = BOWLER_FIXED1K_STR;
+	test_ns_test_get.responseArguments[3] = 0;
+
 	//This is the linked list field
-	test_ns_test_get.next =  NULL;
+	test_ns_test_get.next = NULL;
 	//This is the 4 byte code for of the RPC
-	strcpy( (char*)test_ns_test_get.rpc, "test" );
-	
+	strcpy( test_ns_test_get.rpc, "test");
+
 	// add the new RPC to its namespace
 	addRpcToNamespace(&testns, &test_ns_test_get);
 	//add namespace to stack
 	addNamespaceToList(&testns);
-
+	println_E("Starting..");
 }
 
 void loop() {

@@ -92,8 +92,8 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 	}
 	comPort->flush();
 	BowlerPacket* Packet = (BowlerPacket*)buffer;
-	if(Packet->use.head.Method!= BOWLER_ASYN)
-		printPacket(Packet,INFO_PRINT);
+//	if(Packet->use.head.Method!= BOWLER_ASYN)
+//		printPacket(Packet,INFO_PRINT);
 	return true;
 }
 boolean PutBowlerPacketDummy(BowlerPacket * Packet){
@@ -110,7 +110,7 @@ void BowlerCom::server(void) {
 		FifoAddByte(&store, (char) newByte, &err);
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
-		printPacket(&Packet,WARN_PRINT);
+//		printPacket(&Packet,WARN_PRINT);
 		//Now the Packet struct contains the parsed packet data
 		process(&Packet);
 
