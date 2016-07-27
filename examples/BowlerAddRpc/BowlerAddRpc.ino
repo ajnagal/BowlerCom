@@ -16,6 +16,7 @@ BYTE_FIFO_STORAGE store;
 uint8_t err, i;
 BowlerPacket Packet;
 boolean processTest(BowlerPacket * Packet) {
+	println_E("My Code executed");
 	// process packet here
 	uint8_t i = 0;
 	float divisor = ((float) get32bit(Packet, 0)) / 1000.0f; // pull out a fixed point into a float

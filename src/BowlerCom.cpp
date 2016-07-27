@@ -27,12 +27,11 @@ void putCharDebug(char a) {
 void EnableDebugTerminal() {
 	//none
 }
-BowlerCom::BowlerCom()
-{
+BowlerCom::BowlerCom() {
 	ref = this;
 	addedDyIO = false;
 	addedPID = false;
-	comPort=NULL;
+	comPort = NULL;
 	Bowler_Init();
 }
 /**
@@ -43,26 +42,27 @@ BowlerCom::BowlerCom()
  * @param mode the mode to set the pin to
  * @return If the mode change was successfull
  */
-boolean BowlerCom::setMode(uint8_t pin,uint8_t mode){
-	return setMode(pin,mode);
+boolean BowlerCom::setMode(uint8_t pin, uint8_t mode) {
+	return setMode(pin, mode);
 }
 
-boolean BowlerCom::SetChanVal(uint8_t pin, int32_t bval, float time){
-	return SetChanVal(pin,bval,time);
+boolean BowlerCom::SetChanVal(uint8_t pin, int32_t bval, float time) {
+	return SetChanVal(pin, bval, time);
 }
-int32_t BowlerCom::GetChanVal(uint8_t pin){
+int32_t BowlerCom::GetChanVal(uint8_t pin) {
 	return GetChanVal(pin);
 }
 
 /* begin method for overriding default serial bitrate */
 void BowlerCom::begin(Stream * port) {
-	begin_local( port);
+	begin_local(port);
 }
 
 /* begin method for overriding default serial bitrate */
 void BowlerCom::begin(long speed) {
 	Serial.begin(speed);
-	while (!Serial);    // wait for the serial port to open
+	while (!Serial)
+		;    // wait for the serial port to open
 	begin_local(&Serial);
 }
 
@@ -91,12 +91,12 @@ uint16_t putStream(uint8_t * buffer, uint16_t datalength) {
 		comPort->write((char) buffer[i]);
 	}
 	comPort->flush();
-	BowlerPacket* Packet = (BowlerPacket*)buffer;
+	BowlerPacket* Packet = (BowlerPacket*) buffer;
 //	if(Packet->use.head.Method!= BOWLER_ASYN)
 //		printPacket(Packet,INFO_PRINT);
 	return true;
 }
-boolean PutBowlerPacketDummy(BowlerPacket * Packet){
+boolean PutBowlerPacketDummy(BowlerPacket * Packet) {
 	//do nothing
 	return true;
 }
@@ -110,7 +110,7 @@ void BowlerCom::server(void) {
 		FifoAddByte(&store, (char) newByte, &err);
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
-//		printPacket(&Packet,WARN_PRINT);
+		//printPacket(&Packet, WARN_PRINT);
 		//Now the Packet struct contains the parsed packet data
 		process(&Packet);
 
@@ -118,10 +118,17 @@ void BowlerCom::server(void) {
 		// and the Packet struct now contains the data
 		// to be sent back to the client as a response.
 		PutBowlerPacket(&Packet);
-
-		comsStarted=true;
+		if (Packet.use.head.RPC != GetRPCValue("_pwr")
+				&& Packet.use.head.RPC != GetRPCValue("_png")
+				&& Packet.use.head.RPC != GetRPCValue("_rpc") &&
+				Packet.use.head.RPC != GetRPCValue("_nms") &&
+				Packet.use.head.RPC != GetRPCValue("args")) {//Ignore Power Packet
+			b_println("Response:", INFO_PRINT);
+			printPacket(&Packet, INFO_PRINT);
+		}
+		comsStarted = true;
 	}
-	if(comsStarted)
+	if (comsStarted)
 		RunNamespaceAsync(&Packet, &PutBowlerPacket);
 	else
 		RunNamespaceAsync(&Packet, &PutBowlerPacketDummy);
@@ -154,10 +161,8 @@ void BowlerCom::addDyIOPID() {
 //			mylimits
 //			);
 	println_I("Initializing PID");
-	InitPID(new AbsPID [NUM_PID_GROUPS],
-				new DYIO_PID [NUM_PID_GROUPS],
-				new PidLimitEvent [NUM_PID_GROUPS]
-				);
+	InitPID(new AbsPID[NUM_PID_GROUPS], new DYIO_PID[NUM_PID_GROUPS],
+			new PidLimitEvent[NUM_PID_GROUPS]);
 	println_I("Adding PID Namespace");
 	addNamespaceToList(getBcsPidNamespace());
 	println_I("Adding DyIO PID Namespace");
