@@ -23,6 +23,7 @@ int32_t GetConfigurationDataTable(uint8_t pin) {
 	return EEReadValue(pin);
 }
 
+
 boolean setMode(uint8_t pin, uint8_t mode) {
 	if (pinHasFunction(pin, mode)) {
 		println_I("Setting Pin ");
@@ -297,7 +298,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		DyioPinFunctionData[i].PIN.currentValue = currentValue;
 		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
 	}
-	startupFlag = true;
+	
 #ifdef ARDUINO_ARCH_ARC32
 	// initialize device
 	println_I("Initializing IMU device...");
@@ -338,6 +339,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 	print_I("\t");// 0
 	p_int_I(CurieIMU.getGyroOffset(Z_AXIS));
 #endif
+	startupFlag = true;
 }
 
 uint8_t GetServoPos(uint8_t pin) {
@@ -351,7 +353,8 @@ void SetServoPos(uint8_t pin, uint16_t val, float time) {
 void updateServos() {
 	//println_E("Update");
 #ifdef ARDUINO_ARCH_ARC32
-	CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
+	if(startupFlag)
+		CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
 #endif
 
 	for (int i = 0; i < MAX_SERVOS; i++) {

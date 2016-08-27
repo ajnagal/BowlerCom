@@ -10,6 +10,7 @@
 #include "BowlerStack/include/Bowler/Bowler.h"
 #include "AsyncManager.h"
 #include "BowlerStack/include/Bowler/Scheduler.h"
+#include <BowlerCom.h>
 #ifdef __cplusplus
 extern "C"{
 #endif

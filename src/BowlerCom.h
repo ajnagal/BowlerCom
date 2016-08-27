@@ -55,6 +55,7 @@ void startDebugPint(Stream * port);
 		BowlerPacket Packet;
 		boolean SetChanVal(uint8_t pin, int32_t bval, float time);
 		int32_t GetChanVal(uint8_t pin);
+		boolean enableAsync;
 		/**
 		 * This Function is used to alter the mode of the pin (See DYIO_def.h for modes)
 		 * Setting the higest bit (|=0x80) will enable the mode as async
@@ -67,6 +68,7 @@ void startDebugPint(Stream * port);
 	private:
 		boolean addedDyIO;
 		boolean addedPID;
+
 		void begin_local(Stream * port);
 
 

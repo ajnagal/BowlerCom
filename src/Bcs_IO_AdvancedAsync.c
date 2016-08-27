@@ -140,9 +140,16 @@ void startAdvancedAsyncDefault(uint8_t pin){
 	//int mode =GetChannelMode(pin);
 
 	//getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=0xffffffff;;
-	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
-	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
-	getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
+	int32_t mode =GetChannelMode(pin);
+	if(mode == IS_ANALOG_IN){
+		float val = GetChanVal( pin) ;
+		configAdvancedAsyncDeadBand(pin,val*1.1,val*0.9);
+	}else{
+
+		getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
+		getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
+		getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
+	}
 
 	RunEvery(getPinsScheduler( pin));
 }

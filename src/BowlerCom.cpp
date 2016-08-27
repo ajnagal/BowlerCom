@@ -31,6 +31,7 @@ BowlerCom::BowlerCom() {
 	ref = this;
 	addedDyIO = false;
 	addedPID = false;
+	enableAsync=true;
 	comPort = NULL;
 	Bowler_Init();
 }
@@ -128,7 +129,7 @@ void BowlerCom::server(void) {
 		}
 		comsStarted = true;
 	}
-	if (comsStarted)
+	if (comsStarted&&enableAsync)
 		RunNamespaceAsync(&Packet, &PutBowlerPacket);
 	else
 		RunNamespaceAsync(&Packet, &PutBowlerPacketDummy);

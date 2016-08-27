@@ -10,6 +10,8 @@
 
 boolean noAsyncMode = false;
 
+RunEveryData asyncPulse = {0,10};
+
 void setNoAsyncMode(boolean m) {
 	noAsyncMode = m;
 }
@@ -19,15 +21,16 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet,
 
 	int i;
 	boolean update = false;
-
-	for (i = 0; i < GetNumberOfIOChannels(); i++) {
-		//
-		if (pushAsyncReady(i)) {
-//        	println_W("Pin Async ");p_int_W(i);
-//        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
-//        	print_W(" type = ");printAsyncType(i,WARN_PRINT);
-//        	print_W(" mode = ");printMode(i,GetChannelMode(i),WARN_PRINT);
-			update = true;
+	if(RunEvery(&asyncPulse)>0){
+		for (i = 0; i < GetNumberOfIOChannels(); i++) {
+			//
+			if (pushAsyncReady(i)) {
+	//        	println_W("Pin Async ");p_int_W(i);
+	//        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
+	//        	print_W(" type = ");printAsyncType(i,WARN_PRINT);
+	//        	print_W(" mode = ");printMode(i,GetChannelMode(i),WARN_PRINT);
+				update = true;
+			}
 		}
 	}
 	if (noAsyncMode == true) {
