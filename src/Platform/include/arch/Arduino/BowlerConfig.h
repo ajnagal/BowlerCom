@@ -27,22 +27,6 @@ extern "C"{
 #define digitalPinHasPWM(p)     IS_PIN_DIGITAL(p)
 #endif
 
-// Arduino 101
-#elif  defined(__ARDUINO_ARC__)
-#define TOTAL_DIGITAL 14
-//analog pins plus IMU pins
-#define TOTAL_ANALOG_PINS       6+6
-#define TOTAL_PINS              TOTAL_ANALOG_PINS+TOTAL_DIGITAL
-#define VERSION_BLINK_PIN       13
-#define IS_PIN_DIGITAL(p)       ((p) >= 2 && (p) <= 19)
-#define IS_PIN_ANALOG(p)        ((p) >= TOTAL_DIGITAL && (p) < TOTAL_PINS)
-#define IS_PIN_PWM(p)           digitalPinHasPWM(p)
-#define IS_PIN_SERVO(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SERVOS)
-#define IS_PIN_I2C(p)           ((p) == 18 || (p) == 19)
-#define PIN_TO_DIGITAL(p)       (p)
-#define PIN_TO_ANALOG(p)        ((p) - TOTAL_DIGITAL)
-#define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
-#define PIN_TO_SERVO(p)         ((p) - 2)
 
 // Arduino Duemilanove, Diecimila, and NG
 #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328__)
@@ -65,6 +49,23 @@ extern "C"{
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define ARDUINO_PINOUT_OPTIMIZE 1
+
+// Arduino 101
+#if  defined(__ARDUINO_ARC__)
+#define TOTAL_DIGITAL 14
+//analog pins plus IMU pins
+#define TOTAL_ANALOG_PINS       6+6
+#define TOTAL_PINS              TOTAL_ANALOG_PINS+TOTAL_DIGITAL
+#define VERSION_BLINK_PIN       13
+#define IS_PIN_DIGITAL(p)       ((p) >= 2 && (p) <= 19)
+#define IS_PIN_ANALOG(p)        ((p) >= TOTAL_DIGITAL && (p) < TOTAL_PINS)
+#define IS_PIN_PWM(p)           digitalPinHasPWM(p)
+#define IS_PIN_SERVO(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SERVOS)
+#define IS_PIN_I2C(p)           ((p) == 18 || (p) == 19)
+#define PIN_TO_DIGITAL(p)       (p)
+#define PIN_TO_ANALOG(p)        ((p) - TOTAL_DIGITAL)
+#define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
+#define PIN_TO_SERVO(p)         ((p) - 2)
 
 
 // Wiring (and board)
