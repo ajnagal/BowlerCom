@@ -14,7 +14,7 @@ static boolean comsStarted = false;
 //DYIO_PID mydyPid[NUM_PID_GROUPS];
 //PidLimitEvent mylimits[NUM_PID_GROUPS];
 float getMs(void) {
-	return ((float) micros()) * 1000.0f;
+	return ((float) millis()) * 1.0f;
 }
 void putCharDebug(char a) {
 	// none

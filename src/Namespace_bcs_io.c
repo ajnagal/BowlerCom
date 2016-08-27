@@ -10,7 +10,7 @@
 
 boolean noAsyncMode = false;
 
-RunEveryData asyncPulse = {0,10};
+RunEveryData asyncPulse = {0,100};
 
 void setNoAsyncMode(boolean m) {
 	noAsyncMode = m;
