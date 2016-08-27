@@ -51,7 +51,7 @@ extern "C"{
 #define ARDUINO_PINOUT_OPTIMIZE 1
 
 // Arduino 101
-#if  defined(__ARDUINO_ARC__)
+#elif  defined(__ARDUINO_ARC__)
 #define TOTAL_DIGITAL 14
 //analog pins plus IMU pins
 #define TOTAL_ANALOG_PINS       6+6

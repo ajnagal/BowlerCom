@@ -5,7 +5,16 @@
  *      Author: hephaestus
  */
 #include <BowlerCom.h>
+#ifdef ARDUINO_ARCH_ARC32
+#include <CurieEEPROM.h>
+#include <CurieBLE.h>
+#else
+#include <EEPROM.h>
+#endif
 
+#if !defined (EEPROM_SIZE)
+	#define EEPROM_SIZE 512
+#endif
 
 extern MAC_ADDR MyMAC;
 
