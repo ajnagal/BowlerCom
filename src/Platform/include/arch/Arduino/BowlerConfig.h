@@ -12,16 +12,12 @@ extern "C"{
 #define EndCritical()   interrupts()
 
 
-
-
 /* Borrwoing heavily from Boards.h - Hardware Abstraction Layer for Firmata library */
 // Normally Servo.h must be included before Firmata.h (which then includes
 // this file).  If Servo.h wasn't included, this allows the code to still
 // compile, but without support for any Servos.  Hopefully that's what the
 // user intended by not including Servo.h
-#ifndef MAX_SERVOS
-#define MAX_SERVOS 0
-#endif
+
 
 #ifndef digitalPinHasPWM
 #define digitalPinHasPWM(p)     IS_PIN_DIGITAL(p)
@@ -177,6 +173,9 @@ extern "C"{
 #define VERSION_BLINK_PIN       6
 #define PIN_SERIAL1_RX          2
 #define PIN_SERIAL1_TX          3
+#ifndef MAX_SERVOS
+	#define MAX_SERVOS 			(TOTAL_PINS-TOTAL_ANALOG_PINS)
+#endif
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) < TOTAL_PINS)
 #define IS_PIN_ANALOG(p)        (0)
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
@@ -197,6 +196,9 @@ extern "C"{
 #define VERSION_BLINK_PIN       11
 #define PIN_SERIAL1_RX          7
 #define PIN_SERIAL1_TX          8
+#ifndef MAX_SERVOS
+	#define MAX_SERVOS 			(TOTAL_PINS-TOTAL_ANALOG_PINS)
+#endif
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) < TOTAL_PINS)
 #define IS_PIN_ANALOG(p)        ((p) >= 11 && (p) <= 22)
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
@@ -221,6 +223,9 @@ extern "C"{
 #define PIN_SERIAL2_TX          10
 #define PIN_SERIAL3_RX          7
 #define PIN_SERIAL3_TX          8
+#ifndef MAX_SERVOS
+	#define MAX_SERVOS 			(TOTAL_PINS-TOTAL_ANALOG_PINS)
+#endif
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) <= 33)
 #define IS_PIN_ANALOG(p)        (((p) >= 14 && (p) <= 23) || ((p) >= 34 && (p) <= 38))
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
