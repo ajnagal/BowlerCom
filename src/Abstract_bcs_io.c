@@ -126,7 +126,7 @@ void _SetChannelMode(uint8_t pin,uint8_t mode ) {
     }
     //print_nnl("Set Channel Mode ",ERROR_PRINT);printMode(mode,ERROR_PRINT);
     //getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
-    setMode(pin,mode);
+    SetChannelMode(pin,mode);
 }
 
 uint8_t GetChannelMode(uint8_t pin) {
@@ -585,7 +585,7 @@ void POWER(BowlerPacket * packet){
 	packet->use.head.RPC=GetRPCValue("_pwr");
 	packet->use.data[0]=0;
 	packet->use.data[1]=0;
-	raw.Val=6000;// set rail voltage to nominal 6 volt rail for servos
+	raw.Val=6500;// set rail voltage to nominal 6 volt rail for servos
 	packet->use.data[2]=raw.byte.SB;
 	packet->use.data[3]=raw.byte.LB;
 	packet->use.data[4]=0;// Disable the brownout shutoffs and power lockouts

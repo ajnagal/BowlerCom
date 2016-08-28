@@ -24,9 +24,9 @@ int32_t GetConfigurationDataTable(uint8_t pin) {
 }
 
 
-boolean setMode(uint8_t pin, uint8_t mode) {
+boolean setMode_Local(uint8_t pin, uint8_t mode) {
 	if (pinHasFunction(pin, mode)) {
-		println_I("Setting Pin ");
+		println_I("Attempting to set hardware Pin ");
 		p_int_I(pin);
 		print_I(" to New Mode ");
 		printMode(pin, mode, INFO_PRINT);
@@ -58,6 +58,7 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 			// arduino analogs are not changable
 			break;
 		case IS_SERVO:
+			println_W("Attaching servo");
 			myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
 			break;
 		case IS_DEBUG_TX:
@@ -74,10 +75,10 @@ boolean setMode(uint8_t pin, uint8_t mode) {
 
 		return true;
 	}
-	println_I("CAN NOT BE MODE Pin ");
-	p_int_I(pin);
-	print_I(" to New Mode ");
-	printMode(pin, mode, INFO_PRINT);
+	println_E("CAN NOT BE MODE Pin ");
+	p_int_E(pin);
+	print_E(" to New Mode ");
+	printMode(pin, mode, ERROR_PRINT);
 	return false;
 }
 
@@ -273,7 +274,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 			&GetChanelValueHW, &SetAllChanelValueHW, &GetAllChanelValueHW,
 			&ConfigureChannelHW, &SetStreamHW, &GetStreamHW);
 	println_W("Initializing Setmode Functions");
-	InitilizeBcsIoSetmode(&setMode);
+	InitilizeBcsIoSetmode(&setMode_Local);
 	println_W("Initializing Advanced Async Functions");
 	initAdvancedAsync();  // after the IO namespace is set up
 	//Initialize pina after stack is initialized
@@ -285,7 +286,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		//Get mode from EEPROm
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
-		setMode(i, mode);
+		SetChannelMode(i, mode);
 
 		// Get value using hardware setting.
 		int32_t currentValue;

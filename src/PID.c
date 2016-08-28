@@ -47,8 +47,8 @@ void initPIDChans(uint8_t group){
 //	p_int_W(dyPid[group].outputChannel);
 //	println_W(" mode: ");
 	//printMode(dyPid[group].outputMode, WARN_PRINT);
-	setMode(dyPid[group].inputChannel,dyPid[group].inputMode);
-	setMode(dyPid[group].outputChannel,dyPid[group].outputMode);
+	SetChannelMode(dyPid[group].inputChannel,dyPid[group].inputMode);
+	SetChannelMode(dyPid[group].outputChannel,dyPid[group].outputMode);
 	//SyncModes();
 
 	if(dyPid[group].inputMode== IS_ANALOG_IN){
