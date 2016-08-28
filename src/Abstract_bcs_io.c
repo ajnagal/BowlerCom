@@ -450,9 +450,9 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
 			return function==IS_DEBUG_TX;
     switch (function) {
         case IS_DI:
-            return IS_PIN_DIGITAL(pin);
+            return _IS_PIN_DIGITAL(pin);
         case IS_DO:
-            return  IS_PIN_DIGITAL(pin);
+            return  _IS_PIN_DIGITAL(pin);
         case IS_ANALOG_IN:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_ANALOG_IN;
         case IS_ANALOG_OUT:
@@ -461,7 +461,7 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
         case IS_PWM:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_PWM;
         case IS_SERVO:
-            return IS_PIN_SERVO(pin);
+            return _IS_PIN_SERVO(pin);
         case IS_UART_TX:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_UART_T;
         case IS_UART_RX:

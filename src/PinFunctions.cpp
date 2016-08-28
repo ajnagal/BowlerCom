@@ -2,6 +2,7 @@
 #ifdef ARDUINO_ARCH_ARC32
 #include "CurieIMU.h"
 #endif
+#include <Platform/include/arch/Arduino/IOAbstraction.hpp>
 int ax, ay, az;         // accelerometer values
 int gx, gy, gz;         // gyrometer values
 		/**
@@ -84,6 +85,18 @@ boolean setMode_Local(uint8_t pin, uint8_t mode) {
 	print_E(" to New Mode ");
 	printMode(pin, mode, ERROR_PRINT);
 	return false;
+}
+boolean _IS_PIN_DIGITAL(int pin){
+	return IS_PIN_DIGITAL(pin);
+}
+boolean _IS_PIN_SERVO(int pin){
+	return IS_PIN_SERVO(pin);
+}
+/**
+ *
+ */
+int getMaxServos(){
+	return MAX_SERVOS;
 }
 
 /**

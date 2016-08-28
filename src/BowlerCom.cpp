@@ -3,6 +3,7 @@
  */
 #include <Arduino.h>
 #include <BowlerCom.h>
+#include <Platform/include/arch/Arduino/IOAbstraction.hpp>
 
 static BowlerCom * ref;
 static Stream * serialPort = NULL;

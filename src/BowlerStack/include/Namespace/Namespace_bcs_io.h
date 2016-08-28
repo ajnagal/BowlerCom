@@ -182,6 +182,9 @@ void printAsync();
 void printAsyncType(uint8_t t, Print_Level l);
 void printConfigurations();
 void printValues();
+int getMaxServos();
+boolean _IS_PIN_DIGITAL(int pin);
+boolean _IS_PIN_SERVO(int pin);
 
 /**
  * Crawls the function map and returns true if a mode is availible
