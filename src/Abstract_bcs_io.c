@@ -120,14 +120,6 @@ int GetNumberOfIOChannels() {
     return NumberOfIOChannels;
 }
 
-void _SetChannelMode(uint8_t pin,uint8_t mode ) {
-    if (pin < 0 || pin > GetNumberOfIOChannels()) {
-        return ;
-    }
-    //print_nnl("Set Channel Mode ",ERROR_PRINT);printMode(mode,ERROR_PRINT);
-    //getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
-    SetChannelMode(pin,mode);
-}
 
 uint8_t GetChannelMode(uint8_t pin) {
     return EEReadMode(pin);

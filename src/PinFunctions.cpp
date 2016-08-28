@@ -286,7 +286,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		//Get mode from EEPROm
 		uint8_t mode = GetChannelMode(i);
 		//Set up hardware in startup mode so it forces a hardware set
-		SetChannelMode(i, mode);
+		setMode_Local(i, mode);
 
 		// Get value using hardware setting.
 		int32_t currentValue;
