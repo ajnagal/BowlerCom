@@ -67,7 +67,7 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
 	uint8_t pin =Packet->use.data[0];
 	uint8_t mode=Packet->use.data[1];
 	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
-	println_W("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,GetChannelMode(pin),WARN_PRINT);print_W(" on: ");p_int_W(pin);
+	println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,GetChannelMode(pin),INFO_PRINT);print_I(" on: ");p_int_I(pin);
 
 	if(SetChannelMode(pin,mode)){
 		GetAllChannelModeFromPacket(Packet);

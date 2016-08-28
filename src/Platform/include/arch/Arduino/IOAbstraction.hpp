@@ -170,13 +170,10 @@
 #define VERSION_BLINK_PIN       6
 #define PIN_SERIAL1_RX          2
 #define PIN_SERIAL1_TX          3
-#ifndef MAX_SERVOS
-	//#define MAX_SERVOS 			(TOTAL_PINS-TOTAL_ANALOG_PINS)
-#endif
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) < TOTAL_PINS)
 #define IS_PIN_ANALOG(p)        (0)
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
-#define IS_PIN_SERVO(p)         ((p) >= 0 && (p) < MAX_SERVOS)
+#define IS_PIN_SERVO(p)         ((p) >= 2 && (p) < (MAX_SERVOS+2))
 #define IS_PIN_I2C(p)           (0)
 #define IS_PIN_SPI(p)           ((p) == SS || (p) == MOSI || (p) == MISO || (p) == SCK)
 #define IS_PIN_SERIAL(p)        ((p) == 2 || (p) == 3)
@@ -193,13 +190,10 @@
 #define VERSION_BLINK_PIN       11
 #define PIN_SERIAL1_RX          7
 #define PIN_SERIAL1_TX          8
-#ifndef MAX_SERVOS
-	//#define MAX_SERVOS 			(TOTAL_PINS-TOTAL_ANALOG_PINS)
-#endif
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) < TOTAL_PINS)
 #define IS_PIN_ANALOG(p)        ((p) >= 11 && (p) <= 22)
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
-#define IS_PIN_SERVO(p)         ((p) >= 0 && (p) < MAX_SERVOS)
+#define IS_PIN_SERVO(p)         ((p) >= 2 && (p) < (MAX_SERVOS+2))
 #define IS_PIN_I2C(p)           ((p) == 5 || (p) == 6)
 #define IS_PIN_SPI(p)           ((p) == SS || (p) == MOSI || (p) == MISO || (p) == SCK)
 #define IS_PIN_SERIAL(p)        ((p) == 7 || (p) == 8)
@@ -220,13 +214,10 @@
 #define PIN_SERIAL2_TX          10
 #define PIN_SERIAL3_RX          7
 #define PIN_SERIAL3_TX          8
-#ifndef MAX_SERVOS
-	//#define MAX_SERVOS 			(TOTAL_PINS-TOTAL_ANALOG_PINS)
-#endif
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) <= 33)
 #define IS_PIN_ANALOG(p)        (((p) >= 14 && (p) <= 23) || ((p) >= 34 && (p) <= 38))
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
-#define IS_PIN_SERVO(p)         ((p) >= 0 && (p) < MAX_SERVOS)
+#define IS_PIN_SERVO(p)         ((p) >= 2 && (p) < (MAX_SERVOS+2))
 #define IS_PIN_I2C(p)           ((p) == 18 || (p) == 19)
 #define IS_PIN_SERIAL(p)        (((p) > 6 && (p) < 11) || ((p) == 0 || (p) == 1))
 #define PIN_TO_DIGITAL(p)       (p)
@@ -249,7 +240,7 @@
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) <= 26)
 #define IS_PIN_ANALOG(p)        ((p) >= 14)
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
-#define IS_PIN_SERVO(p)         ((p) >= 0 && (p) < MAX_SERVOS)
+#define IS_PIN_SERVO(p)         ((p) >= 2 && (p) < (MAX_SERVOS+2))
 #define IS_PIN_I2C(p)           ((p) == 18 || (p) == 19)
 #define IS_PIN_SERIAL(p)        (((p) > 6 && (p) < 11) || ((p) == 0 || (p) == 1))
 #define PIN_TO_DIGITAL(p)       (p)
