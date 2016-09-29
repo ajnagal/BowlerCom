@@ -13,8 +13,8 @@
  */
  int baudrate = 9600;
 #include <BowlerCom.h>
-int txPin =15;
-int rxPin =14;
+int txPin =24;
+int rxPin =25;
 BowlerCom com;
 SoftwareSerial mySerial(rxPin,txPin); // RX, TX
 
