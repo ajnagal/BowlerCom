@@ -43,7 +43,7 @@ boolean setMode_Local(uint8_t pin, uint8_t mode) {
 			println_I("Detaching servo");
 			myservo[PIN_TO_SERVO(pin)].detach();
 		}
-		if((GetChannelMode(pin) == IS_DEBUG_TX||GetChannelMode(pin) == IS_DEBUG_RX)&&startupFlag){
+		if((GetChannelMode(pin) == IS_DEBUG_TX||GetChannelMode(pin) == IS_DEBUG_RX)&&!startupFlag){
 			println_W("Bailing because this mode NOT changeable");
 			return true;
 		}
