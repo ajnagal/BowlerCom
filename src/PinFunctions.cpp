@@ -199,9 +199,7 @@ boolean GetStreamHW(uint8_t pin, uint8_t* numValues, uint8_t * data) {
 }
 
 boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
-	if (pin < 2) {
-		return true;
-	}
+
 //	print_W("\r\n");
 //	p_int_E(pin);
 //	print_W(" Set value of pin to ");
