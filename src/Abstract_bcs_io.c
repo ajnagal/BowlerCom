@@ -444,10 +444,7 @@ boolean isOutputMode(uint8_t mode){
 }
 
 boolean pinHasFunction(uint8_t pin, uint8_t function) {
-	if(pin ==0)
-		return function==IS_DEBUG_RX;
-	if(pin ==1)
-			return function==IS_DEBUG_TX;
+
     switch (function) {
         case IS_DI:
             return _IS_PIN_DIGITAL(pin);

@@ -217,7 +217,7 @@
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) <= 33)
 #define IS_PIN_ANALOG(p)        (((p) >= 14 && (p) <= 23) || ((p) >= 34 && (p) <= 38))
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
-#define IS_PIN_SERVO(p)         ((p) >= 2 && (p) < (MAX_SERVOS+2))
+#define IS_PIN_SERVO(p)         ((p) >= 0 && (p) < (MAX_SERVOS))
 #define IS_PIN_I2C(p)           ((p) == 18 || (p) == 19)
 #define IS_PIN_SERIAL(p)        (((p) > 6 && (p) < 11) || ((p) == 0 || (p) == 1))
 #define PIN_TO_DIGITAL(p)       (p)
