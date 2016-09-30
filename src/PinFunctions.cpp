@@ -31,20 +31,20 @@ boolean setMode_Local(uint8_t pin, uint8_t mode) {
 		p_int_I(pin);
 		print_I(" to New Mode ");
 		printMode(pin, mode, INFO_PRINT);
-		if (pin < 2) {
-			println_I("Bailing because this is the communications channel");
-			return true;
-		}
+// 		if (pin < 2) {
+// 			println_W("Bailing because this is the communications channel");
+// 			return true;
+// 		}
 		if (GetChannelMode(pin) == mode && startupFlag) {
-			println_I("Bailing because this mode is already set");
+			println_W("Bailing because this mode is already set");
 			return true;
 		}
 		if (GetChannelMode(pin) == IS_SERVO) {
 			println_I("Detaching servo");
 			myservo[PIN_TO_SERVO(pin)].detach();
 		}
-		if(GetChannelMode(pin) == IS_DEBUG_TX||GetChannelMode(pin) == IS_DEBUG_RX){
-			println_I("Bailing because this mode NOT changeable");
+		if((GetChannelMode(pin) == IS_DEBUG_TX||GetChannelMode(pin) == IS_DEBUG_RX)&&startupFlag){
+			println_W("Bailing because this mode NOT changeable");
 			return true;
 		}
 

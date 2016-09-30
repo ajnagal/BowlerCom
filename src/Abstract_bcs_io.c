@@ -487,6 +487,9 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
             return getBcsIoDataTable(pin)->FUNCTION.HAS_DC_MOTOR;
         case IS_PPM_IN:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_PPM;
+        case IS_DEBUG_RX:
+        case IS_DEBUG_TX:
+        	return true;
         default:
             return false;
     }
