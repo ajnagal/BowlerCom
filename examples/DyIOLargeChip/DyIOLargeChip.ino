@@ -28,7 +28,7 @@ void setup() {
   com.begin(&Serial);
   
   startDebugPint(&mySerial);
-  setPrintLevelInfoPrint();
+  setPrintLevelWarnPrint();
   
   
   println_W("Adding namespaces");
