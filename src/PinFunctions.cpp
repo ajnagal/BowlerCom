@@ -12,7 +12,7 @@ uint8_t getInterpolatedPin(uint8_t pin);
 void SetServoPos(uint8_t pin, uint16_t val, float time);
 void SetServoPosDataTable(uint8_t pin, uint16_t val, float time);
 
-/**
+/**http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2562013
  * Data structures
  */
 DATA_STRUCT * DyioPinFunctionData;
