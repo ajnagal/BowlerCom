@@ -223,9 +223,9 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 	return true;
 }
 int32_t GetChanVal(uint8_t pin) {
-	if (pin < 2) {
-		return 0;
-	}
+// 	if (pin < 2) {
+// 		return 0;
+// 	}
 	switch (GetChannelMode(pin)) {
 	case IS_DI:
 		return digitalRead(PIN_TO_DIGITAL(pin));
