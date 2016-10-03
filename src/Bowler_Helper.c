@@ -229,7 +229,7 @@ float interpolate(INTERPOLATE_DATA * data, float currentTime) {
         return set;
     }
     if(elapsed >= setTime ){
-    	println_W("Interp Done");
+    	println_I("Interp Done");
     	data->setTime=0;
         return set;
     }

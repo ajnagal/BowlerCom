@@ -34,7 +34,7 @@ BowlerCom::BowlerCom() {
 	addedPID = false;
 	enableAsync=true;
 	timeout.MsTime=getMs();
-	timeout.setPoint=3000;
+	timeout.setPoint=5000;
 	comPort = NULL;
 	Bowler_Init();
 }
