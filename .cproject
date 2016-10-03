@@ -34,6 +34,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/src/Platform/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/src}&quot;"/>
 								</option>
+								<option id="de.innot.avreclipse.compiler.option.def.1857169726" name="Define Syms (-D)" superClass="de.innot.avreclipse.compiler.option.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="__AVR_ATmega2560__"/>
+								</option>
 								<inputType id="de.innot.avreclipse.compiler.winavr.input.1498979814" name="C Source Files" superClass="de.innot.avreclipse.compiler.winavr.input"/>
 							</tool>
 							<tool id="de.innot.avreclipse.tool.cppcompiler.lib.release.379441204" name="AVR C++ Compiler" superClass="de.innot.avreclipse.tool.cppcompiler.lib.release">
@@ -47,6 +50,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/src/BowlerStack/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/src/Platform/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BowlerCom/src}&quot;"/>
+								</option>
+								<option id="de.innot.avreclipse.cppcompiler.option.def.1820412571" name="Define Syms (-D)" superClass="de.innot.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="__AVR_ATmega2560__"/>
 								</option>
 								<inputType id="de.innot.avreclipse.cppcompiler.input.1746206458" superClass="de.innot.avreclipse.cppcompiler.input"/>
 							</tool>

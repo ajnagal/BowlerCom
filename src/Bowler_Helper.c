@@ -196,13 +196,43 @@ float interpolate(INTERPOLATE_DATA * data, float currentTime) {
 //
 
     // If the time is imediate, then the target should be returned no matter what.
-    if(setTime<=0)
+    if(setTime<=0){
+    	if(setTime<0){
+    		println_E("FAIL, set time is negative");
+			println_E("Time= ");p_fl_E(currentTime);
+			print_W(" Set= ");p_fl_W(set);
+			print_E(" start= ");p_fl_E(start);
+			print_W(" setTime= ");p_fl_W(setTime);
+			print_E(" startTime= ");p_fl_E(startTime);
+
+			println_W("elapsedTime = ");p_fl_W(elapsed);
+			print_E(" incremental distance = ");p_fl_E(currentDistance);
+			print_W(" Target = ");p_fl_W(currentLocation);
+    	}
     	return set;
+    }
 
     elapsed = currentTime - (startTime);
     //interpolation is done
-    if(elapsed >= setTime || elapsed < 0)
+    if( elapsed < 0){
+    	println_E("FAIL, elapsed time is negative");
+		println_E("Time= ");p_fl_E(currentTime);
+		print_W(" Set= ");p_fl_W(set);
+		print_E(" start= ");p_fl_E(start);
+		print_W(" setTime= ");p_fl_W(setTime);
+		print_E(" startTime= ");p_fl_E(startTime);
+
+		println_W("elapsedTime = ");p_fl_W(elapsed);
+		print_E(" incremental distance = ");p_fl_E(currentDistance);
+		print_W(" Target = ");p_fl_W(currentLocation);
+		data->setTime=0;
         return set;
+    }
+    if(elapsed >= setTime ){
+    	println_W("Interp Done");
+    	data->setTime=0;
+        return set;
+    }
 
     totalDistance = set-start;
 
@@ -213,20 +243,36 @@ float interpolate(INTERPOLATE_DATA * data, float currentTime) {
     // location will be an offset from the start
     currentLocation = currentDistance+start;
 
-    if(isnan(currentLocation))
-    	return set;
-   	if(between(set,currentLocation,start)){
-   		return currentLocation;
-   	}
-//	println_E("Time= ");p_fl_E(currentTime);
-//	print_W(" Set= ");p_fl_W(set);
-//	print_E(" start= ");p_fl_E(start);
-//	print_W(" setTime= ");p_fl_W(setTime);
-//	print_E(" startTime= ");p_fl_E(startTime);
+    if(isnan(currentLocation)){
+    	println_E("FAIL, setpoint calculated as NaN");
+		println_E("Time= ");p_fl_E(currentTime);
+		print_W(" Set= ");p_fl_W(set);
+		print_E(" start= ");p_fl_E(start);
+		print_W(" setTime= ");p_fl_W(setTime);
+		print_E(" startTime= ");p_fl_E(startTime);
 
-//    println_W("elapsedTime = ");p_fl_W(elapsed);
-//    print_E(" incremental distance = ");p_fl_E(currentDistance);
-//    print_W(" Target = ");p_fl_W(currentLocation);
+		println_W("elapsedTime = ");p_fl_W(elapsed);
+		print_E(" incremental distance = ");p_fl_E(currentDistance);
+		print_W(" Target = ");p_fl_W(currentLocation);
+		data->setTime=0;
+    	return set;
+    }
+   	if(between(set,currentLocation,start)){
+   		//print_W(" interp = ");p_fl_W(currentLocation);
+   		return currentLocation;
+   	}else{
+//    	println_E("FAIL, setpoint outside bounds!");
+//		println_E("Time= ");p_fl_E(currentTime);
+//		print_W(" Set= ");p_fl_W(set);
+//		print_E(" start= ");p_fl_E(start);
+//		print_W(" setTime= ");p_fl_W(setTime);
+//		print_E(" startTime= ");p_fl_E(startTime);
+//
+//		println_W("elapsedTime = ");p_fl_W(elapsed);
+//		print_E(" incremental distance = ");p_fl_E(currentDistance);
+//		print_W(" Target = ");p_fl_W(currentLocation);
+   	}
+   	data->setTime=0;
    	return set;
 
 

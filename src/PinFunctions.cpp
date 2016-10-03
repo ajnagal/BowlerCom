@@ -65,6 +65,7 @@ boolean setMode_Local(uint8_t pin, uint8_t mode) {
 		case IS_SERVO:
 			println_W("Attaching servo");
 			myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
+			SetChanVal( pin, 128,  0);
 			break;
 		case IS_DEBUG_TX:
 //			pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
@@ -84,6 +85,7 @@ boolean setMode_Local(uint8_t pin, uint8_t mode) {
 	p_int_E(pin);
 	print_E(" to New Mode ");
 	printMode(pin, mode, ERROR_PRINT);
+	_EEWriteMode(pin , IS_DI);
 	return false;
 }
 boolean _IS_PIN_DIGITAL(int pin){
@@ -139,6 +141,7 @@ boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
  *
  */
 boolean SetAllChanelValueHW(int32_t * data, float ms) {
+// 	println_W("Setting all cannels with time: ");p_fl_W(ms);
 	int i;
 	for (i = 0; i < GetNumberOfIOChannels(); i++) {
 		SetChanelValueHW(i, 1, &data[i], ms);
@@ -200,10 +203,10 @@ boolean GetStreamHW(uint8_t pin, uint8_t* numValues, uint8_t * data) {
 
 boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
 
-//	print_W("\r\n");
-//	p_int_E(pin);
-//	print_W(" Set value of pin to ");
-//	p_int_W(bval);
+// 	print_W("\r\n");
+// 	p_int_E(pin);
+// 	print_W(" Set value of pin to ");
+// 	p_int_W(bval);
 	switch (GetChannelMode(pin)) {
 
 	case IS_DO:
@@ -359,7 +362,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 }
 
 uint8_t GetServoPos(uint8_t pin) {
-	return velocity[PIN_TO_SERVO(pin)].set;
+	return getInterpolatedPin(PIN_TO_SERVO(pin));
 }
 void SetServoPos(uint8_t pin, uint16_t val, float time) {
 	SetServoPosDataTable(pin, val, time);
@@ -374,8 +377,12 @@ void updateServos() {
 #endif
 
 	for (int i = 0; i < MAX_SERVOS; i++) {
-		if (GetChannelMode(i) == IS_SERVO)
-			myservo[PIN_TO_SERVO(i)].write(getInterpolatedPin(PIN_TO_SERVO(i)));
+		if (GetChannelMode(i) == IS_SERVO){
+		    uint8_t current = getInterpolatedPin(PIN_TO_SERVO(i));
+
+			myservo[PIN_TO_SERVO(i)].write(current);
+			
+		}
 	}
 
 }
@@ -391,6 +398,18 @@ void SetServoPosDataTable(uint8_t pin, uint16_t val, float time) {
 	}
 	velocity[pin].set = (float) val;
 	velocity[pin].startTime = getMs();
+	
+// 	Print_Level l = getPrintLevel();
+// 	if(l>=WARN_PRINT)
+// 		setPrintLevel(INFO_PRINT);
+// 	println_I("\n\nNew Setpoint=");
+// 	p_int_I(val);print_I(" on chan=");p_int_I(pin);print_I(" in time=");p_fl_I(time);;
+// 	println_I("set=      \t");p_fl_I(velocity[pin].set);
+// 	println_I("start=    \t");p_fl_I(velocity[pin].start);
+// 	println_I("setTime=  \t");p_fl_I(velocity[pin].setTime);
+// 	println_I("startTime=\t");p_fl_I(velocity[pin].startTime);
+// 	println_I("");
+// 	setPrintLevel(l);
 }
 
 uint8_t getInterpolatedPin(uint8_t pin) {
@@ -403,38 +422,30 @@ uint8_t getInterpolatedPin(uint8_t pin) {
 	/*
 	 disable interrupts during timed sequence */
 	//StartCritical();
-	float ip = interpolate(&velocity[pin], getMs());
+	int32_t ip = (int32_t)interpolate(&velocity[pin], getMs());
 	//SREG = cSREG;
 	boolean error = false;
-	if (ip > (255 - SERVO_BOUND)) {
-		println_W("Upper=");
+	if (ip > (255)) {
+		//println_W("Upper=");
 		error = true;
 	}
-	if (ip < SERVO_BOUND) {
-		println_W("Lower=");
+	if (ip < 0) {
+		//println_W("Lower=");
 		error = true;
 	}
-	int dataTableSet = (getDataTableCurrentValue(pin) & 0x000000ff);
-	int interpolatorSet = ((int32_t) velocity[pin].set);
-	float time = (float) ((getDataTableCurrentValue(pin) >> 16) & 0x0000ffff);
-
-	if (dataTableSet != interpolatorSet) {
-//		println_W("Setpoint=");
-//				error = true;
-		SetServoPosDataTable(pin, dataTableSet, time);
-		//myservo[PIN_TO_SERVO(pin)].write(bval);
-	}
-	if (error) {
-//		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
-//		print_W(" Data Table=");p_int_W(dataTableSet);
-//		println_W("set=      \t");p_fl_W(velocity[pin].set);
-//		println_W("start=    \t");p_fl_W(velocity[pin].start);
-//		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
-//		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
-		ip = velocity[pin].set;
-		SetServoPosDataTable(pin, dataTableSet, time);
-	}
-	int tmp = (int) ip;
-
-	return tmp;
+	int32_t interpolatorSet = ((int32_t) velocity[pin].set);
+	
+// 	if (ip != interpolatorSet) {
+// 		println_W("\n\nSetpoint=");
+// 		error = true;
+// 	}
+// 	if (error) {
+// 		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
+// 		println_W("set=      \t");p_fl_W(velocity[pin].set);
+// 		println_W("start=    \t");p_fl_W(velocity[pin].start);
+// 		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
+// 		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
+// 		println_W("");
+// 	}
+	return ip;
 }

@@ -11,13 +11,13 @@
  * Bowler Server, this is a basic bowler server
  * lib https://github.com/madhephaestus/BowlerCom
  */
- int baudrate = 9600;
+ int baudrate = 115200;
 #include <BowlerCom.h>
 int txPin =24;
 int rxPin =25;
 BowlerCom com;
 SoftwareSerial mySerial(rxPin,txPin); // RX, TX
-
+RunEveryData l = {0, 1000};
 void setup() {
 
   mySerial.begin(baudrate);
@@ -46,5 +46,8 @@ void setup() {
 
 void loop() {
   com.server();
+  if (RunEvery(&l) > 0) {
+	  println_E("Loop ");p_fl_E(getMs()/1000.0);
+  }
 }
 
