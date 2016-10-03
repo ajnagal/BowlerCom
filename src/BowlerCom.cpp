@@ -33,6 +33,8 @@ BowlerCom::BowlerCom() {
 	addedDyIO = false;
 	addedPID = false;
 	enableAsync=true;
+	timeout.MsTime=getMs();
+	timeout.setPoint=3000;
 	comPort = NULL;
 	Bowler_Init();
 }
@@ -106,10 +108,18 @@ boolean PutBowlerPacketDummy(BowlerPacket * Packet) {
 void BowlerCom::server(void) {
 	byte err;
 	byte newByte = 0;
+	if(comsStarted)
+		if(RunEvery(&timeout)>0){
+			println_E("Socket Timed out, clearing buffer");
+			//clear the buffer
+			InitByteFifo(&store, privateRXCom, comBuffSize);
+			comsStarted = false;
+		}
 	while (comPort->available() > 0) {
 		newByte = comPort->read();
 		//println_I("Adding byte: ");prHEX8(newByte,INFO_PRINT);
 		FifoAddByte(&store, (char) newByte, &err);
+		timeout.MsTime=getMs();// reset the timeout timer
 	}
 	if (GetBowlerPacket(&Packet, &store)) {
 		//printPacket(&Packet, WARN_PRINT);
