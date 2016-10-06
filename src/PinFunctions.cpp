@@ -43,7 +43,7 @@ boolean setMode_Local(uint8_t pin, uint8_t mode) {
 		}
 		if (GetChannelMode(pin) == IS_SERVO) {
 			println_I("Detaching servo");
-			myservo[PIN_TO_SERVO(pin)].detach();
+			myservo[pin].detach();
 		}
 // 		if((GetChannelMode(pin) == IS_DEBUG_TX||GetChannelMode(pin) == IS_DEBUG_RX)&&!startupFlag){
 // 			println_W("Bailing because this mode NOT changeable");
@@ -66,7 +66,7 @@ boolean setMode_Local(uint8_t pin, uint8_t mode) {
 			break;
 		case IS_SERVO:
 			println_W("Attaching servo");
-			myservo[PIN_TO_SERVO(pin)].attach(PIN_TO_SERVO(pin));
+			myservo[pin].attach(PIN_TO_SERVO(pin));
 			SetChanVal( pin, 128,  0);
 			break;
 		case IS_DEBUG_TX:
@@ -380,7 +380,7 @@ void updateServos() {
   if (RunEvery(&servoUpdate) > 0) {
   	for (int i = 0; i < MAX_SERVOS; i++) {
 		if (GetChannelMode(i) == IS_SERVO){
-			myservo[PIN_TO_SERVO(i)].write(GetServoPos( pin));
+			myservo[i].write(GetServoPos( i));
 		}
 	}
   }
