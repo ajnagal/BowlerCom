@@ -47,7 +47,7 @@ void setup() {
 void loop() {
   com.server();
   if (RunEvery(&l) > 0) {
-	  println_E("Loop ");p_fl_E(getMs()/1000.0);
+// println_E("Loop ");p_fl_E(getMs()/1000.0);
   }
 }
 

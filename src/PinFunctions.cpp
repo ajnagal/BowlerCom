@@ -18,8 +18,10 @@ void SetServoPosDataTable(uint8_t pin, uint16_t val, float time);
 DATA_STRUCT * DyioPinFunctionData;
 Servo myservo[MAX_SERVOS];  // create servo object to control a servo
 INTERPOLATE_DATA velocity[MAX_SERVOS];  // servo position interpolation
-
+RunEveryData servoUpdate ={0,20};
 boolean startupFlag = false;
+
+
 int32_t GetConfigurationDataTable(uint8_t pin) {
 	return EEReadValue(pin);
 }
@@ -362,7 +364,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 }
 
 uint8_t GetServoPos(uint8_t pin) {
-	return getInterpolatedPin(PIN_TO_SERVO(pin));
+	return getInterpolatedPin(pin);
 }
 void SetServoPos(uint8_t pin, uint16_t val, float time) {
 	SetServoPosDataTable(pin, val, time);
@@ -375,15 +377,14 @@ void updateServos() {
 	if(startupFlag)
 		CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
 #endif
-
-	for (int i = 0; i < MAX_SERVOS; i++) {
+  if (RunEvery(&servoUpdate) > 0) {
+  	for (int i = 0; i < MAX_SERVOS; i++) {
 		if (GetChannelMode(i) == IS_SERVO){
-		    uint8_t current = getInterpolatedPin(PIN_TO_SERVO(i));
-
-			myservo[PIN_TO_SERVO(i)].write(current);
-			
+			myservo[PIN_TO_SERVO(i)].write(GetServoPos( pin));
 		}
 	}
+  }
+
 
 }
 
@@ -424,17 +425,19 @@ uint8_t getInterpolatedPin(uint8_t pin) {
 	//StartCritical();
 	int32_t ip = (int32_t)interpolate(&velocity[pin], getMs());
 	//SREG = cSREG;
-	boolean error = false;
+	//boolean error = false;
 	if (ip > (255)) {
 		//println_W("Upper=");
-		error = true;
+		ip=255;
+		//error = true;
 	}
 	if (ip < 0) {
+		ip=0;
 		//println_W("Lower=");
-		error = true;
+		//error = true;
 	}
-	int32_t interpolatorSet = ((int32_t) velocity[pin].set);
-	
+// 	
+// 	int32_t interpolatorSet = ((int32_t) velocity[pin].set);
 // 	if (ip != interpolatorSet) {
 // 		println_W("\n\nSetpoint=");
 // 		error = true;
@@ -447,5 +450,5 @@ uint8_t getInterpolatedPin(uint8_t pin) {
 // 		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
 // 		println_W("");
 // 	}
-	return ip;
+	return (uint8_t)ip;
 }
