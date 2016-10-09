@@ -526,7 +526,7 @@
 #define PIN_TO_SERVO(p)         ((p) - 2)
 
 // ESP8266 generic
-#elif defined(ARDUINO_ESP8266_ESP01)
+#elif defined(ARDUINO_ARCH_ESP8266)
 #define TOTAL_ANALOG_PINS       0
 #define TOTAL_PINS              17
 #define VERSION_BLINK_PIN       4
@@ -543,7 +543,7 @@
 
 // anything else
 #else
-#error "Please edit BowlerConfig.h with a hardware abstraction for this board"
+#error "Please edit IOAbstraction.h with a hardware abstraction for this board"
 #endif
 
 
