@@ -525,6 +525,21 @@
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 
+// ESP8266 generic
+#elif defined(ARDUINO_ESP8266_ESP01)
+#define TOTAL_ANALOG_PINS       0
+#define TOTAL_PINS              17
+#define VERSION_BLINK_PIN       4
+#define IS_PIN_DIGITAL(p)       ((p) == 0 || (p) == 2 || (p) == 4 || (p) == 5 || (p) == 12 || (p) == 13 || (p) == 14 || (p) == 15 || (p) == 16)
+#define IS_PIN_ANALOG(p)        (false)
+#define IS_PIN_PWM(p)           (false)
+#define IS_PIN_SERVO(p)         ((p) >= 0 && (p) < MAX_SERVOS)
+#define IS_PIN_I2C(p)           (false)
+#define IS_PIN_SPI(p)           (false)
+#define PIN_TO_DIGITAL(p)       (p)
+#define PIN_TO_ANALOG(p)        ((p) - 17)
+#define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
+#define PIN_TO_SERVO(p)         p
 
 // anything else
 #else
