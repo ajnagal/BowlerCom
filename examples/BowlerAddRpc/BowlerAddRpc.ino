@@ -50,8 +50,9 @@ void setup() {
 
 	mySerial.begin(baudrate);
 	Serial.begin(baudrate);
-	while (!Serial || !mySerial)
-		;    // wait for the serial port to open
+#  if  defined(__ARDUINO_ARC__)
+  while (!Serial ||!mySerial );    // wait for the serial port to open
+#endif
 	com.begin(&Serial);
 
 	startDebugPint(&mySerial);

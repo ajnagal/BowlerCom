@@ -20,7 +20,7 @@ SoftwareSerial mySerial(rxPin,txPin); // RX, TX
 RunEveryData l = {0, 1000};
 void setup() {
 
-  mySerial.begin(baudrate);
+  mySerial.begin(115200);
   Serial.begin(baudrate);
 #  if  defined(__ARDUINO_ARC__)
   while (!Serial ||!mySerial );    // wait for the serial port to open
