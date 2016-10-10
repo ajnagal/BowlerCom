@@ -13,7 +13,9 @@ void setup() {
 
   mySerial.begin(baudrate);
   Serial.begin(baudrate);
+#  if  defined(__ARDUINO_ARC__)
   while (!Serial ||!mySerial );    // wait for the serial port to open
+#endif
   //Pass the communications stream to Bowler Server
   com.begin(&Serial);
   //pass the printing stream to the printing interface
