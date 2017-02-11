@@ -10,9 +10,9 @@
 #ifdef __cplusplus
 	#ifdef ARDUINO_ARCH_ARC32
 #if !defined(EEPROM_SIZE)
-	#include <CurieEEPROM.h>
+	#include <EEPROM.h>
 #endif
-#include <CurieBLE.h>
+	//#include <CurieBLE.h>
 	#endif
 	#ifdef ARDUINO_ARCH_AVR
 	#include <EEPROM.h>

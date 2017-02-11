@@ -1,6 +1,6 @@
 #ifdef ARDUINO_ARCH_ARC32
-#include <CurieEEPROM.h>
-#include <CurieBLE.h>
+#include <EEPROM.h>
+//#include <CurieBLE.h>
 #else
 #include <EEPROM.h>
 #endif

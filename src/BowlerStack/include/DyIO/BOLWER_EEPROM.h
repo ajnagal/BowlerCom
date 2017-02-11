@@ -5,8 +5,8 @@
  *      Author: hephaestus
  */
 
-#ifndef EEPROM_H_
-#define EEPROM_H_
+#ifndef BOWLER_EEPROM_H_
+#define BOWLER_EEPROM_H_
 
 #ifdef __cplusplus
 extern "C"{

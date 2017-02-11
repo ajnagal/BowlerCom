@@ -6,10 +6,9 @@
  */
 #include <BowlerCom.h>
 #ifdef ARDUINO_ARCH_ARC32
-#include <CurieEEPROM.h>
-#include <CurieBLE.h>
-#else
 #include <EEPROM.h>
+#else
+#include <DyIO/BOLWER_EEPROM.h>
 #endif
 
 #if !defined (EEPROM_SIZE)
