@@ -5,10 +5,16 @@
  * Bowler Server, this is a basic bowler server
  * lib https://github.com/madhephaestus/BowlerCom
  */
- int baudrate = 115200;
+ int baudrate = 9600;
 #include <BowlerCom.h>
-int txPin =24;
-int rxPin =25;
+#if defined(ARDUINO_ARCH_ESP8266)
+ int txPin =D0;
+ int rxPin =D1;
+#else
+ int txPin =24;
+ int rxPin =25;
+#endif
+
 BowlerCom com;
 SoftwareSerial mySerial(rxPin,txPin); // RX, TX
 RunEveryData l = {0, 1000};
