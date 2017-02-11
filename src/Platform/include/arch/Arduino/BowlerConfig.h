@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 
-#include <DyIO/BOLWER_EEPROM.h>
+#include <BowlerStack/include/DyIO/BOLWER_EEPROM.h>
 #ifdef __cplusplus
 extern "C"{
 #endif

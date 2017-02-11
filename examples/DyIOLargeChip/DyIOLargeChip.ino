@@ -1,10 +1,4 @@
-#ifdef ARDUINO_ARCH_ARC32
 #include <EEPROM.h>
-//#include <CurieBLE.h>
-#else
-#include <EEPROM.h>
-#endif
-
 #include <SoftwareSerial.h>
 #include <Servo.h>
 /**
