@@ -21,7 +21,6 @@ INTERPOLATE_DATA velocity[MAX_SERVOS];  // servo position interpolation
 RunEveryData servoUpdate ={0,20};
 boolean startupFlag = false;
 
-
 int32_t GetConfigurationDataTable(uint8_t pin) {
 	return EEReadValue(pin);
 }
