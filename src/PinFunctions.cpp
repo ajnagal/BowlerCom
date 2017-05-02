@@ -1,7 +1,13 @@
 #include <BowlerCom.h>
-#ifdef ARDUINO_ARCH_ARC32
-#include "CurieIMU.h"
-#endif
+#include <Wire.h>
+#include <L3G.h>
+#include <LSM303.h>
+
+LSM303 compass;
+
+//#ifdef ARDUINO_ARCH_ARC32
+//#include "CurieIMU.h"
+//#endif
 #include <Platform/include/arch/Arduino/IOAbstraction.hpp>
 int ax, ay, az;         // accelerometer values
 int gx, gy, gz;         // gyrometer values
@@ -195,7 +201,7 @@ boolean SetStreamHW(uint8_t pin, uint8_t numValues, uint8_t * data) {
 /**
  * Get Stream
  * This function takes a pin index, a number of values to be dealt with, and an array of data values
- * Data is stored into numValues and data
+ * Data is stored into numValues and data32
  */
 boolean GetStreamHW(uint8_t pin, uint8_t* numValues, uint8_t * data) {
 
@@ -234,7 +240,6 @@ int32_t GetChanVal(uint8_t pin) {
 	case IS_DI:
 		return digitalRead(PIN_TO_DIGITAL(pin));
 	case IS_ANALOG_IN:
-#ifdef ARDUINO_ARCH_ARC32
 		if (PIN_TO_ANALOG(pin) < 6)
 			return analogRead(PIN_TO_ANALOG(pin));
 		switch (PIN_TO_ANALOG(pin) - 6) {
@@ -251,9 +256,7 @@ int32_t GetChanVal(uint8_t pin) {
 		case 5:
 			return gz;
 		}
-#else
-		return analogRead(PIN_TO_ANALOG(pin));
-#endif
+
 		break;
 	case IS_SERVO:
 		return GetServoPos(pin);
@@ -318,47 +321,7 @@ void InitPinFunction(DATA_STRUCT * functionData) {
 		DyioPinFunctionData[i].PIN.currentValue = currentValue;
 		DyioPinFunctionData[i].PIN.asyncDataPreviousVal = currentValue;
 	}
-	
-#ifdef ARDUINO_ARCH_ARC32
-	// initialize device
-	println_I("Initializing IMU device...");
-	CurieIMU.begin();
-
-	// verify connection
-	println_I("Testing device connections...");
-	if (CurieIMU.begin()) {
-		println_I("CurieIMU connection successful");
-	} else {
-		println_E("CurieIMU connection failed");
-	}
-	println_I("About to calibrate. Make sure your board is stable and upright");
-	delay(5000);
-
-	// The board must be resting in a horizontal position for
-	// the following calibration procedure to work correctly!
-	println_I("Starting Gyroscope calibration and enabling offset compensation...");
-	CurieIMU.autoCalibrateGyroOffset();
-	print_I(" Done");
-
-	println_I("Starting Acceleration calibration and enabling offset compensation...");
-	CurieIMU.autoCalibrateAccelerometerOffset(X_AXIS, 0);
-	CurieIMU.autoCalibrateAccelerometerOffset(Y_AXIS, 0);
-	CurieIMU.autoCalibrateAccelerometerOffset(Z_AXIS, 1);
-	print_I(" Done");
-
-	println_I("Internal sensor offsets AFTER calibration...");
-	p_int_I(CurieIMU.getAccelerometerOffset(X_AXIS));
-	print_I("\t");// -76
-	p_int_I(CurieIMU.getAccelerometerOffset(Y_AXIS));
-	print_I("\t");// -2359
-	p_int_I(CurieIMU.getAccelerometerOffset(Z_AXIS));
-	print_I("\t");// 1688
-	p_int_I(CurieIMU.getGyroOffset(X_AXIS));
-	print_I("\t");// 0
-	p_int_I(CurieIMU.getGyroOffset(Y_AXIS));
-	print_I("\t");// 0
-	p_int_I(CurieIMU.getGyroOffset(Z_AXIS));
-#endif
+//initialize acceloremeter
 	startupFlag = true;
 }
 
@@ -372,10 +335,13 @@ void SetServoPos(uint8_t pin, uint16_t val, float time) {
 }
 void updateServos() {
 	//println_E("Update");
-#ifdef ARDUINO_ARCH_ARC32
-	if(startupFlag)
-		CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
-#endif
+
+	if(startupFlag){
+	//pololu read IMU values
+		//CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
+	compass.read();
+}
+
   if (RunEvery(&servoUpdate) > 0) {
   	for (int i = 0; i < MAX_SERVOS; i++) {
 		if (GetChannelMode(i) == IS_SERVO){
@@ -398,7 +364,7 @@ void SetServoPosDataTable(uint8_t pin, uint16_t val, float time) {
 	}
 	velocity[pin].set = (float) val;
 	velocity[pin].startTime = getMs();
-	
+
 // 	Print_Level l = getPrintLevel();
 // 	if(l>=WARN_PRINT)
 // 		setPrintLevel(INFO_PRINT);
@@ -433,16 +399,7 @@ uint8_t getInterpolatedPin(uint8_t pin) {
 	if (ip < 0) {
 		ip=0;
 		//println_W("Lower=");
-		//error = true;
-	}
-// 	
-// 	int32_t interpolatorSet = ((int32_t) velocity[pin].set);
-// 	if (ip != interpolatorSet) {
-// 		println_W("\n\nSetpoint=");
-// 		error = true;
-// 	}
-// 	if (error) {
-// 		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
+		//DUINOget=");p_int_W(interpolatorSet);
 // 		println_W("set=      \t");p_fl_W(velocity[pin].set);
 // 		println_W("start=    \t");p_fl_W(velocity[pin].start);
 // 		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
